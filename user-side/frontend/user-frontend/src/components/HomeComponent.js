@@ -13,21 +13,7 @@ import hero2 from '../images/hero2.jpg';
 const HomeComponent = () => {
   return (
     <div className="bg">
-      <div className="nav">
-        <div className="logo">
-          <img src={logoImage} alt="logo image" />
-          Medicare
-        </div>
-        <div className="nav-items">
-          <a href="#hero">Home</a>
-          <a href="#services">Services</a>
-          <a href="#aboutUs">About Us</a>
-          <a href="#contactUs">Contact Us</a>
-        </div>
-        <div className="profile">
-          <a href="profile">Username</a>
-        </div>
-      </div>
+
       <div className="hero" id="hero">
         <img src={hero2} alt="hero" />
         <p>Delivering medical care to your doorstep </p>
