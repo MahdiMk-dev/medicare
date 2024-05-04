@@ -1,0 +1,318 @@
+
+@import url(https://fonts.googleapis.com/css?family=Dancing+Script);
+
+* {
+    margin: 0;
+}
+
+body {
+    font-family: Arial;
+    overflow: auto;
+    background-color: white;
+}
+
+
+
+
+
+.icon-count {
+    background-color: #ff0000;
+    color: #fff;
+    float: right;
+    font-size: 11px;
+    left: -25px;
+    padding: 2px;
+    position: relative;
+}
+
+/* End */
+
+/* Sidenav */
+.reviewListEdit{
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #FAD273;;
+    color:#0B6C88;;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 15px;
+    font-size: 13px;
+  }
+.sidenav {
+
+    color: black;
+    border-bottom-right-radius: 25px;
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    position: absolute;
+    top: 70px;
+    width: 250px;
+}
+
+.profile {
+    margin-bottom: 20px;
+    margin-top: -12px;
+    text-align: center;
+}
+
+.profile img {
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px 1px grey;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 20px;
+}
+
+.job {
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.url, hr {
+    text-align: center;
+}
+
+.url hr {
+    margin-left: 20%;
+    width: 60%;
+}
+
+.url a {
+    color: #818181;
+    display: block;
+    font-size: 20px;
+    margin: 10px 0;
+    padding: 6px 8px;
+    text-decoration: none;
+}
+
+.url a:hover {
+    background-color: #25d366;
+    border-radius: 28px;
+    color: white;
+    margin-left: 14%;
+    width: 65%;
+}
+.url .active{
+  background-color: #008037;
+  border-radius: 28px;
+  color: white;
+  margin-left: 14%;
+  width: 65%;
+}
+
+/* End */
+
+/* Main */
+.mainprofile {
+    margin-top: 2%;
+    margin-left: 29%;
+    font-size: 28px;
+    padding: 0 10px;
+    width: 65%;
+}
+
+.mainprofile h2 {
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.mainprofile .card {
+    background-color: #a8a5a529;
+    border-radius: 18px;
+    box-shadow: 1px 1px 8px 0 grey;
+     height: 400px;
+    margin-bottom: 20px;
+    padding: 20px 0 20px 50px;
+}
+.mainprofile .table-card {
+    background-color: #a8a5a529;
+    border-radius: 18px;
+    box-shadow: 1px 1px 8px 0 grey;
+     height: 400px;
+    margin-bottom: 20px;
+
+}
+.mainprofile .form-card {
+    background-color: #a8a5a529;
+    border-radius: 18px;
+    box-shadow: 1px 1px 8px 0 grey;
+    height: 50%;
+    margin-bottom: 20px;
+
+}
+  .profileListEdit{
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      background-color: #3bb077;
+      color: white;
+      cursor: pointer;
+      margin-right: 20px;
+  }
+
+.mainprofile .card table {
+    border: none;
+    font-size: 16px;
+    height: 270px;
+    width: 80%;
+
+}
+
+.edit {
+    position: absolute;
+    color: #e7e7e8;
+    right: 14%;
+}
+
+.social-media {
+    text-align: center;
+    width: 90%;
+}
+
+.social-media span {
+    margin: 0 10px;
+}
+
+.fa-facebook:hover {
+    color: #4267b3 !important;
+}
+
+.fa-twitter:hover {
+    color: #1da1f2 !important;
+}
+
+.fa-instagram:hover {
+    color: #ce2b94 !important;
+}
+
+.fa-invision:hover {
+    color: #f83263 !important;
+}
+
+.fa-github:hover {
+    color: #161414 !important;
+}
+
+.fa-whatsapp:hover {
+    color: #25d366 !important;
+}
+
+.fa-snapchat:hover {
+    color: #fffb01 !important;
+}
+.coinsForm{
+  display: flex;
+}
+  
+  .coinsFormLeft {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+  }
+  
+  .coinsFormLeft > label {
+
+    margin-bottom: 4px;
+    color: gray;
+    font-size: 18px;
+  }
+  
+  .coinsFormLeft > input {
+
+    background-color: transparent;
+    margin-bottom: 10px;
+    border: none;
+    padding: 5px;
+    border-bottom: 1px solid gray;
+  }
+  
+  .coinsFormLeft >select{
+    margin-bottom: 10px;
+  }
+  .requestButton{
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #0B6C88;;
+    color:white;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 15px;
+    
+  }
+  .requestForm{
+  display: flex;
+}
+  
+  .requestFormLeft {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    flex: 1;
+  }
+  
+  .requestFormLeft > label {
+
+    margin-bottom: 4px;
+    color: gray;
+    font-size: 18px;
+  }
+  
+  .requestFormLeft > input {
+
+    background-color: transparent;
+    margin-bottom: 10px;
+    border: none;
+    padding: 5px;
+    border-bottom: 1px solid gray;
+  }
+  
+  .requestFormLeft >select{
+    margin-bottom: 10px;
+  }
+  .rating span:focus {
+    outline: 0;
+  }
+  
+  .rating span,
+  .rating:hover span:hover~span {
+    font-family: sans-serif;
+    font-size: 30px;
+    line-height: 1.5em;
+    width: .9em;
+    height: 1em;
+    padding-right: .1em;
+    color: #999; /* unselected-color */
+    text-shadow: 0 0 1px #444;
+  }
+  
+  .rating span:before {
+    content: '\2605'; /* Heart symbol */
+  }
+  
+  .rating .clicked {
+    color: #25d366; /* selected-color */
+  }
+  
+  .rating > span:hover,
+  .rating .clicked:hover,
+  .rating:hover span {
+    color: #FAD273; /* lighten(selected-color, 10%) */
+    text-shadow: 0 0 1px #000;
+    cursor: pointer;
+  }
+  
+  .rating:hover span {
+    /* IE6-7 hack to not show active state on rating hover */
+    _color: #999; /* unselected-color */
+  }
