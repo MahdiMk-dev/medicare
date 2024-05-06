@@ -80,7 +80,7 @@ body {
 }
 
 .url hr {
-    margin-left: 20%;
+    margin-left: 15%;
     width: 60%;
 }
 
@@ -94,7 +94,7 @@ body {
 }
 
 .url a:hover {
-    background-color: #25d366;
+    background-color: rgba(0, 128, 55, 0.7);
     border-radius: 28px;
     color: white;
     margin-left: 14%;

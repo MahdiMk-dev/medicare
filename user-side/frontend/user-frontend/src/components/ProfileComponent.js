@@ -257,7 +257,7 @@ function ProfileComponent() {
                 <tr>
                   <td>Name</td>
                   <td>:</td>
-                  <td>{info.first_name} {info.last_name}</td>
+                  <td>Mahdi {info.last_name}</td>
                 </tr>
                 <tr>
                   <td>Email</td>
