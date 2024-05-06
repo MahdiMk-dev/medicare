@@ -13,7 +13,7 @@ import hero2 from '../images/hero2.jpg';
 const HomeComponent = () => {
   return (
     <div className="bg">
-
+        <div class="page">
       <div className="hero" id="hero">
         <img src={hero2} alt="hero" />
         <p>Delivering medical care to your doorstep </p>
@@ -57,8 +57,9 @@ const HomeComponent = () => {
             </div>        
             </div>
             <div id="aboutUs">
-        <h2>About Us</h2>
         <div className="about">
+        <h2>About Us</h2>
+
         <div class="about-row">
                 <div class="row-item">
                     <h2>About Medicare</h2>
@@ -98,6 +99,7 @@ const HomeComponent = () => {
             </div>        </div>
             </div>
       </div>
+    </div>
     </div>
   );
 };
