@@ -17,9 +17,9 @@
 }
 .hero p{
     color: #008037;
-    margin-left: 350px;
+    margin-left: 250px;
     font-size: 50px;;
-    transform: translateY(-450px); 
+    transform: translateY(-350px); 
 }
 .services{
     display: flex;
