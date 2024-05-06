@@ -3,7 +3,7 @@
     padding: 0;
 
 }
-.bg{    background-color: rgb(236, 236, 236);
+.bg{    background-color: white;
 }
 .main{
     margin-right: 100px;
@@ -38,7 +38,7 @@
 .circle{
     text-align: center;
     padding: 8px;
-    background-color: white;
+    background-color: #008037;
     color: black;
     width: 100px; 
     height: 100px; 
@@ -80,6 +80,7 @@
     border-radius: 5px;
     background-color: #008037;
     color: white;
+    width: 100%;
 }
 h2{
     color: #008037;

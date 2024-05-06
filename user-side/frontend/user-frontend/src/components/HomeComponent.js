@@ -25,7 +25,7 @@ const HomeComponent = () => {
         <div className="services" id="services">
         <div class="services-item">
                 <div class="circle">
-                <FontAwesomeIcon icon={faUserNurse } size="2x" color="#008037" />
+                <FontAwesomeIcon icon={faUserNurse } size="2x" color="white" />
                 </div>
                 <div class="rectangle">
                     <p>Private Nursing Services: Our registered nurses and practical nurses are available to provide specialized medical treatments, long-term care, or short-term assistance, all within the comfort of your home.</p>
@@ -35,7 +35,7 @@ const HomeComponent = () => {
             <div class="services-item">
                 <div class="circle">
                
-                <FontAwesomeIcon icon={faUserDoctor} size="2x" color="#008037"   />
+                <FontAwesomeIcon icon={faUserDoctor} size="2x" color="white"   />
                 </div>
                 <div class="rectangle">
                     <p>Telemedicine Consultations: Access timely medical advice and consultations from board-certified physicians, right from the convenience of your living room. Whether it's an urgent matter or a routine check-up, our telemedicine services ensure that healthcare is just a click away.</p>
@@ -48,14 +48,16 @@ const HomeComponent = () => {
             </div>
             <div class="services-item">
                 <div class="circle">
-                <FontAwesomeIcon icon={faVialVirus}  size="2x" color="#008037"  />
+                <FontAwesomeIcon icon={faVialVirus}  size="2x" color="white"  />
                 </div>
                 <div class="rectangle">
                     <p>At-Home Phlebotomy: Say goodbye to the hassle of visiting a lab for blood tests. Our skilled phlebotomists come to you, ensuring a seamless and stress-free experience. We collect blood samples at your convenience and ensure they reach the lab promptly for accurate testing.</p>
                     <button id="request-phlebotomist">Request Lab Tests</button>
                 </div>
-            </div>        </div>
-        <h2 id="aboutUs">About Us</h2>
+            </div>        
+            </div>
+            <div id="aboutUs">
+        <h2>About Us</h2>
         <div className="about">
         <div class="about-row">
                 <div class="row-item">
@@ -94,6 +96,7 @@ const HomeComponent = () => {
                     <p>At Medicare, we are committed to putting your health and well-being first. We understand the challenges of navigating the healthcare system, which is why we're dedicated to providing you with the support and guidance you need every step of the way. Whether it's managing your medications, accessing expert advice, or simply having someone to talk to, we're here for you, 24/7.</p>
                 </div>
             </div>        </div>
+            </div>
       </div>
     </div>
   );
