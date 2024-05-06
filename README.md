@@ -5,7 +5,7 @@
 <!-- project philosophy -->
 <img src="./readme/title2.svg"/>
 
-> A mobile app for requesting any home medical service, so that people living alone or those who need continuous medical care can get treated well at home with 24/7 service.
+> A web app for requesting any home medical service, so that people living alone or those who need continuous medical care can get treated well at home with 24/7 service.
 >
 > Elder people living alone find it hard sometimes to take good care of the their medical issues, or even people with chronic cases who need continuous medical care face a lot of issues. This project aims to help these people secure all kind of medical services (private nurses,medical supplies, medical consulation, lab samples, etc..) around the clock while they're at home.
 
