@@ -8,7 +8,7 @@ const RequestNurse=()=>{
         <div class="form-bg">
         <h2>Request Nurse</h2>
 
-            <div class="main">
+            <div class="mainn">
 
                 <div class="form">
                     <div class="form-row">

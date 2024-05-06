@@ -8,7 +8,7 @@ const RequestDoctor=()=>{
         <div class="form-bg">
         <h2>Request Doctor</h2>
 
-            <div class="main">
+            <div class="mainn">
 
                 <div class="form">
                     <div class="form-row">
