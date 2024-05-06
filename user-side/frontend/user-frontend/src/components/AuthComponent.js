@@ -76,6 +76,7 @@ const AuthPage = () => {
   }, []);
 
   return (
+    <div className='bg'>
     <div className="login">
     <div className="form">
       <ul className="tab-group">
@@ -137,6 +138,7 @@ const AuthPage = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
     </div>
   );
