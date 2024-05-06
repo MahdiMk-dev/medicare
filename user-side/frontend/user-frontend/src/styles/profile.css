@@ -94,7 +94,7 @@ body {
 }
 
 .url a:hover {
-    background-color: rgba(0, 128, 55, 0.7);
+    background-color: #4ca673;
     border-radius: 28px;
     color: white;
     margin-left: 14%;

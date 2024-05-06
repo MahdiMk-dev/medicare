@@ -215,7 +215,7 @@ function ProfileComponent() {
 
 
   return (
-    <div>
+    <div className='page'>
       <div className="sidenav">
         <div className="profile">
 
