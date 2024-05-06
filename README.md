@@ -11,11 +11,14 @@
 
 ### User Stories
 
-- As a user, I want to browse the menu, so I ask for a specific medical service.
-- As a user, I want to ask for a private nurse for a specific schedule(hours and days).
-- As a user, I want to rent a medical supply for a period of time while I need it.
-- As a user, I want to ask for a medical consulation without having to visit a private clinic.
-- As a user, I want to do some tests without going to the lab or hospital physically.
+- As a patient, I want to have a live chat with a medical admin to get help with specific services/medical opinions, so that I can benefit the most from the application.
+- As a patient, I want to request medical services, so that I can get the needed care at home.
+- As a patient, I want to get a brief quick analysis of my results, so that I can know if I should do something or contact someone urgently.
+- As a staff, I want to get email with my schedule so that I don't miss any schedule task.
+- As a staff, I want to have access over my patients' profiles, so that I can provide good care.
+- As an admin, I want to have full access over the system, so that I can provide good management of human and medical resources.
+- As an admin, I want to assign staff to newly received requests.
+- As an admin, I want to have live chat with any patient, so that I can give any urgent comment and for better communication securing high quality of service.
 
 <br><br>
 
