@@ -13,10 +13,10 @@ const Navbar=()=>{
             Medicare
         </div>
         <div class="nav-items">
-            <a href="/home">Home</a>
-            <a href="/home#services">Services</a>
-            <a href="/home#aboutUs">About Us</a>
-            <a href="#contactUs">Contact Us</a>
+            <a href="/">Home</a>
+            <a href="/#services">Services</a>
+            <a href="/#aboutUs">About Us</a>
+            <a href="/#contactUs">Contact Us</a>
         </div>
         <div class="profile">
             <a href="profile">Username</a>
