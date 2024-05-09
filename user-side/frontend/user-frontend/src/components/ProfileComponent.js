@@ -2,23 +2,20 @@ import {useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/profile.css';
 import { DataGrid } from '@mui/x-data-grid';
+import axios from 'axios';
+
 
 
 function ProfileComponent() {
   const [info, setinfo] = useState([]);
   const [infoedit, seteditinfo] = useState([]);
-  const [trips, settrips] = useState([]);
-  const [previous, setprev] = useState([]);
-  const [messages, setmessage] = useState([]);
-  const [coins, setcoins] = useState([]);
+  const [medications, setmedications] = useState([]);
+  const [requests, setrequests] = useState([]);
   const [data, setData] = useState([]);
-   const [upcommingdata, setupcommingdata] = useState([]);
-   const [showTripHistory, setShowTripHistory] = useState(false);
-   const [showRequestCoins, setShowRequestCoins] = useState(false);
-   const [showTripIpcomming, setTripIpcomming] = useState(false);
+   const [showMedications, setShowMedications] = useState(false);
+   const [showRequest, setShowRequests] = useState(false);
    const [showProfile, setProfile] = useState(true);
    const [EditProfile, setEditProfile] = useState(false);
-   const [showmessages, setshowmessages] = useState(false);
    const handleChange = (e) => {
     const { id, value } = e.target;
     seteditinfo(prevState => ({ ...prevState, [id]: value }));
@@ -27,7 +24,7 @@ function ProfileComponent() {
    const handleeditInfo = async (e) => {
     e.preventDefault();
     const first_name = document.getElementById('first_name').value;
-    const city = document.getElementById('city').value;
+    const address = document.getElementById('address').value;
     const dob = document.getElementById('dob').value;
     const phone_number = document.getElementById('phone_number').value;
     const last_name = document.getElementById('last_name').value;
@@ -35,67 +32,36 @@ function ProfileComponent() {
             first_name:first_name,
             last_name:last_name,
             dob:dob,
-            city:city,
+            address:address,
             phone_number:phone_number
     }
    
 
   }; 
-   const handleSubmitRequest = async (e) => {
-    e.preventDefault();
-    const amount = document.getElementById('amount').value;
-    const formData = {
-            amount: amount
-    }
    
-    try {
-      const token = localStorage.getItem('token');
-      console.log(token)
-      const response = await fetch('http://localhost:8000/api/coinRequest', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if(data.status=='success'){
-        alert('requested successfully')
-        window.location.href='/profile'
-      }
-      else{
-        alert(data.message)
-         window.location.href="/login"
-      }
-      console.log(data); // Handle the response data here
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }; 
+
+  
    
   useEffect(() => {
 
-    // Simulating data fetching or any asynchronous operation
-    // Set data after fetching or any asynchronous operation
     setData();
     setupcommingdata()
   }, []);
     const handleMenuClick = (menuItem) => {
-    setShowTripHistory(menuItem === 'tripHistory');
-    setShowRequestCoins(menuItem === 'requestCoins');
-    setTripIpcomming(menuItem === 'upcomingTrips');
+    setShowMedications(menuItem === 'medications');
+    setShowRequests(menuItem === 'requests');
     setProfile(menuItem === 'profile');
     setEditProfile(menuItem === 'editprofile');
   };
 
-  console.log(data)
-  const columns = [
+  const medicationstable = [
     { field: "id", headerName: "ID", width: 90, hide: true },
-    { field: "origin_station", headerName: "Medication", width: 120 },
-    { field: "destination_station", headerName: "Dose", width: 120 },
-    { field: "price", headerName: "Instructions", width: 120 },
-    { field: "status", headerName: "comments", width: 120 },
+    { field: "name", headerName: "Name", width: 120 },
+    { field: "dose", headerName: "Dose", width: 120 },
+    { field: "instructions", headerName: "Instructions", width: 120 },
+    { field: "comments", headerName: "Comments", width: 120 },
+    { field: "Time", headerName: "Time", width: 120 },
+
     {
       field: "action",
       headerName: "Action",
@@ -105,7 +71,7 @@ function ProfileComponent() {
           <>
           {params.row.status==='completed' && (
             <Link to={"/tripreview/" + params.row.id}>
-              <button className="reviewListEdit">Add Review</button>
+              <button className="reviewListEdit">edit</button>
             </Link>
           )}
           </>
@@ -113,7 +79,7 @@ function ProfileComponent() {
       },
     },
   ];
-    const upcommingcolumns = [
+    const resultstable = [
     { field: "id", headerName: "ID", width: 90, hide: true },
     { field: "Result", headerName: "result", width: 120 },
     { field: "Review", headerName: "Review", width: 120 },
@@ -122,96 +88,85 @@ function ProfileComponent() {
   ];
 
   
-  const coinstable = [
+  const requeststable = [
     { field: "id", headerName: "ID", width: 90, hide: true },
-    { field: "amount", headerName: "Service", width: 120 },
-    { field: "status", headerName: "Start Date", width: 120 },
-    { field: "status", headerName: "Start Time", width: 120 },
-    { field: "status", headerName: "staff Name", width: 120 },
-    { field: "status", headerName: "staff Number", width: 120 }
+    { field: "service", headerName: "Service", width: 120 },
+    { field: "startD ", headerName: "Start Date", width: 120 },
+    { field: "startT", headerName: "Start Time", width: 120 },
+    { field: "staffN", headerName: "staff Name", width: 120 },
+    { field: "staffNum", headerName: "staff Number ", width: 120 }
 
 
   ];
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            console.log(token)
-            const response = await fetch('http://localhost:8000/api/show', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-            });
+      try {
+        const token = localStorage.getItem('token');
+  
+        const response = await axios.post('http://localhost:8000/api/show', null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+  
+        const data = response.data;
+  
+        if (data.status === 'success') {
+          setinfo(data.user);
+  
+          seteditinfo({
+            first_name: data.user.first_name,
+            last_name: data.user.last_name,
+            dob: data.user.dob,
+            address: data.user.address,
+            phone_number: data.user.phone_number
+          });
+  
+          const medications = data.user.medications.map(medication => ({
+            id: medication.id,
+            name: medication.user.medication.name,
+            dose: medication.user.medication.dose,
+            instructions: medication.user.medication.instructions,
+            comments: medication.user.medication.comments,
+            Time: medication.user.medication.Time,
 
-            const data = await response.json();
-            console.log(data)
-            if (data.status === 'success') {
-              setinfo(data.passenger)
-              
-              seteditinfo({
-                first_name: data.passenger.first_name,
-                last_name: data.passenger.last_name,
-                dob: data.passenger.dob,
-                city: data.passenger.city,
-                phone_number: data.passenger.phone_number
-              });
+          }));
+  
+          const requests = data.requests.map(request => ({
+            id: request.id,
+            service_id: request.user.request.service_id,
+            start: request.user.request.start,
+            end: request.user.request.end,
+            status: request.user.request.status,
+            created_at: request.user.request.created_at,
+          }));
 
+  
 
-                const transformedTrips = data.trips.map(trip => ({
-    id: trip.id,
-    origin_station: trip.trip.origin_station.name,
-    destination_station: trip.trip.destination_station.name,
-    price: trip.price,
-    status: trip.status,
-    departure_time: trip.trip.departure_time,
-    arrival_time: trip.trip.arrival_time,
-  }));
-  const prevoistrips = data.previous.map(trip => ({
-    id: trip.id,
-    origin_station: trip.trip.origin_station.name,
-    destination_station: trip.trip.destination_station.name,
-    price: trip.price,
-    status: trip.status,
-    departure_time: trip.trip.departure_time,
-    arrival_time: trip.trip.arrival_time,
-  }));
+  
+          setmedications([medications]);
+          setrequests([requests]);
 
-
-    const messages = data.messages.map(message => ({
-    id: message.id,
-    name: message.passenger.first_name,
-    from: message.user.name,
-    content: message.content,
-  }));
-  const coins = data.coins.map(coin => ({
-    id: coin.id,
-    amount: coin.amount,
-    status:coin.status,
-  }));
-
-              settrips([])
-
-              setprev([])
-              setcoins([])
-              setmessage([])
-                console.log(data)
-
-            }
-             else {
-                alert(data.message);
-                window.location.href = '/login';
-            }
-
-        } catch (error) {
-            console.error('Error:', error);
+        } else {
+          window.location.href = '/login';
         }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
-
+  
     fetchData();
-}, []);
+  }, []);
+  const handleSubmitRequest = async (e) => {
+    e.preventDefault();
+
+
+  }; 
+   
+
+  
 
 
   return (
@@ -223,27 +178,24 @@ function ProfileComponent() {
         </div>
         <div className="sidenav-url">
           <div className="url">
-            <a href="#settings" className={showProfile ? 'active' : ''} onClick={() => {handleMenuClick('profile');setEditProfile(false);setProfile(true);setShowTripHistory(false);setShowRequestCoins(false);setTripIpcomming(false);setshowmessages(false)}}>
+            <a href="#settings" className={showProfile ? 'active' : ''} onClick={() => {handleMenuClick('profile');setEditProfile(false);setProfile(true);setShowMedications(false);setShowRequests(false);}}>
             Profile</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="#settings" className={EditProfile ? 'active' : ''} onClick={() => {handleMenuClick('editprofile');setEditProfile(true);setProfile(false);setShowTripHistory(false);setShowRequestCoins(false);setTripIpcomming(false);setshowmessages(false)}}>
+            <a href="#settings" className={EditProfile ? 'active' : ''} onClick={() => {handleMenuClick('editprofile');setEditProfile(true);setProfile(false);setShowMedications(false);setShowRequests(false);}}>
             Edit Info</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="#settings" className={showTripHistory ? 'active' : ''} onClick={() => {handleMenuClick('tripHistory');setEditProfile(false);setProfile(false);setShowTripHistory(true);setShowRequestCoins(false);setTripIpcomming(false);setshowmessages(false)}}>Medications</a>
+            <a href="#settings" className={showMedications ? 'active' : ''} onClick={() => {handleMenuClick('medications');setEditProfile(false);setProfile(false);setmedications(true);setShowRequests(false);}}>Medications</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="#settings" className={showRequestCoins ? 'active' : ''} onClick={() => {handleMenuClick('requestCoins');setEditProfile(false);setProfile(false);setShowRequestCoins(true);setShowTripHistory(false);;setTripIpcomming(false);setshowmessages(false)}}>Requests</a>
+            <a href="#settings" className={showRequest ? 'active' : ''} onClick={() => {handleMenuClick('requests');setEditProfile(false);setProfile(false);setShowMedications(false);setShowRequests(true);}}>Requests</a>
             <hr align="center" />
           </div>
-           <div className="url">
-            <a href="#settings" className={showTripIpcomming ? 'active' : ''} onClick={() => {handleMenuClick('upcomingTrips');setEditProfile(false);setProfile(false);setShowRequestCoins(false);setShowTripHistory(false);;setTripIpcomming(true);setshowmessages(false);}}>Add Result </a>
-            <hr align="center" />
-          </div>
+
           
         </div>
       </div>
@@ -257,7 +209,7 @@ function ProfileComponent() {
                 <tr>
                   <td>Name</td>
                   <td>:</td>
-                  <td>Mahdi {info.last_name}</td>
+                  <td>{info.first_name} {info.last_name}</td>
                 </tr>
                 <tr>
                   <td>Email</td>
@@ -267,7 +219,7 @@ function ProfileComponent() {
                 <tr>
                   <td>Address</td>
                   <td>:</td>
-                  <td>{info.city}</td>
+                  <td>{info.address}</td>
                 </tr>
                 <tr>
                   <td>Gender</td>
@@ -289,7 +241,7 @@ function ProfileComponent() {
             </table>
           </div>
         </div>
-        {showTripHistory && (
+        {showMedications && (
           <div className="tripshistory">
           <h2>Medications </h2>
           <div className="table-card">
@@ -297,64 +249,31 @@ function ProfileComponent() {
             <DataGrid
               rows={previous}
               disableSelectionOnClick
-              columns={columns}
+              columns={medicationstable}
               pageSize={8}
               checkboxSelection
             />
           </div>
           </div>
         )}
-        {showTripIpcomming  && (
-          <div className="tripshistory">
-          <h2>Upcomming Trips</h2>
-          <div className="table-card">
-           
-            <DataGrid
-              rows={trips}
-              disableSelectionOnClick
-              columns={upcommingcolumns}
-              pageSize={8}
-              checkboxSelection
-            />
-          </div>
-          </div>
-        )}
+
         
-                {showRequestCoins  && (
+                {showRequest  && (
         <>
         <div className="coins">
          <h2> Requests</h2>
          <div className="table-card">
            
             <DataGrid
-              rows={coins}
+              rows={requests}
               disableSelectionOnClick
-              columns={coinstable}
+              columns={requeststable}
               pageSize={8}
               checkboxSelection
             />
           </div>
           </div>
-        <div className="coins">
-         <h2>Request Coins</h2>
-          <div className="form-card">
-      
-            <form className="coinsForm"  onSubmit={handleSubmitRequest}>
-              <div className="coinsFormLeft">
-                 <label>Amount</label>
-                  <input
-                    type="number"
-                    id="amount"
-                    placeholder="amount"
-                    required
-                  />
-                  
-                  <button className="requestButton">Request</button>
-              </div>
-              </form>
 
-          </div>
-          </div>
           </>
         )}
         {EditProfile  && (
@@ -418,5 +337,6 @@ function ProfileComponent() {
         </div>
 
   );
-}
+}; 
+
 export default ProfileComponent;
