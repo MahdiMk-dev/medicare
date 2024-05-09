@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->where('type', 'patient')->first();
         
         if (!$user) {
             return response()->json(['message' => 'Invalid Email', 'status' => 'fail'], 401);
@@ -25,8 +25,10 @@ class AuthController extends Controller
         }
         
         // Generate token
-        $token = JWTAuth::fromUser($user);
-    
+        $token = JWTAuth::fromUser($user,[
+            'id' => $user->id,
+            'type' => $user->type,
+        ]);
         // Return success message, user information, and token
         return response()->json([
             'message' => 'Login successful',
@@ -72,30 +74,6 @@ class AuthController extends Controller
     {
         return response()->json(auth()->user());
     }
-    public function hello()
-    {
-        return 'hi';
-    }
-    /*public function signup(Request $request)
-    {
-        // Create a new user instance
-        $user = new User();
-        $user->email = $request->email;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->phone_number = $request->phone_number;
-        $user->city = $request->city;
-        $user->dob = $request->dob;
 
-        
-        $user->password = Hash::make($request->password);
-        // You can add more fields here if needed
-        // Example: $user->name = $request->name;
 
-        // Save the user record
-        $user->save();
-
-        // Return a success response
-        return response()->json(['message' => 'Signup successful', 'status' => 'success','user'=>$user], 201);
-    }*/
 }
