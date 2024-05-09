@@ -8,10 +8,10 @@ use App\Models\Order;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Illuminate\Support\Str;
 
 
 class UserController extends Controller
@@ -36,7 +36,6 @@ class UserController extends Controller
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->password = bcrypt($request->input('password'));
-        // Assign other fields as needed
         $user->save();
 
         return response()->json(['message' => 'User created successfully'], 201);
@@ -50,49 +49,129 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
-    {
-        try{
-        // Extract the user ID from the JWT token payload
-        $token = JWTAuth::parseToken();
-        $user_id = $token->getPayload()->get('sub');
+    { 
+        if ($request->header('Authorization')) {
+            $token = $request->header('Authorization');
+
+            // Check if the token starts with 'Bearer '
+            if (Str::startsWith($token, 'Bearer ')) {
+                // Extract the token without 'Bearer ' prefix
+                $jwtToken = Str::substr($token, 7);
+
+                // Now you have the JWT token
+                // You can validate, decode, or perform any operation you need with the token
+                // For example, you can use the JWTAuth facade
+                try {
+                    $token = JWTAuth::parseToken();
+                    $user_id = $token->getPayload()->get('sub');
+
+
+    // Retrieve user by ID
+    $user = User::findOrFail($user_id);
+
+    // Retrieve all medications for the user
+
+    $medications = User::with(['medications'])
+        ->where('id', $user_id)
+        ->get();
+   /* $requests = Order::with(['user_id','service_id','start','end','status','urgent','image'])
+        ->whereHas('user', function ($query) use ($user_id) {
+            $query->where('id', $user_id);
+        })
+        ->get();*/
+
+             // Return data as JSON response
+    return response()->json([
+        'status'=>'success',
+        'user' => $user,
+        'medications' => $medications,
+        //'requests' => $requests,
+            ]);   
+    } catch (TokenExpiredException $e) {
+        // Token has expired
+        return response()->json(['status'=>'fail','message' => 'token_expired'], 401);
+    } catch (TokenInvalidException $e) {
+        // Token is invalid
+        return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
+    } catch (\Exception $e) {
+        // Other exceptions
+        return response()->json(['status'=>'fail','message' => $e], 401);
+    }
+                }
+            }
+            else {
+                return response()->json(['status'=>'fail','message' => 'no token found'], 401);
+            }
     
+     
+        
+        
+    }
+    
+    public function show2(Request $request)
+    { var_dump('hi');
+            if ($request->header('Authorization')) {
+                // Extract the token from the Authorization header
+                $token = $request->header('Authorization');
+    
+                // Check if the token starts with 'Bearer '
+                if (Str::startsWith($token, 'Bearer ')) {
+                    // Extract the token without 'Bearer ' prefix
+                    $jwtToken = Str::substr($token, 7);
+    
+                    // Now you have the JWT token
+                    // You can validate, decode, or perform any operation you need with the token
+                    // For example, you can use the JWTAuth facade
+                    try {
+                        var_dump('hi');
+                       /* $user = JWTAuth::parseToken()->authenticate();
+
+        $user_id =$user["id"];
         // Retrieve user by ID
         $user = User::findOrFail($user_id);
     
         // Retrieve all medications for the user
 
-        $medications = Medication::with(['user', 'dose', 'instuctions','comments'])
+        $medications = User::with(['medications'])
+            ->where('id', $user_id)
+            ->get();
+       /* $requests = Order::with(['user_id','service_id','start','end','status','urgent','image'])
             ->whereHas('user', function ($query) use ($user_id) {
                 $query->where('id', $user_id);
             })
-            ->get();
-        $requests = Order::with(['user_id','service_id','start','end','status','urgent','image'])
-            ->whereHas('user', function ($query) use ($user_id) {
-                $query->where('id', $user_id);
-            })
-            ->get();
+            ->get();*/
+
+                 // Return data as JSON response
+       /* return response()->json([
+            'status'=>'success',
+            'user' => $user,
+            'medications' => $medications,
+            //'requests' => $requests,
+                ]);   */
+        } catch (TokenExpiredException $e) {
+            // Token has expired
+            return response()->json(['status'=>'fail','message' => 'token_expired'], 401);
+        } catch (TokenInvalidException $e) {
+            // Token is invalid
+            return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
+        } catch (\Exception $e) {
+            // Other exceptions
+            return response()->json(['status'=>'fail','message' => 'token_exception'], 401);
+        }
+                    }
+                }
+                else {
+                    return response()->json(['status'=>'fail','message' => 'no token found'], 401);
+                }
         
+         
+            
+            
     
         
                        
     
-        // Return data as JSON response
-        return response()->json([
-            'status'=>'success',
-            'user' => $user,
-            'medications' => $medications,
-            'requests' => $requests,
-                ]);
-    }catch (TokenExpiredException $e) {
-                
-        return response()->json(['status'=>'fail','message' => 'token_expired'], 401);
-   } catch (TokenInvalidException $e) {
-           // Token is invalid
-           return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
-   } catch (\Exception $e) {
-           // Other exceptions
-           return response()->json(['status'=>'fail','message' => 'token_exception'], 401);
-   }
+
     }
 
      public function editinfo(Request $request)
@@ -106,7 +185,7 @@ class UserController extends Controller
          $user = User::findOrFail($userId);
          $user->first_name = $$request->first_name;
          $user->last_name = $request->last_name;
-         $user->city = $request->city;
+         $user->gender = $request->gender;
          $user->phone_number = $request->phone_number;
          $user->dob = $request->dob;
          $user->save();
