@@ -10,8 +10,6 @@ use App\Http\Controllers\UserController;
 
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::get('/hello', [AuthController::class, 'hello']);
-    Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('me', [AuthController::class, 'me']);
     Route::post('/users', [UserController::class, 'store']);
@@ -20,4 +18,4 @@ use App\Http\Controllers\UserController;
     Route::post('/duties', [DutyController::class, 'store']);
     Route::put('/duties/{id}', [DutyController::class, 'update']);
     Route::delete('/duties/{id}', [DutyController::class, 'destroy']);
-});
+;
