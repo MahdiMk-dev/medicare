@@ -1,5 +1,5 @@
 import React from "react";
-import '../styles/requestPhlebotomist.css';
+import '../styles/request.css';
 
 const requestPhlebotomist=()=>{
 return(
