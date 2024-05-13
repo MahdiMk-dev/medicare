@@ -7,14 +7,15 @@
 
 }
 .form-bg{
-    background-image: url('../images/form.png');
+    background-image: url('../images/newbg.png');
     background-size: cover;
     background-position: center;
+
     background-repeat: no-repeat;
 }
 .request .form{
-    color: #008037;
-    background-color:  rgb(146 217 196 / 0%);
+    color: black;
+    background-color:  #4ca673;
     border: 1px solid #ccc; 
     border-radius: 4px;
     box-sizing: border-box;
@@ -23,7 +24,6 @@
     min-height: 80%;
     height: 90%;
     width: 60%  ;
-    margin-left:400px;
 }
 .request .form-row{
 display: flex;
@@ -32,7 +32,7 @@ width: 100%;
 padding: 10px;
 }
 .form h4{
-    color: #008037;
+    color: black;
 }
 .request .form-item{
     color: black;
