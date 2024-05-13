@@ -4,11 +4,12 @@ import Auth from './pages/Auth';
 import Home from './pages/Home';
 import RequestNurse from './pages/RequestNurse';
 import RequestDoctor from './pages/RequestDoctor';
+import ChatBox from './components/ChatBox';
 import RequestPhlebotomist from './pages/RequestPhlebotomist';
 import Profile from './pages/Profile';
 function App() {
   return (
-    <Router>
+    <Router >
       <Routes>
         <Route path="/auth" element={<Auth />} />
         <Route path="/" element={<Home />} />
@@ -16,7 +17,7 @@ function App() {
         <Route path="/requestDoctor" element={<RequestDoctor/>}/>
         <Route path="/requestPhlebotomist" element={<RequestPhlebotomist/>}/>
         <Route path="/profile" element ={<Profile/>}/>
-
+        <Route path="/live_chat" element={<ChatBox />} />
       </Routes>
 
     </Router>
