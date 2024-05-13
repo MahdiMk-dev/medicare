@@ -1,5 +1,5 @@
 import React from "react";
-import '../styles/requestDoctor.css';
+import '../styles/request.css';
 const RequestDoctor=()=>{
     return(
         
