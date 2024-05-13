@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Medication extends Model
 {
-    use HasFactory;
-    public function user(): BelongsTo
+    protected $fillable = [
+        'name', // Add 'name' to the fillable array
+        'dose',
+        'instructions',
+        'comments',
+    ];    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
