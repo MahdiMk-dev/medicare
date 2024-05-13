@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 
 use Illuminate\Support\Facades\Validator;
+//export PATH="/Applications/AMPPS/apps/php74/bin:$PATH"
+//php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
 
 class AuthController extends Controller
 {
@@ -34,9 +36,7 @@ class AuthController extends Controller
             'message' => 'Login successful',
             'status' => 'success',
             'token' => $token,
-            'user' => [
-                'id' => $user->id,
-            ]
+            'user' => $user
         ], 200);
     }
     
@@ -51,16 +51,29 @@ class AuthController extends Controller
         ]);
     
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json(['status' => 'Error', 'message'=> $validator->errors()->toJson()]);
         }
-    
-        $user = User::create(array_merge(
-            $validator->validated(),
-            ['password' => bcrypt($request->password)]
-        ));
-    
-        return response()->json(['message' => 'User registered successfully'], 201);
-    }
+                    $user = new User();
+                    $user->first_name =$request->first_name;
+                    $user->last_name = $request->last_name;
+                    $user->email = $request->email;
+                    $user->dob = $request->dob;
+                    $user->type = 'patient';
+                    $user->gender = $request->gender;
+                    $user->password= bcrypt($request->password);
+                    $user->address=$request->address;
+                    $user->phone_number=$request->phone_number;
+                    try {
+                        $user->save();
+                        return response()->json(['status'=>'success','message' => 'User Registered Successfully']);
+                    } catch (\Exception $e) {
+                        // Log the error or handle it in some other way
+                        echo "Error: " . $e->getMessage();
+                        return response()->json(['status' => 'Error', 'message'=>'User not created']);
+                    }
+
+
+}
     
 
     public function logout()
