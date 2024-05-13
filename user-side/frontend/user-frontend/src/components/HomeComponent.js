@@ -1,23 +1,64 @@
 // Home.js
 import React from 'react';
 import '../styles/home.css';
-import logoImage from '../images/2-removebg-preview.png'; 
 import logoImage2 from '../images/1-removebg-preview.png'; 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import newhero from '../images/newhero.png'
+import contact from '../images/contact.png'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserNurse,faUserDoctor,faVialVirus   } from '@fortawesome/free-solid-svg-icons'; // Import the necessary icons
+import { Link } from 'react-router-dom';
+import { FaPhone, FaEnvelope, FaComments, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+
 
 
 import hero from '../images/hero.jpg';
 import hero2 from '../images/hero2.jpg';
 
 const HomeComponent = () => {
+  const userData = useSelector(state => state.user.userData);
   return (
     <div className="bg">
         <div class="page">
       <div className="hero" id="hero">
-        <img src={hero2} alt="hero" />
-        <p>Delivering medical care to your doorstep </p>
-        <p>with love and professionalism.</p>
+        <img src={newhero} alt="hero" />
+        <p>Delivering medical care to your doorstep with love and professionalism.</p>
+        <p>Signup now to benefit from our services!</p>
+        <br></br>
+        <br></br>
+        {userData ? (
+                    <div class='profile'> 
+                    <button>
+                    <Link
+                    to="/#services"
+                    onClick={() => {
+                      localStorage.clear();
+                      window.location.href="/#services";
+                    }}
+                  >
+                    Request
+                  </Link>
+                  </button>
+                  </div>
+        ) : (
+          <div class='profile'> 
+        <div class='profile'> 
+                <button>
+                <Link
+                to="/auth"
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.href="/auth";
+                }}
+              >
+                Signup
+              </Link>
+              </button>
+            </div>
+      </div>
+
+        )}
+       
       </div>
 
       <div className="main">
@@ -29,7 +70,7 @@ const HomeComponent = () => {
                 </div>
                 <div class="rectangle">
                     <p>Private Nursing Services: Our registered nurses and practical nurses are available to provide specialized medical treatments, long-term care, or short-term assistance, all within the comfort of your home.</p>
-                    <button id="request-nurse">Request Private Nurse</button>
+                    <button id="request-nurse" ><a href='/requestNurse'>Request Private Nurse</a></button>
                 </div>
             </div>
             <div class="services-item">
@@ -42,7 +83,7 @@ const HomeComponent = () => {
                     
                     <div>
     </div>
-                    <button id="request-doctor">Request Medical Consultation</button>
+                    <button id="request-doctor"><a href='/requestDoctor'>Request Medical Consultation</a></button>
 
                 </div>
             </div>
@@ -52,7 +93,7 @@ const HomeComponent = () => {
                 </div>
                 <div class="rectangle">
                     <p>At-Home Phlebotomy: Say goodbye to the hassle of visiting a lab for blood tests. Our skilled phlebotomists come to you, ensuring a seamless and stress-free experience. We collect blood samples at your convenience and ensure they reach the lab promptly for accurate testing.</p>
-                    <button id="request-phlebotomist">Request Lab Tests</button>
+                    <button id="request-phlebotomist"><a href='/requestPhlebotomist'>Request Lab Tests</a></button>
                 </div>
             </div>        
             </div>
@@ -98,7 +139,43 @@ const HomeComponent = () => {
                 </div>
             </div>        </div>
             </div>
+            <h2>Contact Us</h2>
+            <div className="contact-us">
+        
+        <div className='contact-column'>
+        <div className="contact-methods">.
+          <div className="contact-method">
+            <FaPhone />
+            <p>00961 03 12 34 56</p>
+          </div>
+          <div className="contact-method">
+            <FaEnvelope />
+            <p>mokaledmahdi@gmail.com</p>
+          </div>
+          <div className="contact-method">
+            <FaComments />
+            <button><a href="https://example.com/live-chat">Live Chat</a></button>
+          </div>
+          </div>
+        </div>
+        <div className='contact-column'>
+            <img src={contact}></img>
+        </div>
       </div>
+
+
+
+
+
+
+      </div>
+      <footer className="footer">
+      <div className="social-icons">
+          <a href="https://facebook.com"><FaFacebook className="icon large" /></a>
+          <a href="https://twitter.com"><FaTwitter className="icon large" /></a>
+          <a href="https://instagram.com"><FaInstagram className="icon large" /></a>
+        </div>
+      </footer>
     </div>
     </div>
   );
