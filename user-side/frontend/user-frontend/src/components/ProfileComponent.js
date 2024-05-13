@@ -9,9 +9,18 @@ import { db } from '../firebase'; // Assuming this is the path to your Firebase 
 import { useSelector } from 'react-redux';
 import { DeleteOutline } from "@mui/icons-material";
 import { Button } from '@mui/material';
+import {
+    CalendarToday,
+    LocationSearching,
+    MailOutline,
+    PermIdentity,
+    PhoneAndroid,
+    Publish,
+  } from "@mui/icons-material";
 
 function ProfileComponent() {
   const [info, setinfo] = useState([]);
+  const[medform,setShowMedForm]=useState(false)
   const [medications, setmedications] = useState([]);
   const [requests, setrequests] = useState([]);
   const [unread, setUnread] = useState(0);
@@ -20,6 +29,61 @@ function ProfileComponent() {
    const [showProfile, setProfile] = useState(true);
    const [EditProfile, setEditProfile] = useState(false);
    const [showMessages, setShowMessages] = useState(false);
+   const [message, setMessage] = useState();
+   const [file, setFile] = useState();
+   const[image,setimage]=useState();
+   const[error,setError]=useState();
+const[medicationId,setMedicationId]=useState();
+  const [medicationData, setMedicationData] = useState({
+    name: '',
+    dose: '',
+    instructions:'',
+    comments:'',
+    Time:''
+  });
+   const token = localStorage.getItem('token');
+   const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+          }
+        };
+        function handleeditMed(id){
+          setMedicationId(id);
+          fetchmedData();
+          setShowMedForm(true);
+        }
+  const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!medicationId) {
+      // Make the GET request with the configured headers
+      const response = await axios.post('http://localhost:8000/api/add_medication',medicationData, config)
+            if(response.data.status=='success'){
+                setShowMedForm(false);
+              window.location.href = '/profile';
+            }
+            
+            else{
+              let d=response.data.message
+              setError(d)
+            }
+        }
+        else{
+          console.log(medicationData)
+           const response = await axios.post(`http://localhost:8000/api/medication/${medicationId}`,medicationData, config)
+            if(response.data.status=='success'){
+              setMedicationId();
+              window.location.href = '/profile';
+            }
+            
+            else{
+              let d=response.data.message
+              setError(d)
+            }
+        }
+    };
+
+
 
    const [ProfileData, setProfileData] = useState({
     first_name: '',
@@ -27,35 +91,123 @@ function ProfileComponent() {
     email:'',
     phone_number:'',
     dob:'',
-    address:''
+    address:'',
+    img_file:''
   });
-   const userData = useSelector(state => state.user.userData);
-   const [phone_number, setPhoneNumber] = useState('');
 
+   const userData = useSelector(state => state.user.userData);
   const handleInputChange = (e, setData) => {
     const { name, value } = e.target;
+
+    if(name=="img_file"){
+    setimage(URL.createObjectURL(e.target.files[0]));
+    setData(prevData => ({
+      ...prevData,
+      [name]: e.target.files[0]
+    }));
+    setFile(e.target.files[0]);
+    }
+    else
     setData(prevData => ({
       ...prevData,
       [name]: value
     }));
-    console.log(ProfileData)
   };
+  const handleDeleteMedication = async (id) => {
+    try {
+      
+      const response = await axios.delete(`http://localhost:8000/api/delete_medication/${id}` ,config)
+      const data = await response.data;
 
+      if (data.status === 'success' ) {
+        console.log('medication deleted successfully:', data);
+        window.location.href="/profile"
+        // Optionally, update state or perform any other actions after deletion
+      } else {
+        window.location.href="/profile"
+        console.error('Failed to delete user:', data);
+        // Handle error response
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle network errors or other exceptions
+    }
+  };
+  function handleshowform(){
+    setMedicationId();
+    setMedicationData({name: '',
+    dose: '',
+    instructions:'',
+    comments:'',
+    Time:''})
+  setShowMedForm(true);
+  }
+   const fetchmedData = async () => {
+      try {
+
+      // Make the GET request with the configured headers
+      const response = await axios.get(`http://localhost:8000/api/get_medication/${medicationId}`, config)
+
+  
+        const data = response.data;
+  
+        if (data.status === 'success') {
+          setMedicationData({
+            name: data.medication.name,
+            dose: data.medication.dose,
+            instructions: data.medication.instructions,
+            comments: data.medication.comments,
+            Time:data.medication.Time
+          });
+
+        } else {
+          window.location.href = '/auth';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
    
    const handleeditInfo = async (e) => {
     e.preventDefault();
-    const first_name = document.getElementById('first_name').value;
-    const address = document.getElementById('address').value;
-    const dob = document.getElementById('dob').value;
-    const phone_number = document.getElementById('phone_number').value;
-    const last_name = document.getElementById('last_name').value;
-    const formData = {
-            first_name:first_name,
-            last_name:last_name,
-            dob:dob,
-            address:address,
-            phone_number:phone_number
-    }
+    console.log(ProfileData);
+     try {
+        const token = localStorage.getItem('token');
+      //  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      // Make the GET request with the configured headers
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+          }
+        };
+        const formData = new FormData();
+        formData.append("filename", file);
+        formData.append("first_name", ProfileData.first_name);
+        formData.append("last_name", ProfileData.last_name);
+        formData.append("dob", ProfileData.dob);
+        formData.append("address", ProfileData.address);
+        formData.append("phone_number", ProfileData.phone_number);
+        console.log(ProfileData)
+      const response = await axios.post('http://localhost:8000/api/edit_profile',formData ,config)
+
+  
+        const data = response.data;
+  
+        if (data.status === 'success'  ) {
+          setMessage(`<div className='display-success'>{data.message</div>`)
+
+        }
+        else if (data.status === 'fail'){
+          setMessage(`<div className='display-error'>{data.message</div>`)
+
+        } else {
+          window.location.href = '/auth';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
    
 
   }; 
@@ -83,11 +235,12 @@ function ProfileComponent() {
         return (
           
           <>
-            <Link to={"/medications/" + params.row.id}>
-              <button className="userEdit">Edit</button>
-            </Link>
+
+              <button className="userEdit" onClick={()=>handleeditMed(params.row.id)}>Edit</button>
+
             <DeleteOutline
               className="userListDelete"
+              onClick={() => handleDeleteMedication(params.row.id)}
             />
           </>
         );
@@ -114,6 +267,10 @@ function ProfileComponent() {
   ];
 
   useEffect(() => {
+     
+   if (medicationId) {
+    fetchmedData();
+  }
     async function getUnreadMessagesCount() {
   try {
     // Query messages where read is false (unread messages)
@@ -133,6 +290,7 @@ function ProfileComponent() {
     return 0; // Return 0 if there's an error
   }
 }
+
 function subscribeToMessages() {
   const unsubscribe = onSnapshot(collection(db, "messages"), () => {
     // When new messages are added, update the unread messages count
@@ -163,6 +321,9 @@ function subscribeToMessages() {
         const data = response.data;
   
         if (data.status === 'success') {
+
+          setFile(data.user.image_url);
+          setimage(data.user.image_url)
           setinfo(data.user);
   
           setProfileData({
@@ -216,29 +377,35 @@ function subscribeToMessages() {
       <div className="sidenav">
         <div className="profile">
 
-          <div className="name">{info.first_name} {info.last_name}</div>
+          
+          <div className="userShowInfo">
+              <div className="name">{info.first_name} {info.last_name}</div>
+              <PermIdentity className="userShowIcon" />
+              <span className="userShowInfoTitle">{info.email}</span>
+            </div>
+          <img className="profileImage" src={info.image_url}  alt="" width="100" height="100" />
         </div>
         <div className="sidenav-url">
           <div className="url">
-            <a href="#settings" className={showProfile ? 'active' : ''} onClick={() => {handleMenuClick('profile');setShowMessages(false);setEditProfile(false);setProfile(true);setShowMedications(false);setShowRequests(false);}}>
+            <a href="#settings" className={showProfile ? 'active' : ''} onClick={() => {handleMenuClick('profile');setShowMedForm(false);;setShowMessages(false);setEditProfile(false);setProfile(true);setShowMedications(false);setShowRequests(false);}}>
             Profile</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="#settings" className={EditProfile ? 'active' : ''} onClick={() => {handleMenuClick('editprofile');setShowMessages(false);setEditProfile(true);setProfile(false);setShowMedications(false);setShowRequests(false);}}>
+            <a href="#settings" className={EditProfile ? 'active' : ''} onClick={() => {handleMenuClick('editprofile');setShowMedForm(false);setShowMessages(false);setEditProfile(true);setProfile(false);setShowMedications(false);setShowRequests(false);}}>
             Edit Info</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="#settings" className={showMedications ? 'active' : ''} onClick={() => {handleMenuClick('medications');setShowMessages(false);setEditProfile(false);setProfile(false);setShowMedications(true);setShowRequests(false);}}>Medications</a>
+            <a href="#settings" className={showMedications ? 'active' : ''} onClick={() => {handleMenuClick('medications');setShowMedForm(false);setShowMessages(false);setEditProfile(false);setProfile(false);setShowMedications(true);setShowRequests(false);}}>Medications</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="#settings" className={showRequest ? 'active' : ''} onClick={() => {handleMenuClick('requests');setShowMessages(false);setEditProfile(false);setProfile(false);setShowMedications(false);setShowRequests(true);}}>Requests</a>
+            <a href="#settings" className={showRequest ? 'active' : ''} onClick={() => {handleMenuClick('requests');setShowMedForm(false);setShowMessages(false);setEditProfile(false);setProfile(false);setShowMedications(false);setShowRequests(true);}}>Requests</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="/live_chat" target="_blank" className={showMessages ? 'active' : ''} onClick={() => {handleMenuClick('messages');setShowMessages(true);setEditProfile(false);setProfile(false);setShowMedications(false);setShowRequests(false);}}>Messages ({unread})</a>
+            <a href="/live_chat" target="_blank" className={showMessages ? 'active' : ''} onClick={() => {handleMenuClick('messages');setShowMedForm(false);setShowMessages(true);setEditProfile(false);setProfile(false);setShowMedications(false);setShowRequests(false);}}>Messages ({unread})</a>
             <hr align="center" />
           </div>
 
@@ -292,7 +459,9 @@ function subscribeToMessages() {
           <div className="tripshistory">
           <h2>Medications </h2>
           <div className="table-card">
-           
+          <div className="createbutton">
+            <button className="addMedications" onClick={handleshowform}>Create</button>
+          </div>
             <DataGrid
               rows={medications}
               disableSelectionOnClick
@@ -336,19 +505,21 @@ function subscribeToMessages() {
         <div className="coins">
          <h2>Edit Profile</h2>
           <div className="form-card">
-      
+             <div dangerouslySetInnerHTML={{ __html: message }}></div>
             <form className="coinsForm" onSubmit={handleeditInfo}>
               <div className="coinsFormLeft">
                  <label>First Name</label>
                   <input
+                    id="first_name"
                     type="text"
                     name="first_name"
                     value={ProfileData.first_name}
                     required
                     onChange={(e) => handleInputChange(e, setProfileData)}
                   />
-                   <label>Name</label>
+                   <label>Last Name</label>
                   <input
+                    id="last_name"
                     type="text"
                     name="last_name"
                     value={ProfileData.last_name}
@@ -357,6 +528,7 @@ function subscribeToMessages() {
                   />
                   <label>Address</label>
                   <input
+                    id="address"
                     type="text"
                     name="address"
                     value={ProfileData.address}
@@ -366,6 +538,7 @@ function subscribeToMessages() {
                   />
                   <label>Date of Birth</label>
                   <input
+                     id="dob"
                     type="date"
                     name="dob"
                     value={ProfileData.dob}
@@ -374,12 +547,15 @@ function subscribeToMessages() {
                   />
                   <label>Phone Number</label>
                   <input
+                    id="phone_number"
                     type="text"
                     name="phone_number"
                     required
                     value={ProfileData.phone_number}
                     onChange={(e) => handleInputChange(e, setProfileData)}
                   />
+                  <input type="file" name="img_file" id="file"  onChange={(e) => handleInputChange(e, setProfileData)} />
+                  <img src={image} className="userUpdateImg"/>
                   <button className="requestButton" >Update</button>
               </div>
               </form>
@@ -387,7 +563,41 @@ function subscribeToMessages() {
           </div>
           </div>
         )}
-         
+        {medform &&(
+        <div className="coins">
+          <h2>Medication</h2>
+          <div className="form-card">
+            <form className="coinsForm" onSubmit={handleSubmit}>
+             <div className='display-error'> {error && <p>{error}</p>} </div>
+              <div className="requestFormLeft">
+                <label>Name</label>
+                  <input id="name" name="name" type="text" value={medicationData.name}
+                    onChange={(e) => handleInputChange(e, setMedicationData)}  required/>
+                 <label>Dose</label>
+                  <input id="dose" name="dose" type="text" value={medicationData.dose}
+                    onChange={(e) => handleInputChange(e, setMedicationData)} required />
+                   <label>Instructions</label>
+                  <input id="instructions" name="instructions" type="text" value={medicationData.instructions}
+                    onChange={(e) => handleInputChange(e, setMedicationData)}  required />
+                <label>Time</label>
+                <input type="time" id="time" name="Time" value={medicationData.Time}
+                    onChange={(e) => handleInputChange(e, setMedicationData)} required/>
+                <label>Comments</label>
+                <textarea
+                  id="comments"
+                  name="comments"
+                  rows={5}
+                  value={medicationData.comments}
+                  onChange={(e) => handleInputChange(e, setMedicationData)} 
+                  required
+                />
+                <button className="requestButton">Request</button>
+              </div>
+            </form>
+          
+        </div>
+      </div>
+        )} 
           </div>
         </div>
 
