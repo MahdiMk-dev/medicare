@@ -95,7 +95,17 @@ const HomeComponent = () => {
                     <p>At-Home Phlebotomy: Say goodbye to the hassle of visiting a lab for blood tests. Our skilled phlebotomists come to you, ensuring a seamless and stress-free experience. We collect blood samples at your convenience and ensure they reach the lab promptly for accurate testing.</p>
                     <button id="request-phlebotomist"><a href='/requestPhlebotomist'>Request Lab Tests</a></button>
                 </div>
-            </div>        
+            </div> 
+            <div class="services-item">
+                <div class="circle">
+                <FontAwesomeIcon icon={faUserNurse } size="2x" color="white" />
+                </div>
+                <div class="rectangle">
+                    <p>Attach your medical result below so you can get a brief fast analysis!</p>
+                    <p class='disclaimer'>Diclaimer: This analysis is AI generated and is not 100% dependable so don't hesitate to contact one of our Doctors for better medical plan</p>
+                    <button id="analysis" ><a href='/analysis'>Analyze My Result</a></button>
+                </div>
+            </div>       
             </div>
             <div id="aboutUs">
         <div className="about">
