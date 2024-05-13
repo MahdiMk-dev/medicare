@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\MedicationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DutyController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
-
-
+use Symfony\Component\Routing\RequestContext;
 
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -18,4 +19,11 @@ use App\Http\Controllers\UserController;
     Route::post('/duties', [DutyController::class, 'store']);
     Route::put('/duties/{id}', [DutyController::class, 'update']);
     Route::delete('/duties/{id}', [DutyController::class, 'destroy']);
+    Route::post('/createRequest', [RequestController::class,'createRequest']);
+    Route::post('/editRequest',[RequestController::class,'editRequest'] );
+    Route::post('/createMedication', [MedicationController::class , 'addMedication']);
+    Route::post('/editMedication', [MedicationController::class , 'editMedication']);
+    Route::post('/deleteMedication', [MedicationController::class , 'deleteMedication']);
+
+
 ;
