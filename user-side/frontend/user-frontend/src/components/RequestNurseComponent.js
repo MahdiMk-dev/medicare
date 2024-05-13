@@ -1,16 +1,19 @@
-import React, { useState } from "react";
 import axios from "axios"; // Import Axios
 import '../styles/request.css';
+import React, { useEffect, useState } from 'react';
 
 const RequestNurse = () => {
     const [requestData, setRequestData] = useState({
+        service_id:1,
         fromDate: "",
         toDate: "",
         fromTime: "",
         toTime: "",
         genderPreference: "any",
-        comments: ""
+        comments: "",
+        timeSelect:""
     });
+    const [error,setError]=useState({})
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -19,20 +22,28 @@ const RequestNurse = () => {
             [name]: value
         }));
     };
+    const token = localStorage.getItem('token');
+   const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          }
+        };
 
-    const handleRequest = () => {
-        // Make a POST request to the API endpoint with requestData
-        axios.post('http://localhost:8000/api/requestNurse', requestData)
-            .then(function(response) {
-                // Handle success
-                console.log('Nurse requested successfully', response.data);
-                alert('Nurse requested successfully');
-            })
-            .catch(function(error) {
-                // Handle error
-                console.error('Error requesting nurse', error);
-                alert('Error requesting nurse');
-            });
+ const handleSubmit = async (e) => {
+        e.preventDefault();        // Make a POST request to the API endpoint with requestData
+        const response = await axios.post('http://localhost:8000/api/create-request', requestData,config)
+            if(response.data.status=='success'){
+              window.location.href = '/';
+            }
+            
+            else if(response.data.status=='error'){
+              let d=response.data.message
+              setError(d)
+            }
+            else{
+               window.location.href = '/auth'; 
+            }
     };
 
     return (
@@ -40,21 +51,32 @@ const RequestNurse = () => {
             <div className="form-bg">
                 <h2>Request Nurse</h2>
                 <div className="mainn">
+               
                     <div className="form">
+                    <form onSubmit={handleSubmit}>
+                        <div className='display-error'> 
+                            <ul>
+                                {Object.entries(error).map(([key, value]) => (
+                                  <li key={key}>
+                                    <strong>{key}:</strong> {value}
+                                  </li>
+                                ))}
+                            </ul>
+                        </div>
                         <div className="form-row">
                             <div className="form-item">
                                 <h4>Date</h4>
                             </div>
                             <div className="form-item">
                                 <label>From</label>
-                                <input type="date" name="fromDate" value={requestData.fromDate} onChange={handleInputChange} />
+                                <input required type="date" name="fromDate" value={requestData.fromDate} onChange={handleInputChange} />
                             </div>
                         </div>
                         <div className="form-row">
                             <div className="form-item"></div>
                             <div className="form-item">
                                 <label>To</label>
-                                <input type="date" name="toDate" value={requestData.toDate} onChange={handleInputChange} />
+                                <input required type="date" name="toDate" value={requestData.toDate} onChange={handleInputChange} />
                             </div>
                         </div>
                         <div className="form-row">
@@ -62,7 +84,8 @@ const RequestNurse = () => {
                                 <h4>Time</h4>
                             </div>
                             <div className="form-item">
-                                <select id="timeSelect" name="timeSelect" value={requestData.timeSelect} onChange={handleInputChange}>
+                                <select required id="timeSelect" name="timeSelect" value={requestData.timeSelect} onChange={handleInputChange}>
+                                     <option value="" selected disabled>Select Option</option>
                                     <option value="24/24">24/24 (All day)</option>
                                     <option value="specific-time">Specific Time</option>
                                 </select>
@@ -75,14 +98,14 @@ const RequestNurse = () => {
                                     <div className="form-item"></div>
                                     <div className="form-item">
                                         <label>From</label>
-                                        <input type="time" name="fromTime" value={requestData.fromTime} onChange={handleInputChange} />
+                                        <input required type="time" name="fromTime" value={requestData.fromTime} onChange={handleInputChange} />
                                     </div>
                                 </div>
                                 <div className="form-row">
                                     <div className="form-item"></div>
                                     <div className="form-item">
                                         <label>To</label>
-                                        <input type="time" name="toTime" value={requestData.toTime} onChange={handleInputChange} />
+                                        <input required type="time" name="toTime" value={requestData.toTime} onChange={handleInputChange} />
                                     </div>
                                 </div>
                             </>
@@ -92,7 +115,7 @@ const RequestNurse = () => {
                                 <h4>Preferred Gender</h4>
                             </div>
                             <div className="form-item">
-                                <select id="genderSelect" name="genderPreference" value={requestData.genderPreference} onChange={handleInputChange}>
+                                <select required id="genderSelect" name="genderPreference" value={requestData.genderPreference} onChange={handleInputChange}>
                                     <option value="any">Any</option>
                                     <option value="female">Female</option>
                                     <option value="male">Male</option>
@@ -101,13 +124,16 @@ const RequestNurse = () => {
                         </div>
                         <h3>Comments</h3>
                         <div className="input-comments">
-                            <textarea className="comments" name="comments" value={requestData.comments} onChange={handleInputChange}></textarea>
+                            <textarea required className="comments" name="comments" value={requestData.comments} onChange={handleInputChange}></textarea>
                         </div>
                         <div className="submit">
-                            <button onClick={handleRequest}>Request</button>
+                            <button >Request</button>
                         </div>
+                        </form>
                     </div>
+                
                 </div>
+
             </div>
         </div>
     );
