@@ -71,21 +71,19 @@ class UserController extends Controller
 
     // Retrieve all medications for the user
 
-    $medications = User::with(['medications'])
-        ->where('id', $user_id)
-        ->get();
-   /* $requests = Order::with(['user_id','service_id','start','end','status','urgent','image'])
+    $medications = Medication::where('user_id', $user_id)->get();
+    $requests = Order::with(['user','service'])
         ->whereHas('user', function ($query) use ($user_id) {
             $query->where('id', $user_id);
         })
-        ->get();*/
+        ->get();
 
              // Return data as JSON response
     return response()->json([
         'status'=>'success',
         'user' => $user,
         'medications' => $medications,
-        //'requests' => $requests,
+        'requests' => $requests,
             ]);   
     } catch (TokenExpiredException $e) {
         // Token has expired
@@ -185,7 +183,7 @@ class UserController extends Controller
          $user = User::findOrFail($userId);
          $user->first_name = $$request->first_name;
          $user->last_name = $request->last_name;
-         $user->gender = $request->gender;
+         $user->address = $request->address;
          $user->phone_number = $request->phone_number;
          $user->dob = $request->dob;
          $user->save();
