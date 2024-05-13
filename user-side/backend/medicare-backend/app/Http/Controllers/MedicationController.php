@@ -45,7 +45,7 @@ class MedicationController extends Controller
         $medication-> dose=$validatedData['dose'];
         $medication-> instructions=$validatedData['instructions'];
         $medication-> comments=$validatedData['comments'];
-
+        $medication-> Time=$request->Time;
         $medication->save();
 
         // Return response
@@ -58,7 +58,7 @@ class MedicationController extends Controller
         return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
     } catch (\Exception $e) {
         // Other exceptions
-        return response()->json(['status'=>'fail','message' => $e], 401);
+        return response()->json(['status'=>'fail','message' => $e->getMessage()], 401);
     }
                 }
             }
@@ -68,7 +68,7 @@ class MedicationController extends Controller
     }
 
     // Edit Medication
-    public function editMedication(Request $request)
+    public function editMedication(Request $request,$id)
 {
     // Check if the request contains the Authorization header
     if (!$request->hasHeader('Authorization')) {
@@ -89,30 +89,20 @@ class MedicationController extends Controller
         // Validate and decode the token
         $token = JWTAuth::parseToken();
         $user_id = $token->getPayload()->get('sub');
-
-        // Validation
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|integer',
-            'name' => 'required|string',
-            'dose' => 'required|string',
-            'instructions' => 'required|string',
-            'comments' => 'nullable|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['status' => 'fail', 'message' => $validator->errors()], 422);
-        }
-
-        $id = $request->input('id');
+       
 
         // Find medication
-        $updatedMedication = Medication::findOrFail($id);
+        $medication = Medication::findOrFail($id);
 
         // Update medication attributes
-        $updatedMedication->update($request->only(['name', 'dose', 'instructions', 'comments']));
-
+        $medication-> name=$request->name;
+        $medication-> dose=$request->dose;
+        $medication-> instructions=$request->instructions;
+        $medication-> comments=$request->comments;
+        $medication-> Time=$request->Time;
+        $medication->save();
         // Return response
-        return response()->json(['status' => 'success', 'message' => 'Medication updated successfully', 'data' => $updatedMedication]);
+        return response()->json(['status' => 'success', 'message' => 'Medication updated successfully', 'data' => $medication]);
 
     } catch (TokenExpiredException $e) {
         // Token has expired
@@ -126,16 +116,29 @@ class MedicationController extends Controller
     }
 }
     // Delete Medication
-    public function deleteMedication(Request $request)
+    public function deleteMedication($id)
     {
-        // Find medication
-        $id=$request['id'];
+       
         $medication = Medication::findOrFail($id);
-
+         if (!$medication) {
+            return response()->json(['status' => 'error','message'=>'Item not found'], 200);
+        }
         // Delete medication
         $medication->delete();
 
         // Return response
         return response()->json(['status' => 'success', 'message' => 'Medication deleted successfully']);
+    }
+    public function getmedication($id)
+    {
+       
+        $medication = Medication::findOrFail($id);
+         if (!$medication) {
+            return response()->json(['status' => 'error','message'=>'medication not found'], 200);
+        }
+
+
+        // Return response
+        return response()->json(['status' => 'success', 'medication' => $medication]);
     }
 }
