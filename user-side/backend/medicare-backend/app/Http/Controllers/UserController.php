@@ -87,18 +87,18 @@ class UserController extends Controller
             ]);   
     } catch (TokenExpiredException $e) {
         // Token has expired
-        return response()->json(['status'=>'fail','message' => 'token_expired'], 401);
+        return response()->json(['status'=>'error','message' => 'token_expired'], 200);
     } catch (TokenInvalidException $e) {
         // Token is invalid
-        return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
+        return response()->json(['status'=>'error','message' => 'token_invalid'], 200);
     } catch (\Exception $e) {
         // Other exceptions
-        return response()->json(['status'=>'fail','message' => $e], 401);
+        return response()->json(['status'=>'fail','message' => $e], 200);
     }
                 }
             }
             else {
-                return response()->json(['status'=>'fail','message' => 'no token found'], 401);
+                return response()->json(['status'=>'error','message' => 'no token found'], 200);
             }
     
      
@@ -106,71 +106,6 @@ class UserController extends Controller
         
     }
     
-    public function show2(Request $request)
-    { var_dump('hi');
-            if ($request->header('Authorization')) {
-                // Extract the token from the Authorization header
-                $token = $request->header('Authorization');
-    
-                // Check if the token starts with 'Bearer '
-                if (Str::startsWith($token, 'Bearer ')) {
-                    // Extract the token without 'Bearer ' prefix
-                    $jwtToken = Str::substr($token, 7);
-    
-                    // Now you have the JWT token
-                    // You can validate, decode, or perform any operation you need with the token
-                    // For example, you can use the JWTAuth facade
-                    try {
-                        var_dump('hi');
-                       /* $user = JWTAuth::parseToken()->authenticate();
-
-        $user_id =$user["id"];
-        // Retrieve user by ID
-        $user = User::findOrFail($user_id);
-    
-        // Retrieve all medications for the user
-
-        $medications = User::with(['medications'])
-            ->where('id', $user_id)
-            ->get();
-       /* $requests = Order::with(['user_id','service_id','start','end','status','urgent','image'])
-            ->whereHas('user', function ($query) use ($user_id) {
-                $query->where('id', $user_id);
-            })
-            ->get();*/
-
-                 // Return data as JSON response
-       /* return response()->json([
-            'status'=>'success',
-            'user' => $user,
-            'medications' => $medications,
-            //'requests' => $requests,
-                ]);   */
-        } catch (TokenExpiredException $e) {
-            // Token has expired
-            return response()->json(['status'=>'fail','message' => 'token_expired'], 401);
-        } catch (TokenInvalidException $e) {
-            // Token is invalid
-            return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
-        } catch (\Exception $e) {
-            // Other exceptions
-            return response()->json(['status'=>'fail','message' => 'token_exception'], 401);
-        }
-                    }
-                }
-                else {
-                    return response()->json(['status'=>'fail','message' => 'no token found'], 401);
-                }
-        
-         
-            
-            
-    
-        
-                       
-    
-
-    }
 
      public function editinfo(Request $request)
      {
@@ -181,11 +116,17 @@ class UserController extends Controller
      
          // Create a new coin request instance
          $user = User::findOrFail($userId);
-         $user->first_name = $$request->first_name;
+         $user->first_name = $request->first_name;
          $user->last_name = $request->last_name;
          $user->address = $request->address;
          $user->phone_number = $request->phone_number;
          $user->dob = $request->dob;
+         if($request->hasfile('filename')){
+         $file = $request->file('filename');
+         $fileName = $file->getClientOriginalName();
+         $file->storeAs('public/',$fileName);
+         $user->image_url="http://localhost:8000/storage/".$fileName;
+         }
          $user->save();
      
          // Return success response
@@ -195,13 +136,15 @@ class UserController extends Controller
          ], 201);
      }catch (TokenExpiredException $e) {
                  
-         return response()->json(['status'=>'fail','message' => 'token_expired'], 401);
+         return response()->json(['status'=>'error','message' => 'token_expired'], 200);
      } catch (TokenInvalidException $e) {
             // Token is invalid
-            return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
+            return response()->json(['status'=>'error','message' => 'token_invalid'], 200);
      } catch (\Exception $e) {
             // Other exceptions
-            return response()->json(['status'=>'fail','message' => 'token_exception'], 401);
+         var_dump("Error: " . $e->getMessage());
+
+            return response()->json(['status'=>'fail','message' => $e], 200);
      }
      }
 
