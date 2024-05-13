@@ -3,23 +3,44 @@ import { Link } from 'react-router-dom';
 import '../styles/profile.css';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-
-
+import ChatBox from './ChatBox';
+import { collection, query, where, onSnapshot ,getDocs} from "firebase/firestore";
+import { db } from '../firebase'; // Assuming this is the path to your Firebase initialization file
+import { useSelector } from 'react-redux';
+import { DeleteOutline } from "@mui/icons-material";
+import { Button } from '@mui/material';
 
 function ProfileComponent() {
   const [info, setinfo] = useState([]);
-  const [infoedit, seteditinfo] = useState([]);
   const [medications, setmedications] = useState([]);
   const [requests, setrequests] = useState([]);
-  const [data, setData] = useState([]);
+  const [unread, setUnread] = useState(0);
    const [showMedications, setShowMedications] = useState(false);
    const [showRequest, setShowRequests] = useState(false);
    const [showProfile, setProfile] = useState(true);
    const [EditProfile, setEditProfile] = useState(false);
-   const handleChange = (e) => {
-    const { id, value } = e.target;
-    seteditinfo(prevState => ({ ...prevState, [id]: value }));
+   const [showMessages, setShowMessages] = useState(false);
+
+   const [ProfileData, setProfileData] = useState({
+    first_name: '',
+    last_name: '',
+    email:'',
+    phone_number:'',
+    dob:'',
+    address:''
+  });
+   const userData = useSelector(state => state.user.userData);
+   const [phone_number, setPhoneNumber] = useState('');
+
+  const handleInputChange = (e, setData) => {
+    const { name, value } = e.target;
+    setData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+    console.log(ProfileData)
   };
+
    
    const handleeditInfo = async (e) => {
     e.preventDefault();
@@ -39,19 +60,12 @@ function ProfileComponent() {
 
   }; 
    
-
-  
-   
-  useEffect(() => {
-
-    setData();
-    setupcommingdata()
-  }, []);
     const handleMenuClick = (menuItem) => {
     setShowMedications(menuItem === 'medications');
     setShowRequests(menuItem === 'requests');
     setProfile(menuItem === 'profile');
     setEditProfile(menuItem === 'editprofile');
+    setShowMessages(menuItem==='messages')
   };
 
   const medicationstable = [
@@ -61,62 +75,97 @@ function ProfileComponent() {
     { field: "instructions", headerName: "Instructions", width: 120 },
     { field: "comments", headerName: "Comments", width: 120 },
     { field: "Time", headerName: "Time", width: 120 },
-
     {
       field: "action",
       headerName: "Action",
       width: 150,
       renderCell: (params) => {
         return (
+          
           <>
-          {params.row.status==='completed' && (
-            <Link to={"/tripreview/" + params.row.id}>
-              <button className="reviewListEdit">edit</button>
+            <Link to={"/medications/" + params.row.id}>
+              <button className="userEdit">Edit</button>
             </Link>
-          )}
+            <DeleteOutline
+              className="userListDelete"
+            />
           </>
         );
       },
     },
-  ];
-    const resultstable = [
-    { field: "id", headerName: "ID", width: 90, hide: true },
-    { field: "Result", headerName: "result", width: 120 },
-    { field: "Review", headerName: "Review", width: 120 },
-    { field: "Doctor Review", headerName: "Doctor Review", width: 120 },
-
-  ];
-
-  
+  ];  
   const requeststable = [
     { field: "id", headerName: "ID", width: 90, hide: true },
     { field: "service", headerName: "Service", width: 120 },
-    { field: "startD ", headerName: "Start Date", width: 120 },
-    { field: "startT", headerName: "Start Time", width: 120 },
-    { field: "staffN", headerName: "staff Name", width: 120 },
-    { field: "staffNum", headerName: "staff Number ", width: 120 }
-
-
+    { field: "start_time", headerName: "Start Time", width: 120 },
+    { field: "end_time", headerName: "End Time", width: 120 },
+    { field: "user", headerName: "staff Name ", width: 120 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      renderCell: (params) => (
+        <td className={`widgetLgButton ${params.value}`}>
+          <Button className={`widgetLgButton ${params.value}`} >{params.value}</Button>
+          
+        </td>
+      ),
+    },
   ];
 
   useEffect(() => {
+    async function getUnreadMessagesCount() {
+  try {
+    // Query messages where read is false (unread messages)
+    const q = query(
+      collection(db, "messages"),
+      where('ReceiverId','==',userData.id),
+      where('read', '==', false)
+    );
+
+    // Get the documents
+    const querySnapshot = await getDocs(q);
+
+    // Return the count of unread messages
+    return querySnapshot.size;
+  } catch (error) {
+    console.error("Error fetching unread messages count:", error);
+    return 0; // Return 0 if there's an error
+  }
+}
+function subscribeToMessages() {
+  const unsubscribe = onSnapshot(collection(db, "messages"), () => {
+    // When new messages are added, update the unread messages count
+    getUnreadMessagesCount().then(count => {
+      console.log("Updated unread messages count:", count);
+      setUnread(count)
+      // Do something with the updated count (e.g., update the UI)
+    });
+  });
+
+  // Return the unsubscribe function
+  return unsubscribe;
+}
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-  
-        const response = await axios.post('http://localhost:8000/api/show', null, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+        const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
           }
-        });
+        };
+
+      // Make the GET request with the configured headers
+      const response = await axios.get('http://localhost:8000/api/show', config)
+
   
         const data = response.data;
   
         if (data.status === 'success') {
           setinfo(data.user);
   
-          seteditinfo({
+          setProfileData({
             first_name: data.user.first_name,
             last_name: data.user.last_name,
             dob: data.user.dob,
@@ -124,33 +173,35 @@ function ProfileComponent() {
             phone_number: data.user.phone_number
           });
   
-          const medications = data.user.medications.map(medication => ({
+          const medicationsData = data.medications.map(medication => ({
             id: medication.id,
-            name: medication.user.medication.name,
-            dose: medication.user.medication.dose,
-            instructions: medication.user.medication.instructions,
-            comments: medication.user.medication.comments,
-            Time: medication.user.medication.Time,
+            name: medication.name,
+            dose: medication.dose,
+            instructions: medication.instructions,
+            comments: medication.comments,
+            Time: medication.Time,
 
           }));
+          console.log(medications)
   
           const requests = data.requests.map(request => ({
             id: request.id,
-            service_id: request.user.request.service_id,
-            start: request.user.request.start,
-            end: request.user.request.end,
-            status: request.user.request.status,
-            created_at: request.user.request.created_at,
+            service: request.service.type,
+            start_time: request.start,
+            end_time: request.end,
+            status: request.status,
+            user: request.user.first_name,
           }));
 
   
-
+          
   
-          setmedications([medications]);
-          setrequests([requests]);
+          setmedications(medicationsData);
+          setrequests(requests);
+          console.log(medications)
 
         } else {
-          window.location.href = '/login';
+          window.location.href = '/auth';
         }
       } catch (error) {
         console.error('Error:', error);
@@ -158,17 +209,8 @@ function ProfileComponent() {
     };
   
     fetchData();
+    subscribeToMessages();
   }, []);
-  const handleSubmitRequest = async (e) => {
-    e.preventDefault();
-
-
-  }; 
-   
-
-  
-
-
   return (
     <div className='page'>
       <div className="sidenav">
@@ -178,21 +220,25 @@ function ProfileComponent() {
         </div>
         <div className="sidenav-url">
           <div className="url">
-            <a href="#settings" className={showProfile ? 'active' : ''} onClick={() => {handleMenuClick('profile');setEditProfile(false);setProfile(true);setShowMedications(false);setShowRequests(false);}}>
+            <a href="#settings" className={showProfile ? 'active' : ''} onClick={() => {handleMenuClick('profile');setShowMessages(false);setEditProfile(false);setProfile(true);setShowMedications(false);setShowRequests(false);}}>
             Profile</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="#settings" className={EditProfile ? 'active' : ''} onClick={() => {handleMenuClick('editprofile');setEditProfile(true);setProfile(false);setShowMedications(false);setShowRequests(false);}}>
+            <a href="#settings" className={EditProfile ? 'active' : ''} onClick={() => {handleMenuClick('editprofile');setShowMessages(false);setEditProfile(true);setProfile(false);setShowMedications(false);setShowRequests(false);}}>
             Edit Info</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="#settings" className={showMedications ? 'active' : ''} onClick={() => {handleMenuClick('medications');setEditProfile(false);setProfile(false);setmedications(true);setShowRequests(false);}}>Medications</a>
+            <a href="#settings" className={showMedications ? 'active' : ''} onClick={() => {handleMenuClick('medications');setShowMessages(false);setEditProfile(false);setProfile(false);setShowMedications(true);setShowRequests(false);}}>Medications</a>
             <hr align="center" />
           </div>
           <div className="url">
-            <a href="#settings" className={showRequest ? 'active' : ''} onClick={() => {handleMenuClick('requests');setEditProfile(false);setProfile(false);setShowMedications(false);setShowRequests(true);}}>Requests</a>
+            <a href="#settings" className={showRequest ? 'active' : ''} onClick={() => {handleMenuClick('requests');setShowMessages(false);setEditProfile(false);setProfile(false);setShowMedications(false);setShowRequests(true);}}>Requests</a>
+            <hr align="center" />
+          </div>
+          <div className="url">
+            <a href="/live_chat" target="_blank" className={showMessages ? 'active' : ''} onClick={() => {handleMenuClick('messages');setShowMessages(true);setEditProfile(false);setProfile(false);setShowMedications(false);setShowRequests(false);}}>Messages ({unread})</a>
             <hr align="center" />
           </div>
 
@@ -241,13 +287,14 @@ function ProfileComponent() {
             </table>
           </div>
         </div>
+
         {showMedications && (
           <div className="tripshistory">
           <h2>Medications </h2>
           <div className="table-card">
            
             <DataGrid
-              rows={previous}
+              rows={medications}
               disableSelectionOnClick
               columns={medicationstable}
               pageSize={8}
@@ -276,6 +323,15 @@ function ProfileComponent() {
 
           </>
         )}
+                {showMessages  && (
+        <>
+        <div className="coins">
+         <h2> Messages</h2>
+        
+          </div>
+
+          </>
+        )}
         {EditProfile  && (
         <div className="coins">
          <h2>Edit Profile</h2>
@@ -286,45 +342,44 @@ function ProfileComponent() {
                  <label>First Name</label>
                   <input
                     type="text"
-                    id="first_name"
-                    value={info.first_name}
+                    name="first_name"
+                    value={ProfileData.first_name}
                     required
-                    onChange={handleChange}
+                    onChange={(e) => handleInputChange(e, setProfileData)}
                   />
                    <label>Name</label>
                   <input
                     type="text"
-                    id="last_name"
-                    value={info.last_name}
+                    name="last_name"
+                    value={ProfileData.last_name}
                     required
-                    onChange={handleChange}
+                    onChange={(e) => handleInputChange(e, setProfileData)}
                   />
-                  <label>City</label>
+                  <label>Address</label>
                   <input
                     type="text"
-                    id="city"
-                    value={info.city}
-                    placeholder="city"
+                    name="address"
+                    value={ProfileData.address}
+                    placeholder="Address"
                     required
-                    onChange={handleChange}
+                    onChange={(e) => handleInputChange(e, setProfileData)}
                   />
                   <label>Date of Birth</label>
                   <input
                     type="date"
-                    id="dob"
-                    value={info.dob}
+                    name="dob"
+                    value={ProfileData.dob}
                     required
-                    onChange={handleChange}
+                    onChange={(e) => handleInputChange(e, setProfileData)}
                   />
                   <label>Phone Number</label>
                   <input
                     type="text"
-                    value={info.phone_number}
-                    id="phone_number"
+                    name="phone_number"
                     required
-                    onChange={handleChange}
+                    value={ProfileData.phone_number}
+                    onChange={(e) => handleInputChange(e, setProfileData)}
                   />
-                  
                   <button className="requestButton" >Update</button>
               </div>
               </form>
