@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PatientRequests;
+use App\Models\Order;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
@@ -15,7 +15,7 @@ class RequestController extends Controller
 {
 
 
-public function createRequest(Request $request)
+public function create_request(Request $request)
 {
     // Check if the request contains the Authorization header
     if (!$request->hasHeader('Authorization')) {
@@ -40,30 +40,47 @@ public function createRequest(Request $request)
         // Validation
         $validator = Validator::make($request->all(), [
             'service_id' => 'required|integer',
-            'start' => 'required|date',
-            'end' => 'required|date',
-            'urgent' => 'required|string',
-            'image' => 'nullable|image|max:2048', // Assuming images are uploaded
+            'fromDate' => 'required|date',
+            'comments' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['status' => 'fail', 'message' => $validator->errors()], 422);
+            return response()->json(['status' => 'fail', 'message' => $validator->errors()], 200);
         }
 
         // Create a new request record
-        $newRequest = new PatientRequests();
+        $newRequest = new Order();
         $newRequest->user_id = $user_id;
-        $newRequest->service_id = $request->input('service_id');
-        $newRequest->start = $request->input('start');
-        $newRequest->end = $request->input('end');
-        $newRequest->status = 'pending';
-        $newRequest->urgent = $request->input('urgent', false); // Use input with default value
+        $newRequest->service_id = $request->service_id;
         
-
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images'); 
-            $newRequest->image = $imagePath;
+        $newRequest->comments = $request->comments;
+        $newRequest->gender = $request->genderPreference;
+        $newRequest->status = 'pending';
+        $newRequest->urgent = $request->input('urgent', false); 
+        if($request->service_id==1 && isset($request->timeSelect) && $request->timeSelect=='24/24'){
+          $newRequest->start = $request->fromDate." 00:00:00"; 
+          $newRequest->end = $request->toDate." 23:59:59";   
+        }
+        else if ($request->service_id==1){
+          $newRequest->start = $request->fromDate." ".$request->fromTime; 
+          $newRequest->end = $request->toDate." ".$request->toTime;  
+        }
+        else{
+          $newRequest->start = $request->fromDate." ".$request->fromTime; 
+          $newRequest->end = $request->fromDate." ".$request->toTime;
+          $newRequest->urgent = intval($request->urgent);      
+        }
+       
+       if(isset($request->specialty) ){
+          $newRequest->specialty = $request->specialty;
+        }
+        // Use input with default value
+        //var_dump($request->file('filename'));
+        if (isset($request->filename)) {
+         $file = $request->file('filename');
+        $fileName = $file->getClientOriginalName();
+         $file->storeAs('public/',$fileName);
+         $newRequest->image="http://localhost:8000/storage/".$fileName;
         }
 
         // Save the request
@@ -74,13 +91,15 @@ public function createRequest(Request $request)
 
     } catch (TokenExpiredException $e) {
         // Token has expired
-        return response()->json(['status' => 'fail', 'message' => 'Token expired'], 401);
+        return response()->json(['status' => 'fail', 'message' => 'Token expired'], 200);
     } catch (TokenInvalidException $e) {
         // Token is invalid
-        return response()->json(['status' => 'fail', 'message' => 'Token invalid'], 401);
+        return response()->json(['status' => 'fail', 'message' => 'Token invalid'], 200);
     } catch (\Exception $e) {
         // Other exceptions
-        return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 500);
+           
+
+        return response()->json(['status' => 'error', 'message' => $e->getMessage()], 200);
     }
 }
 
