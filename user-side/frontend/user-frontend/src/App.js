@@ -8,6 +8,8 @@ import ChatBox from './components/ChatBox';
 import RequestPhlebotomist from './pages/RequestPhlebotomist';
 import Profile from './pages/Profile';
 import TestAnalysis from './pages/TestAnalysis';
+import DesktopNotification from './components/DesktopNotificationComponent';
+
 function App() {
   return (
     <Router >
@@ -20,6 +22,8 @@ function App() {
         <Route path="/profile" element ={<Profile/>}/>
         <Route path="/live_chat" element={<ChatBox />} />
         <Route path="/result_analysis" element={<TestAnalysis/>}/>
+        <Route path="/notification" element={<DesktopNotification/>}/>
+        
       </Routes>
 
     </Router>
