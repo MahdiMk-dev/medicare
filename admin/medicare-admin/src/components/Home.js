@@ -1,6 +1,5 @@
 import '../styles/home.css'
-import Coins from './Coins';
-import HomeTrips from './HomeTrips';
+
 import Topbar from './Topbar';
 import Sidebar from './Sidebar';
 
