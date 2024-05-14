@@ -140,7 +140,7 @@ public function editRequest(Request $request)
         $id=$request->input('service_id');
 
         // Find the request by ID
-        $requestModel = PatientRequests::findOrFail($id);
+        $requestModel = Order::findOrFail($id);
 
         // Update request attributes
         $requestModel->service_id = $request->input('service_id');
