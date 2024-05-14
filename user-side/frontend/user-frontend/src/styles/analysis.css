@@ -31,6 +31,16 @@
     align-items: center;
     justify-content: center;
 }
+.analysis-btn{
+    width: 75px;
+    height: 25px;
+    border-radius: 5px;
+}
+.analysis-input{
+    width: 200px;
+    height: 25px;
+    border-radius: 5px;
+}
 .response{
     width: 90%;
     border: 2px solid black;
