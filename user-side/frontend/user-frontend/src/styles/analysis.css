@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.analysis-form{
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: space-between;
+    border: solid 2px black;
+    padding: 20px;
+}
+.analysis-form button{
+    height: 20px;
+
+}
+.analysis{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.analysis-form p{
+    text-wrap: wrap;
+}
