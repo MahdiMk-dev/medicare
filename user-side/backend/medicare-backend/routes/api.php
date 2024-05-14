@@ -8,9 +8,13 @@ use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MedicationController;
 use Symfony\Component\Routing\RequestContext;
+use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\AdminUserController;
+
 
 
     Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/adminlogin', [AdminLoginController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('me', [AuthController::class, 'me']);
@@ -26,4 +30,8 @@ use Symfony\Component\Routing\RequestContext;
     Route::post('/add_medication', [MedicationController::class,'addMedication']);
     Route::post('/medication/{id}', [MedicationController::class,'editMedication']);
     Route::get('/get_medication/{id}', [MedicationController::class,'getmedication']);
-    
+    Route::get('/getadminusers', [AdminUserController::class,'getUsers']);
+    Route::delete('/delete_user/{id}', [AdminUserController::class,'delete_user']);
+    Route::get('/get_user/{id}', [AdminUserController::class,'getuser']);
+    Route::post('/create_user', [AdminUserController::class,'create_user']);
+    Route::post('/update_user', [AdminUserController::class,'updateuser']);
