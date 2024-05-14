@@ -9,9 +9,7 @@ import { faUserNurse,faUserDoctor,faVialVirus   } from '@fortawesome/free-solid-
 import { Link } from 'react-router-dom';
 import { FaPhone, FaEnvelope, FaComments, FaFacebook, FaTwitter, FaInstagram, FaChartLine } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-
-
-
+import about from '../images/newbg.png';
 import hero from '../images/heroimg.png';
 
 const HomeComponent = () => {
@@ -64,7 +62,10 @@ const HomeComponent = () => {
       </div>
 
       <div className="main">
-        <h2 id="services-title">Services</h2>
+      <div className="underlined-container">
+      <p  id="services-title" class='title'>Services</p>
+        <div className="underline"></div>
+      </div>
         <div className="services" id="services">
         <div class="services-item">
                 <div class="circle">
@@ -111,8 +112,10 @@ const HomeComponent = () => {
             </div>
             <div id="aboutUs">
         <div className="about">
-        <h2>About Us</h2>
-
+        <div className="underlined-container">
+      <p  id="aboutUs" className='title'>About Us</p>
+        <div className="underline"></div>
+      </div>
         <div class="about-row">
                 <div class="row-item">
                     <h2>About Medicare</h2>
@@ -124,7 +127,7 @@ const HomeComponent = () => {
             </div>
                 <div class="about-row">
                     <div class="row-image">
-                        <img src={hero} alt="2nd part"/>
+                        <img src={about} alt="2nd part"/>
                     </div>
                 <div class="row-item">
                     <h2>Our Vision</h2>
@@ -138,12 +141,12 @@ const HomeComponent = () => {
                     <p>Medicare offers a range of in-home medical services designed to promote wellness, recovery, and comfort. Whether you require the expertise of a registered nurse, a consultation with a qualified physician, or the convenience of blood testing at home, we've got you covered. Our dedicated team of professionals is committed to ensuring that you receive the highest standard of care, tailored to your unique needs.</p>
                 </div>
                 <div class="row-image">
-                    <img src={hero} alt="3rd"/>
+                    <img src={about} alt="3rd"/>
                 </div>
                 </div>
                 <div class="about-row">
                 <div class="row-image">
-                    <img src={hero}/>
+                    <img src={about}/>
                 </div>
                     <div class="row-item">
                     <h2>Our Commitment</h2>
@@ -151,9 +154,10 @@ const HomeComponent = () => {
                 </div>
             </div>        </div>
             </div>
-            <h2>Contact Us</h2>
             <div className="contact-us">
-        
+        <div className='title'>
+        <p>Contact Us</p>
+        </div>
         <div className='contact-column'>
         <div className="contact-methods">.
           <div className="contact-method">
