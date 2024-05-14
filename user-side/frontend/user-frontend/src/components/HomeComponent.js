@@ -26,37 +26,25 @@ const HomeComponent = () => {
         <p>Signup now to benefit from our services!</p>
 
         {userData ? (
-                    <div className='profile'> 
-                    <button>
-                    <Link
-                    to="/#services"
-                    onClick={() => {
-                      localStorage.clear();
-                      window.location.href="/#services";
-                    }}
-                  >
-                    Request
-                  </Link>
-                  </button>
-                  </div>
-                  
-        ) : (
-        <div class='profile'> 
-                <button>
-                <Link
-                to="/auth"
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.href="/auth";
-                }}
-              >
-                Sign Up
-              </Link>
-              </button>
-            </div>
-            
+  <button onClick={() => { 
+    localStorage.clear(); 
+    window.location.href="/#services"; 
+  }}>
+    <Link to="/#services">
+      Request
+    </Link>
+  </button>
+) : (
+  <button onClick={() => { 
+    localStorage.clear(); 
+    window.location.href="/auth"; 
+  }}>
+    <Link to="/auth">
+      Sign Up
+    </Link>
+  </button>
+)}
 
-        )}
         </div>
        
       </div>
@@ -154,10 +142,12 @@ const HomeComponent = () => {
                 </div>
             </div>        </div>
             </div>
+            <div className="underlined-container">
+      <p  id="aboutUs" className='title'>Contact Us</p>
+        <div className="underline"></div>
+      </div>
             <div className="contact-us">
-        <div className='title'>
-        <p>Contact Us</p>
-        </div>
+
         <div className='contact-column'>
         <div className="contact-methods">.
           <div className="contact-method">
@@ -170,7 +160,7 @@ const HomeComponent = () => {
           </div>
           <div className="contact-method">
             <FaComments />
-            <button><a href="https://example.com/live-chat">Live Chat</a></button>
+            <button><a href="/live_chat">Live Chat</a></button>
           </div>
           </div>
         </div>
