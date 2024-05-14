@@ -88,6 +88,7 @@ body {
     text-align: center;
 }
 
+
 .url hr {
     margin-left: 15%;
     width: 80%;
@@ -103,6 +104,7 @@ body {
     display: block;
     font-size: 20px;
     margin: 10px 0;
+    margin-left: 40px;
     padding: 6px 8px;
     text-decoration: none;
 }
@@ -111,14 +113,15 @@ body {
     background-color: #4ca673;
     border-radius: 28px;
     color: white;
-    margin-left: 14%;
+    margin-left: 40px;
     width: 65%;
+
 }
 .url .active{
   background-color: #008037;
   border-radius: 28px;
   color: white;
-  margin-left: 14%;
+  margin-left: 40px;
   width: 65%;
 }
 
