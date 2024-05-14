@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 
 use Illuminate\Support\Facades\Validator;
@@ -64,6 +65,10 @@ class AuthController extends Controller
                     $user->address=$request->address;
                     $user->phone_number=$request->phone_number;
                     try {
+                        if($user->dob>(Carbon::today())){
+                            return response()->json(['status' => 'Error', 'message'=>'dob is not valid']);
+
+                        }
                         $user->save();
                         return response()->json(['status'=>'success','message' => 'User Registered Successfully']);
                     } catch (\Exception $e) {
