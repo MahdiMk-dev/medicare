@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import '../styles/analysis.css';
-
+import Navbar from "./navbar";
 const TestAnalysis = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [responseMessage, setResponseMessage] = useState(""); // State to hold response message
@@ -42,7 +42,9 @@ const TestAnalysis = () => {
     };
 
     return (
+        <div>
         <div className='analysis'>
+        <Navbar/>
             <div className="analysis-form">
                 <div className="title"><p>Get instant analysis for your medical result!</p></div>
                 <div className="analysis-image">
@@ -54,6 +56,7 @@ const TestAnalysis = () => {
                 {responseMessage && <p>{responseMessage}</p>}
                 </div>
             </div>
+        </div>
         </div>
     );
 };
