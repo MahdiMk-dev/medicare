@@ -16,6 +16,8 @@ import {
 import { db } from "../firebase";
 import { useParams } from "react-router-dom";
 import '../styles/chat.css'
+import Topbar from './Topbar';
+import Sidebar from './Sidebar';
 
 const AdminChat = () => {
   const { patientId } = useParams();
@@ -112,7 +114,14 @@ return () => unsubscribe;
 
 }, []);
   return (
-   <main className="chat-box">
+    <div>
+    <Topbar />
+      <div className="admincontainer">
+        <Sidebar />
+    <div className="userList">
+    <div className="productTitleContainer">
+        <h1 className="productTitle">Chats</h1>
+      </div>
       <div className="messages-wrapper">
         {messages?.map((message) => (
           <AdminMessage key={message.id} message={message} />
@@ -121,7 +130,9 @@ return () => unsubscribe;
       {/* when a new message enters the chat, the screen scrolls down to the scroll div */}
       <span ref={scroll}></span>
       <SendAdminMessage scroll={scroll} />
-    </main>
+    </div>
+    </div>
+  </div>
   );
 };
 
