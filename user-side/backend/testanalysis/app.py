@@ -68,7 +68,7 @@ def hello_world():
     text = pytesseract.image_to_string(image)
 
     # Perform AI analysis
-    client = OpenAI(api_key="sk-proj-6j92qSjkNG3KNKOOWBQNT3BlbkFJyO0awHFDUc6Bv8s5D6N6")
+    client = OpenAI(api_key="test")
     chat_completion = client.chat.completions.create(
         messages=[
             {
