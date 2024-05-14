@@ -34,7 +34,7 @@ const TestAnalysis = () => {
             });
 
             // Set the response message in the state
-            setResponseMessage(response.data.message);
+            setResponseMessage(response.data.ai_result);
         } catch (error) {
             console.error("Error uploading image:", error);
             alert("Error uploading image. Please try again later.");
@@ -47,9 +47,9 @@ const TestAnalysis = () => {
                 <div className="title"><p>Get instant analysis for your medical result!</p></div>
                 <div className="analysis-image">
                 <label htmlFor="image">Select File</label>
-                <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
-                <button onClick={uploadImage}>Upload</button>
-                </div>
+                <input className="analysis-input" type="file" id="image" accept="image/*" onChange={handleImageChange} />
+                <button  className='analysis-btn' onClick={uploadImage}>Upload</button>
+                </div>  
                 <div className="response">
                 {responseMessage && <p>{responseMessage}</p>}
                 </div>
