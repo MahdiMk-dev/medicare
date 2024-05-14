@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 const RequestPhlebotomist = () => {
     const [requestData, setRequestData] = useState({
-        service_id:3,
+        service_id:2,
         fromDate: "",
         toDate: "",
         fromTime: "",
@@ -146,7 +146,7 @@ return(
                         <h4>Upload Document</h4>
                     </div>
                     <div class="form-item">
-                        <input  type="file" name="img_file" id="file"  onChange={handleInputChange} />
+                        <input  type="file" name="img_file" id="file"   defaultValue='none' onChange={handleInputChange} />
                         {image && (<img src={image} className="userUpdateImg"/> )}
                     </div>
                 </div>
