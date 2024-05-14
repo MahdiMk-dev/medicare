@@ -49,10 +49,11 @@ const RequestNurse = () => {
     return (
         <div className="request">
             <div className="form-bg">
-                <h2>Request Nurse</h2>
                 <div className="mainn">
-               
+               <div className="separate"></div>
                     <div className="form">
+                    <h2>Request Nurse</h2>
+
                     <form onSubmit={handleSubmit}>
                         <div className='display-error'> 
                             <ul>
