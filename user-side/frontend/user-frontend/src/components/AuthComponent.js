@@ -20,7 +20,10 @@ const AuthPage = () => {
     first_name: '',
     last_name: '',
     email: '',
-    password: ''
+    password: '',
+    dob:'',
+    gender:'',
+    phone_number:''
   });
 
   const handleLoginSubmit = async (e) => {
