@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
+import json
 
 
 UPLOAD_FOLDER = './images'
@@ -22,7 +23,8 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 class ResultAnalysis(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image_url = db.Column(db.String(255))
+    #image_url = db.Column(db.String(255))
+    image_url='text'
     user_id = db.Column(db.Integer)
     result = db.Column(db.Text)
     
@@ -83,7 +85,7 @@ def hello_world():
     db.session.commit()
 
     # Return the AI result
-    return ai_result
+    return json.dumps({"ai_result": ai_result})
 
 if __name__ == '__main__':
     app.run()
