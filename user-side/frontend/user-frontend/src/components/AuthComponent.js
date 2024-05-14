@@ -67,13 +67,12 @@ const AuthPage = () => {
         <div className="form">
       <ul className="tab-group">
         <li className={`tab ${activeTab === 'signup' ? 'active' : ''}`} onClick={() => handleTabClick('signup')}><a href="#signup">Sign Up</a></li>
-        <li className={`tab ${activeTab === 'login' ? 'active' : ''}`} onClick={() => handleTabClick('login')}><a href="#login">Log In</a></li>
+        <li className={`tab ${activeTab === 'login' ? 'active' : ''}`} onClick={() => handleTabClick('login')}><a href="#login">Login</a></li>
       </ul>
           
           <div className="tab-content">
             {/* Signup Form */}
             <div id="signup" style={{ display: activeTab === 'signup' ? 'block' : 'none' }}>   
-              <h1>Sign Up for Free</h1>
               <div className='display-error'> 
               <ul>
             {Object.entries(signupError).map(([key, value]) => (
@@ -122,7 +121,6 @@ const AuthPage = () => {
             </div>
             {/* Login Form */}
             <div id="login" style={{ display: activeTab === 'login' ? 'block' : 'none' }}>   
-              <h1>Welcome Back!</h1>
               <div className='display-error'> {error && <p>{error}</p>}
               </div>
 
@@ -135,7 +133,7 @@ const AuthPage = () => {
                   <input type="password" name="password"  placeholder='Password' required autoComplete="off" onChange={(e) => handleInputChange(e, setLoginData)} />
                 </div>
                 <p className="forgot"><a href="#">Forgot Password?</a></p>
-                <button className="button button-block">Log In</button>
+                <button className="button button-block">Login</button>
               </form>
             </div>
           </div>
