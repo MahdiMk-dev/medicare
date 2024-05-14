@@ -12,6 +12,13 @@
 }
 .hero{
     height: 100vh;
+    display: flex;
+}
+.hero-item{
+  width: 50%;
+  height: 100%;
+  text-align: center;
+
 }
 
 .hero img{
@@ -19,10 +26,11 @@
     width: 100%;
 }
 .hero p{
-    color: #4ca673;
-    margin-left: 900px;
-    font-size: 50px;;
-    transform: translateY(-600px);
+
+    margin-top: 100px;
+    margin-left: 50px;
+    color: black;
+    font-size: 30px;
     overflow: hidden; /* This ensures the text doesn't overflow */
     max-width: 600px;
     margin-bottom: 20px; /* Add margin bottom to create space between paragraphs */
@@ -176,7 +184,7 @@ button a {
     color: white;
 
 }
-h2{
+.page h2{
     text-align: center;
     color: black;
     margin-top: 100px;
