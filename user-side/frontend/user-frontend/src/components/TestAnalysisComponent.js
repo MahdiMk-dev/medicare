@@ -45,11 +45,14 @@ const TestAnalysis = () => {
         <div className='analysis'>
             <div className="analysis-form">
                 <div className="title"><p>Get instant analysis for your medical result!</p></div>
+                <div className="analysis-image">
                 <label htmlFor="image">Select File</label>
                 <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
                 <button onClick={uploadImage}>Upload</button>
+                </div>
+                <div className="response">
                 {responseMessage && <p>{responseMessage}</p>}
-                
+                </div>
             </div>
         </div>
     );
