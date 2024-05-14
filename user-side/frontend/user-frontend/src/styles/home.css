@@ -75,13 +75,12 @@
     z-index:1;
     transform: translateY(50px); 
 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
     
 }
 .rectangle{
     z-index: 2;
-    border-radius: 10px;
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -93,7 +92,29 @@
     width: 250px;
     height: 350px;
     justify-content: space-between;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.rectangle:hover{
+  border: solid 2px #008037;
+}
+.rectangle p{
+  text-align: justify;
+  hyphens: auto;
+
+}
+
+.rectangle button{
+
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #008037;
+  color: white;
+  width: 100%;
+  font-weight: bold;
+  font-size: x-small;
+}
+.rectangle button:hover{
+  transform: scale(1.05);
 }
 .contact-us {
     border-radius: 10px;
@@ -137,7 +158,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 24px;
+    font-size: 50px;
     margin-bottom: 20px;
   }
   
@@ -158,36 +179,38 @@
     font-size: 24px;
     margin-right: 10px;
   }
-.rectangle:hover{
-    background-color: #4ca673;
-    transform: scale(1.05);
-}
-.rectangle p{
-    text-align: justify;
-    hyphens: auto;
 
-}
-
-.rectangle button{
-
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #008037;
-    color: white;
-    width: 100%;
-}
-.rectangle button:hover{
-    transform: scale(1.05);
-}
 button a {
     text-decoration: none;
     color: white;
 
 }
-.page h2{
-    text-align: center;
-    color: black;
-    margin-top: 100px;
+.underlined-container {
+  position: relative;
+}
+
+
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 5px; /* Thickness of the line */
+  background-color: black; /* Color of the line */
+}
+.underline p{
+  text-align: center;
+  color: black;
+  margin-top: 50px;
+  font-size: 60px;
+}
+.title {
+  text-align: center;
+  color: black;
+  margin-top: 50px;
+  font-size: 60px;
+
 }
 .about {
     display: flex;
@@ -223,6 +246,9 @@ button a {
     padding: 10px;
 
 }
+.row-image img{
+  border-radius: 25px;
+}
 .row-item p{
     margin-top: 20px;
     word-spacing: 1px; 
@@ -244,6 +270,9 @@ button a {
   
   .contact-us {
     margin-top: 40px;
+  }
+  .contact-us img{
+    border-radius: 25px;
   }
   
   .contact-us h2 {
@@ -280,7 +309,7 @@ button a {
     margin-bottom: 20px;
   }
 .social-icons{
-height: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
