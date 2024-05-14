@@ -7,6 +7,7 @@ import RequestDoctor from './pages/RequestDoctor';
 import ChatBox from './components/ChatBox';
 import RequestPhlebotomist from './pages/RequestPhlebotomist';
 import Profile from './pages/Profile';
+import TestAnalysis from './pages/TestAnalysis';
 function App() {
   return (
     <Router >
@@ -18,6 +19,7 @@ function App() {
         <Route path="/requestPhlebotomist" element={<RequestPhlebotomist/>}/>
         <Route path="/profile" element ={<Profile/>}/>
         <Route path="/live_chat" element={<ChatBox />} />
+        <Route path="/result_analysis" element={<TestAnalysis/>}/>
       </Routes>
 
     </Router>
