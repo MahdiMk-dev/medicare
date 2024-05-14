@@ -7,27 +7,28 @@ import contact from '../images/contact.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserNurse,faUserDoctor,faVialVirus   } from '@fortawesome/free-solid-svg-icons'; // Import the necessary icons
 import { Link } from 'react-router-dom';
-import { FaPhone, FaEnvelope, FaComments, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaComments, FaFacebook, FaTwitter, FaInstagram, FaChartLine } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 
 
-import hero from '../images/hero.jpg';
-import hero2 from '../images/hero2.jpg';
+import hero from '../images/heroimg.png';
 
 const HomeComponent = () => {
   const userData = useSelector(state => state.user.userData);
   return (
     <div className="bg">
-        <div class="page">
+        <div className="page">
       <div className="hero" id="hero">
-        <img src={newhero} alt="hero" />
+        <div className="hero-item">
+        <img src={hero} alt="hero" />
+        </div>
+        <div className  ='hero-item'>
         <p>Delivering medical care to your doorstep with love and professionalism.</p>
         <p>Signup now to benefit from our services!</p>
-        <br></br>
-        <br></br>
+
         {userData ? (
-                    <div class='profile'> 
+                    <div className='profile'> 
                     <button>
                     <Link
                     to="/#services"
@@ -40,8 +41,8 @@ const HomeComponent = () => {
                   </Link>
                   </button>
                   </div>
+                  
         ) : (
-          <div class='profile'> 
         <div class='profile'> 
                 <button>
                 <Link
@@ -51,13 +52,14 @@ const HomeComponent = () => {
                   window.location.href="/auth";
                 }}
               >
-                Signup
+                Sign Up
               </Link>
               </button>
             </div>
-      </div>
+            
 
         )}
+        </div>
        
       </div>
 
@@ -98,12 +100,12 @@ const HomeComponent = () => {
             </div> 
             <div class="services-item">
                 <div class="circle">
-                <FontAwesomeIcon icon={faUserNurse } size="2x" color="white" />
+                <FontAwesomeIcon icon={FaChartLine } size="2x" color="white" />
                 </div>
                 <div class="rectangle">
                     <p>Attach your medical result below so you can get a brief fast analysis!</p>
                     <p class='disclaimer'>Diclaimer: This analysis is AI generated and is not 100% dependable so don't hesitate to contact one of our Doctors for better medical plan</p>
-                    <button id="analysis" ><a href='/analysis'>Analyze My Result</a></button>
+                    <button id="analysis" ><a href='/result_analysis'>Analyze My Result</a></button>
                 </div>
             </div>       
             </div>
