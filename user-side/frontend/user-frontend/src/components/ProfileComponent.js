@@ -413,7 +413,7 @@ function subscribeToMessages() {
         </div>
       </div>
       <div className="mainprofile">
-        <h2>Personal Info</h2>
+        <p className='title'>Personal Info</p>
         <div className="card">
           <div className="card-body">
             <i className="fa fa-pen fa-xs edit"></i>
@@ -457,7 +457,7 @@ function subscribeToMessages() {
 
         {showMedications && (
           <div className="tripshistory">
-          <h2>Medications </h2>
+          <p className='title'>Medications </p>
           <div className="table-card">
           <div className="createbutton">
             <button className="addMedications" onClick={handleshowform}>Create</button>
