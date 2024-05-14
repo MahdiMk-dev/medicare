@@ -44,7 +44,8 @@ const TestAnalysis = () => {
     return (
         <div className='analysis'>
             <div className="analysis-form">
-                <label htmlFor="image">Upload your test result image</label>
+                <div className="title"><p>Get instant analysis for your medical result!</p></div>
+                <label htmlFor="image">Select File</label>
                 <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
                 <button onClick={uploadImage}>Upload</button>
                 {responseMessage && <p>{responseMessage}</p>}
