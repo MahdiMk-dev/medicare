@@ -1,0 +1,11 @@
+.home{
+    flex: 4;
+}
+
+.homeWidgets{
+    display: inline;
+    margin: 20px;
+}
+.admincontainer{
+        display: flex;
+}
