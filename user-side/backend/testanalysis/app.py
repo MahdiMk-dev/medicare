@@ -57,7 +57,8 @@ def upload_file():
 @app.route('/', methods=['POST'])
 def hello_world():
     # Save the image URL
-    image_url = upload_file()
+    #image_url = upload_file()
+    image_url=request.form.get('image_url')
     user_id = request.form.get('user_id')
     print(user_id)
     # Your existing code for OCR
@@ -72,7 +73,7 @@ def hello_world():
         messages=[
             {
                 "role": "user",
-                "content": "ANALYZE RESULTS BELOW " + text
+                "content": "HI"
             }
         ],
         model="gpt-3.5-turbo",
