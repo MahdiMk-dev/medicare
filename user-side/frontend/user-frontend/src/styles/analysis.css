@@ -3,14 +3,23 @@
     padding: 0;
 }
 .analysis-form{
+    margin-top: 100px;
     width: 500px;
     height: 500px;
-    display: flex;
-    justify-content: space-between;
+
     border: solid 2px black;
     padding: 20px;
     background-color:  #4ca673;
 
+}
+.analysis-image{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+.title p{
+    font-size: 30px;
+    margin-top: -20px;
 }
 .analysis-form button{
     height: 20px;
@@ -21,6 +30,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.response{
+
 }
 .analysis-form p{
     text-wrap: wrap;
