@@ -32,6 +32,11 @@
     justify-content: center;
 }
 .response{
+    width: 90%;
+    border: 2px solid black;
+    margin-top: 50px;
+    margin-left: 25px;
+    height: 200px;
 
 }
 .analysis-form p{
