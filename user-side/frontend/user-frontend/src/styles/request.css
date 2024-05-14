@@ -6,22 +6,23 @@
     align-items: center;
 
 }
+
 .form-bg{
-    background-image: url('../images/newbg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 .request .form{
-    color: #008037;
+    color: black;
+    margin-top: 250px;
     background-color:  #4ca673;
     border: 1px solid #ccc; 
-    border-radius: 4px;
+    border-radius: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     min-height: 80%;
-    height: 90%;
+    height: 700px;
     width: 60%  ;
 }
 .request .form-row{
@@ -31,7 +32,7 @@ width: 100%;
 padding: 10px;
 }
 .form h4{
-    color: #008037;
+    color: black;
 }
 .request .form-item{
     color: black;
@@ -50,10 +51,10 @@ padding: 10px;
     margin-right: 50px;
     background-color: white;
     border: none;
-    color: #008037;
+    color: black;
 }
 .request .form select{
-    color: #008037;
+    color: black;
     text-align: center;
     height:30px;
     border-radius: 3px;
@@ -86,10 +87,9 @@ padding: 10px;
 }
 .request h2{
 
-    color: #008037;
+    color: black;
     text-align: center;
-    padding: 20px;
-    margin-left: 350px;
+    padding: 10px;
     }
     .submit{
         display: flex;
@@ -101,4 +101,6 @@ padding: 10px;
         color:white;
         width: 50%;
         height: 50px;
+        font-size: x-large;
+        font-weight: bold;
     }
