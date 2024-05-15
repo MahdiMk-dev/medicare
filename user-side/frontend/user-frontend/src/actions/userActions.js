@@ -27,7 +27,8 @@ export const loginUser = (loginData) => {
         const userData = { first_name: response.data.user.first_name,
                            last_name: response.data.user.last_name,
                            id: response.data.user.id,
-                           email: response.data.user.email};
+                           email: response.data.user.email,
+                           image_url:response.data.user.image_url};
        
         dispatch(loginSuccess(userData));
         window.location.href='/'
