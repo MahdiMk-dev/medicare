@@ -35,7 +35,7 @@ class AdminPatientController extends Controller
                 // For example, you can use the JWTAuth facade
                 try {
                     $user = JWTAuth::parseToken()->authenticate();
-                    if($user["type"]=='admin'){
+               
                     // Find the user by ID
                     $user = User::find($id);
                     if($user){
@@ -58,11 +58,8 @@ class AdminPatientController extends Controller
                     else{
                      return response()->json(['status'=>'fail', 'message'=>'User Not found']);   
                     }
-                    }
-                    else{
-                       return response()->json(['status'=>'fail', 'message'=>'Cannot Update user']);
-                               
-                    }
+                    
+                    
                  } catch (TokenExpiredException $e) {
                 
                      return response()->json(['status'=>'fail','message' => 'token_expired'], 200);
@@ -112,9 +109,12 @@ class AdminPatientController extends Controller
                     }
                     }
                     else{
-                    $users = User::where('type', '=', 'patient')
-                     ->whereHas('requests') // Users with at least one related request
-                     ->get();
+                    $users = User::whereHas('requests', function ($query) use ($user_id) {
+    $query->whereHas('duty', function ($subquery) use ($user_id) {
+        $subquery->where('staff_id', $user_id);
+    });
+})
+->get();
                     // Find the user by ID
                     $user = User::find($user_id);
                     if($user){
