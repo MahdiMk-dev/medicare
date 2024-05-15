@@ -27,6 +27,7 @@ function AdminLogin() {
         localStorage.setItem('admintoken', response.data.token);
          localStorage.setItem('name', response.data.user.first_name);
          localStorage.setItem('usertype', response.data.user.type);
+         localStorage.setItem('image_url', response.data.user.image_url);
         window.location.href='/admin'
       }
       
