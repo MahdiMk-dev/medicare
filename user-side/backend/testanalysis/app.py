@@ -55,7 +55,7 @@ def upload_file():
                                     filename=filename))
 
 @app.route('/', methods=['POST'])
-def hello_world():
+def result_analysis():
     # Save the image URL
     #image_url = upload_file()
     image_url=request.form.get('image_url')
@@ -68,7 +68,6 @@ def hello_world():
     text = pytesseract.image_to_string(image)
 
     # Perform AI analysis
-    client = OpenAI(api_key="test")
     chat_completion = client.chat.completions.create(
         messages=[
             {
