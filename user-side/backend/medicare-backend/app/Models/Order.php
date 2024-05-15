@@ -18,4 +18,8 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function duty()
+    {
+        return $this->hasOne(Duty::class);
+    }
 }
