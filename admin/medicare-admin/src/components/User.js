@@ -71,8 +71,10 @@ function User() {
     e.preventDefault();
      
         const formData = new FormData();
-        formData.append("filename", file);
+        if(file)
+          formData.append("filename", file);
         formData.append("first_name", data.first_name);
+        formData.append("id",userId);
         formData.append("last_name", data.last_name);
         formData.append("email", data.email);
         formData.append("type", data.type);
