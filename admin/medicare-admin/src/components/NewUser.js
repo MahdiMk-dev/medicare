@@ -3,50 +3,44 @@ import Topbar from './Topbar';
 import Sidebar from './Sidebar';
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import {
+    CalendarToday,
+    LocationSearching,
+    MailOutline,
+    PermIdentity,
+    PhoneAndroid,
+    Publish,
+  } from "@mui/icons-material";
+import axios from 'axios';
 function NewUser() {
   const { userId } = useParams();
   const [stations, setStations] = useState([]);
+
+    const [message, setMessage] = useState();
+   const[image,setImage]=useState();
+    const[file,setFile]=useState();
   const [formData, setFormData] = useState({
-    name: '',
+    first_name: '',
+    last_name:'',
     email: '',
     password: '',
     phone_number: '',
-    status: 'active', // Set default value for status
-    type: 'admin', // Set default value for type
-    station_id: '0' // Set default value for station
+    type: '', // Set default value for type
   });
 
-  useEffect(() => {
-    const fetchStations = async () => {
-      try {
-        const token = localStorage.getItem('admintoken');
-        const response = await fetch('http://localhost:8000/api/admingetstations/', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        const data = await response.json();
-        if (data.status === 'success') {
-          setStations(data.stations);
-        }
-
-        
-        else {
-          alert(data.message);
-          window.location.href = "/admin_login";
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    fetchStations();
-  }, []);
 
   const handleChange = (e) => {
+     const { id, value } = e.target;
+    if(id=="file"){
+     
+    setImage(URL.createObjectURL(e.target.files[0]));
+    setFormData(prevData => ({
+      ...prevData,
+      [id]: e.target.files[0]
+    }));
+    setFile(e.target.files[0]);
+    }
+    else
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -55,27 +49,28 @@ function NewUser() {
 
     try {
       const token = localStorage.getItem('admintoken');
-      const response = await fetch('http://localhost:8000/api/createadminuser', {
-        method: 'POST',
+       const config = {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (data.status === 'success') {
-        alert('created successfully');
-        window.location.href = '/admin';
-      }
-      else if(data.status === 'duplicate') {
-        alert(data.message);
-        window.location.href = "/users";
-      }
-       else {
-        alert(data.message);
-        window.location.href = '/admin_login';
-      }
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+          }
+        };
+        const response = await axios.post('http://localhost:8000/api/create_user',formData ,config)
+
+  
+        const data = response.data;
+  
+        if (data.status === 'success'  ) {
+         window.location.href = '/admin';
+
+        }
+        else if (data.status === 'duplicate'){
+          setMessage(`<div className='display-error'>{data.message</div>`)
+
+        } else {
+          window.location.href = '/admin';
+        }
+
     } catch (error) {
       console.error('Error:', error);
     }
@@ -89,13 +84,25 @@ function NewUser() {
         <div className="newUser">
           <h1 className="newUserTitle">New User</h1>
           <form className="newUserForm" onSubmit={handleSubmit}>
+          <div dangerouslySetInnerHTML={{ __html: message }}></div>
             <div className="userUpdateLeft">
               <div className="userUpdateItem">
-                <label>Name</label>
+                <label>First Name</label>
                 <input
                   type="text"
-                  placeholder="Name"
-                  name="name"
+                  placeholder="First Name"
+                  name="first_name"
+                  className="userUpdateInput"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="userUpdateItem">
+               <label>Last Name</label>
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  name="last_name"
                   className="userUpdateInput"
                   onChange={handleChange}
                   required
@@ -121,7 +128,9 @@ function NewUser() {
                   required
                 >
                   <option value="admin">Admin</option>
-                  <option value="manager">Manager</option>
+                <option value="Nurse">Nurse</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Phlebotomist">Phlebotomist</option>
                 </select>
               </div>
               <div className="userUpdateItem">
@@ -135,35 +144,19 @@ function NewUser() {
                   required
                 />
               </div>
-              <div className="userUpdateItem">
-                <label>Status</label>
-                <select
-                  name="status"
-                  className="userUpdateInput"
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
-              <div className="userUpdateItem">
-                <label>Station</label>
-                <select
-                  name="station_id"
-                  className="userUpdateInput"
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="0">All</option>
-                  {stations.map((station) => (
-                    <option key={station.id} value={station.id}>
-                      {station.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <div className="userUpdateRight">
+                <div className="userUpdateUpload">
+                  <img
+                    className="userUpdateImg"
+                    src={image} alt=""
+                  />
+                  <label htmlFor="file">
+                    <Publish className="userUpdateIcon" />
+                  </label>
+                  <input type="file" id="file" style={{ display: "none" }} onChange={handleChange} />
+                </div>
               <button type="submit" className="newUserButton">Create</button>
+              </div>
             </div>
           </form>
         </div>
