@@ -200,7 +200,7 @@ const[medicationId,setMedicationId]=useState();
   
         if (data.status === 'success'  ) {
           
-          setMessage(`<div className='display-success'>{data.message</div>`)
+          setMessage(`<div className='display-success'>${data.message}</div>`);
           const userData = { first_name:data.user.first_name,
             last_name:data.user.last_name,
             id: data.user.id,
@@ -211,7 +211,7 @@ const[medicationId,setMedicationId]=useState();
 
         }
         else if (data.status === 'fail'){
-          setMessage(`<div className='display-error'>{data.message</div>`)
+          setMessage(`<div className='display-success'>${data.message}</div>`);
 
         } else {
           window.location.href = '/auth';
@@ -488,7 +488,7 @@ function subscribeToMessages() {
                 {showRequest  && (
         <>
         <div className="coins">
-         <h2> Requests</h2>
+        <p className='title'>Requests</p>
          <div className="table-card">
            
             <DataGrid
@@ -514,7 +514,7 @@ function subscribeToMessages() {
         )}
         {EditProfile  && (
         <div className="coins">
-         <h2>Edit Profile</h2>
+        <p className='title'>Edit Info</p>
           <div className="form-card">
              <div dangerouslySetInnerHTML={{ __html: message }}></div>
             <form className="coinsForm" onSubmit={handleeditInfo}>
