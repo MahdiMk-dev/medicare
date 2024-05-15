@@ -37,17 +37,15 @@ class AdminUserController extends Controller
                     $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
         ]);
 
                     if($user["type"]=='admin'){
                       // var_dump($request) ; 
                     
 
-                    $id=$user->id;
+                   
                   
-                    $userdata = User::find(intval($id));
+                    $userdata = User::find(intval($request->id));
 
                     if($userdata){
                     $userdata->first_name = $request->first_name;
@@ -82,7 +80,7 @@ class AdminUserController extends Controller
                         return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
                 } catch (\Exception $e) {
                         // Other exceptions
-                        return response()->json(['status'=>'fail','message' => 'token_exception'], 401);
+                        return response()->json(['status'=>'fail','message' => $e->getMessage()], 401);
                 }
             }
         }
@@ -312,6 +310,58 @@ $mail = new PHPMailer(true);
         } catch (\Exception $e) {
             // Log the error or handle it in some other way
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+    }
+         public function getUserType(Request $request)
+    {
+        // Validate the incoming request data
+             if ($request->header('Authorization')) {
+            // Extract the token from the Authorization header
+            $token = $request->header('Authorization');
+
+            // Check if the token starts with 'Bearer '
+            if (Str::startsWith($token, 'Bearer ')) {
+                // Extract the token without 'Bearer ' prefix
+                $jwtToken = Str::substr($token, 7);
+
+                // Now you have the JWT token
+                // You can validate, decode, or perform any operation you need with the token
+                // For example, you can use the JWTAuth facade
+                try {
+                    $user = JWTAuth::parseToken()->authenticate();
+                    $token = JWTAuth::parseToken();
+                    $user_id = $token->getPayload()->get('sub');
+                    if($user["type"]=='admin'){
+                    $users=user::where('type','=',$request->type)->get();
+                    // Find the user by ID
+                    $user = User::find($user_id);
+                    if($user){
+
+                    // Redirect back to the user profile page or return a response as needed
+                     return response()->json(['status'=>'success', 'user'=>$user,'users'=>$users]);
+                    }
+                    else{
+                     return response()->json(['status'=>'fail', 'message'=>'User Not found']);   
+                    }
+                    }
+                    else{
+                       return response()->json(['status'=>'fail', 'message'=>'Cannot Update user']);
+                               
+                    }
+                 } catch (TokenExpiredException $e) {
+                
+                     return response()->json(['status'=>'fail','message' => 'token_expired'], 200);
+                } catch (TokenInvalidException $e) {
+                        // Token is invalid
+                        return response()->json(['status'=>'fail','message' => 'token_invalid'], 200);
+                } catch (\Exception $e) {
+                        // Other exceptions
+                        return response()->json(['status'=>'fail','message' => 'token_exception'], 200);
+                }
+            }
+        }
+        else {
+            return response()->json(['status'=>'fail','message' => 'no token found'], 401);
         }
     }
 
