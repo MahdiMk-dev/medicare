@@ -3,13 +3,12 @@
     padding: 0;
 }
 .analysis-form{
-    margin-top: 100px;
+    margin-top: 140px;
     width: 500px;
     height: 500px;
-
-    border: solid 2px black;
+    border-radius: 10px;
     padding: 20px;
-    background-color:  #4ca673;
+    background-color:  #B2D9C3;
 
 }
 .analysis-image{
@@ -18,11 +17,18 @@
     margin-top: 50px;
 }
 .title p{
+    text-align: center;
     font-size: 30px;
-    margin-top: -20px;
+    margin-top: 20px;
 }
 .analysis-form button{
-    height: 20px;
+    height: 40px;
+    width: 100px;
+    border:solid 1px #B2D9C3;
+    background-color: #1AB188;
+    color: white;
+    font-weight: bold;
+    
 
 }
 .analysis{
@@ -41,14 +47,18 @@
     height: 25px;
     border-radius: 5px;
 }
+.analysis-form h3{
+    margin-top: 50px; 
+    margin-bottom: 10px;  
+
+}
 .response{
-    width: 90%;
+    width: 100%;
     border: 2px solid black;
-    margin-top: 50px;
-    margin-left: 25px;
     height: 200px;
     background-color: white;
     color: black;
+    border-radius: 5px;
 
 }
 .scrollable-div {
