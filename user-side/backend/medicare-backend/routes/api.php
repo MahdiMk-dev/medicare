@@ -11,6 +11,11 @@ use App\Http\Controllers\AdminLoginController;
 use Symfony\Component\Routing\RequestContext;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminPatientController;
+use App\Events\MedicationReminderEvent;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\AdminScheduleController;
+use App\Http\Controllers\AdminDashboardController;
+
 
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/adminlogin', [AdminLoginController::class, 'login']);
@@ -36,6 +41,24 @@ use App\Http\Controllers\AdminPatientController;
     Route::post('/update_user', [AdminUserController::class,'updateuser']);
     Route::get('/get_patients', [AdminPatientController::class,'getPatients']);
     Route::get('/get_patient/{id}', [AdminPatientController::class,'getpatient']);
+    Route::get('/send-notification', function () {
+        event(new MedicationReminderEvent());
+        return "Notification sent!";});
+    Route::post('/send-notification', [NotificationController::class,'sendNotification']);
+    Route::get('/dueMedications', [MedicationController::class, 'getDueMedications']);
+
+    Route::post('/get_user_type', [AdminUserController::class,'getUserType']);
+
+    Route::get('/get_requests', [RequestController::class,'get_requests']);
+    Route::get('/get_request/{id}', [RequestController::class,'get_request']);
+    Route::get('/get_duties', [DutyController::class,'get_duties']);
+    Route::get('/get_duty/{id}', [DutyController::class,'get_duty']);
+    Route::get('/cancel_request/{id}', [RequestController::class,'cancel_request']);
+    Route::get('/complete_request/{id}', [RequestController::class,'complete_request']);
+    Route::post('/get_staff', [AdminUserController::class,'getUserType']);
+    Route::get('/get_schedule', [AdminScheduleController::class,'getSchedule']);
+    Route::post('/add_schedule', [AdminScheduleController::class,'addSchedule']);
+    Route::get('/get_dashboard', [AdminDashboardController::class,'getDashboard']);
     
     
     
