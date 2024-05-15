@@ -26,8 +26,8 @@ const HomeComponent = () => {
         <img src={hero} alt="hero" />
         </div>
         <div className  ='hero-item'>
+        <h1>Welcome to Medicare</h1>
         <p>Delivering medical care to your doorstep with love and professionalism.</p>
-        <p>Signup now to benefit from our services!</p>
        
 
         {userData ? (
@@ -54,7 +54,7 @@ const HomeComponent = () => {
 
       <div className="main">
       <div className="underlined-container">
-      <p  id="services-title" class='title'>Services</p>
+      <p  id="services-homeTitle" class='homeTitle'>Services</p>
         <div className="underline"></div>
       </div>
         <div className="services" id="services">
@@ -104,7 +104,7 @@ const HomeComponent = () => {
             <div id="aboutUs">
         <div className="about">
         <div className="underlined-container">
-      <p  id="aboutUs" className='title'>About Us</p>
+      <p  id="aboutUs" className='homeTitle'>About Us</p>
         <div className="underline"></div>
       </div>
         <div class="about-row">
@@ -146,13 +146,16 @@ const HomeComponent = () => {
             </div>        </div>
             </div>
             <div className="underlined-container">
-      <p  id="aboutUs" className='title'>Contact Us</p>
+      <p  id="aboutUs" className='homeTitle'>Contact Us</p>
         <div className="underline"></div>
       </div>
             <div className="contact-us">
 
         <div className='contact-column'>
-        <div className="contact-methods">.
+        <div className="contact-methods">
+          <h1 id='contact'>Contact Medicare</h1>
+          <p>Need help beyond whats on Medicare?</p>
+          <p>You can talk or live chat with a real person, 24 hours a day, 7 days a week (except some federal holidays.)</p>
           <div className="contact-method">
             <FaPhone />
             <p>00961 03 12 34 56</p>
