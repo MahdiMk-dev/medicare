@@ -15,7 +15,7 @@ const SendMessage = () => {
     await addDoc(collection(db, "messages"), {
       text: message,
       name: userData.first_name+' '+userData.last_name,
-     // avatar: photoURL,
+      avatar: userData.image_url,
       createdAt: serverTimestamp(),
       SenderId:userData.id,
       ReceiverId:2,
