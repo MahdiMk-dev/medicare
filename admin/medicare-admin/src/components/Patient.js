@@ -14,6 +14,11 @@ import {
     PermIdentity,
     PhoneAndroid,
     Publish,
+    Email,
+    Address,
+    Home,
+    Man3,
+    CalendarTodayIcon
   } from "@mui/icons-material";
 
 import '../styles/user.css'
@@ -64,7 +69,7 @@ const[medicationId,setMedicationId]=useState();
       const response = await axios.post('http://localhost:8000/api/add_medication',medicationData, config)
             if(response.data.status=='success'){
                 setShowMedForm(false);
-              window.location.href = '/profile';
+              window.location.href = '/patients';
             }
             
             else{
@@ -77,7 +82,7 @@ const[medicationId,setMedicationId]=useState();
            const response = await axios.post(`http://localhost:8000/api/medication/${medicationId}`,medicationData, config)
             if(response.data.status=='success'){
               setMedicationId();
-              window.location.href = '/profile';
+              window.location.href = '/patients';
             }
             
             else{
@@ -124,10 +129,10 @@ const[medicationId,setMedicationId]=useState();
 
       if (data.status === 'success' ) {
         console.log('medication deleted successfully:', data);
-        window.location.href="/profile"
+        window.location.href="/patients"
         // Optionally, update state or perform any other actions after deletion
       } else {
-        window.location.href="/profile"
+        window.location.href="/patients"
         console.error('Failed to delete user:', data);
         // Handle error response
       }
@@ -310,7 +315,7 @@ const[medicationId,setMedicationId]=useState();
           <div className="userShowBottom">
             <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
-              <PermIdentity className="userShowIcon" />
+              <Email className="userShowIcon" />
               <span className="userShowInfoTitle">{info.email}</span>
             </div>
             <span className="userShowTitle">Contact Details</span>
@@ -320,17 +325,17 @@ const[medicationId,setMedicationId]=useState();
               
             </div>
             <div className="userShowInfo">
-              <PhoneAndroid className="userShowIcon" />
+              <Home className="userShowIcon" />
               <span className="userShowInfoTitle">{info.address}</span>
               
             </div>
             <div className="userShowInfo">
-              <PhoneAndroid className="userShowIcon" />
+              <Man3 className="userShowIcon" />
               <span className="userShowInfoTitle">{info.gender}</span>
               
             </div>
             <div className="userShowInfo">
-              <PhoneAndroid className="userShowIcon" />
+              <CalendarToday className="userShowIcon" />
               <span className="userShowInfoTitle">{info.dob}</span>
               
             </div>
@@ -344,7 +349,7 @@ const[medicationId,setMedicationId]=useState();
       </div>
        <div className="createbutton">
             
-            <Link to="/newmedication/" >
+            <Link to={`/newmedication/${patientId}`}>
               <button className="userListEdit">Create</button>
             </Link>
       
