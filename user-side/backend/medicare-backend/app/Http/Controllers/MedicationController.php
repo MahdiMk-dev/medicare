@@ -40,6 +40,9 @@ class MedicationController extends Controller
             'comments' => 'nullable|string',
         ]);
         $medication=new Medication();
+        if(isset($request->user_id))
+        $medication-> user_id=$request->user_id;
+        else   
         $medication-> user_id=$user_id;
         $medication-> name=$validatedData['name'];
         $medication-> dose=$validatedData['dose'];
