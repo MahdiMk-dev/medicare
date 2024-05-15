@@ -133,6 +133,7 @@ class UserController extends Controller
          return response()->json([
              'status'=>'success',
              'message' => 'updated successfully',
+             'user'=>$user
          ], 201);
      }catch (TokenExpiredException $e) {
                  
