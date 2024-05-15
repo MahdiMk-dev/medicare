@@ -12,14 +12,16 @@ import {
     Publish,
   } from "@mui/icons-material";
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 function NewMedication() {
-
+    const { patientId } = useParams();
   const [stations, setStations] = useState([]);
 
     const [message, setMessage] = useState();
    const[image,setImage]=useState();
     const[file,setFile]=useState();
   const [formData, setFormData] = useState({
+    user_id:patientId,
     name: '',
     dose:'',
     instructions: '',
