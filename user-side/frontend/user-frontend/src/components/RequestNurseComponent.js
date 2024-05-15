@@ -66,7 +66,7 @@ const RequestNurse = () => {
                         </div>
                         <div className="form-row">
                             <div className="form-item">
-                                <h4>Date</h4>
+                                <h3>Date</h3>
                             </div>
                             <div className="form-item">
                                 <label>From</label>
@@ -82,7 +82,7 @@ const RequestNurse = () => {
                         </div>
                         <div className="form-row">
                             <div className="form-item">
-                                <h4>Time</h4>
+                                <h3>Time</h3>
                             </div>
                             <div className="form-item">
                                 <select required id="timeSelect" name="timeSelect" value={requestData.timeSelect} onChange={handleInputChange}>
@@ -113,7 +113,7 @@ const RequestNurse = () => {
                         )}
                         <div className="form-row">
                             <div className="form-item">
-                                <h4>Preferred Gender</h4>
+                                <h3>Preferred Gender</h3>
                             </div>
                             <div className="form-item">
                                 <select required id="genderSelect" name="genderPreference" value={requestData.genderPreference} onChange={handleInputChange}>
@@ -123,9 +123,11 @@ const RequestNurse = () => {
                                 </select>
                             </div>
                         </div>
+                        <div className="form-row">
                         <h3>Comments</h3>
                         <div className="input-comments">
                             <textarea required className="comments" name="comments" value={requestData.comments} onChange={handleInputChange}></textarea>
+                        </div>
                         </div>
                         <div className="submit">
                             <button >Request</button>
