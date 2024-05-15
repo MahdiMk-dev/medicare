@@ -51,6 +51,12 @@
     color: black;
 
 }
+.scrollable-div {
+
+    overflow-y: auto; /* This makes it vertically scrollable */
+    border: 1px solid #ccc; /* Optional: Add a border for clarity */
+    padding: 10px; /* Optional: Add padding for content */
+  }
 .analysis-form p{
     text-wrap: wrap;
 }
