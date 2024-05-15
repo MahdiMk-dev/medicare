@@ -19,14 +19,14 @@ public function create_request(Request $request)
 {
     // Check if the request contains the Authorization header
     if (!$request->hasHeader('Authorization')) {
-        return response()->json(['status' => 'fail', 'message' => 'No token found'], 401);
+        return response()->json(['status' => 'fail', 'message' => 'No token found'], 200);
     }
 
     $token = $request->header('Authorization');
 
     // Check if the token starts with 'Bearer '
     if (!Str::startsWith($token, 'Bearer ')) {
-        return response()->json(['status' => 'fail', 'message' => 'Invalid token format'], 401);
+        return response()->json(['status' => 'fail', 'message' => 'Invalid token format'], 200);
     }
 
     // Extract the token without the 'Bearer ' prefix
@@ -107,14 +107,14 @@ public function editRequest(Request $request)
 {
     // Check if the request contains the Authorization header
     if (!$request->hasHeader('Authorization')) {
-        return response()->json(['status' => 'fail', 'message' => 'No token found'], 401);
+        return response()->json(['status' => 'fail', 'message' => 'No token found'], 200);
     }
 
     $token = $request->header('Authorization');
 
     // Check if the token starts with 'Bearer '
     if (!Str::startsWith($token, 'Bearer ')) {
-        return response()->json(['status' => 'fail', 'message' => 'Invalid token format'], 401);
+        return response()->json(['status' => 'fail', 'message' => 'Invalid token format'], 200);
     }
 
     // Extract the token without the 'Bearer ' prefix
@@ -135,7 +135,7 @@ public function editRequest(Request $request)
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['status' => 'fail', 'message' => $validator->errors()], 422);
+            return response()->json(['status' => 'fail', 'message' => $validator->errors()], 200);
         }
         $id=$request->input('service_id');
 
@@ -162,14 +162,177 @@ public function editRequest(Request $request)
 
     } catch (TokenExpiredException $e) {
         // Token has expired
-        return response()->json(['status' => 'fail', 'message' => 'Token expired'], 401);
+        return response()->json(['status' => 'fail', 'message' => 'Token expired'], 200);
     } catch (TokenInvalidException $e) {
         // Token is invalid
-        return response()->json(['status' => 'fail', 'message' => 'Token invalid'], 401);
+        return response()->json(['status' => 'fail', 'message' => 'Token invalid'], 200);
     } catch (\Exception $e) {
         // Other exceptions
-        return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 500);
+        return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 200);
     }
 }
+public function get_requests(Request $request)
+{
+    // Check if the request contains the Authorization header
+    if (!$request->hasHeader('Authorization')) {
+        return response()->json(['status' => 'fail', 'message' => 'No token found'], 200);
+    }
 
+    $token = $request->header('Authorization');
+
+    // Check if the token starts with 'Bearer '
+    if (!Str::startsWith($token, 'Bearer ')) {
+        return response()->json(['status' => 'fail', 'message' => 'Invalid token format'], 200);
+    }
+
+    // Extract the token without the 'Bearer ' prefix
+    $jwtToken = Str::substr($token, 7);
+
+    try {
+        // Validate and decode the token
+        $token = JWTAuth::parseToken();
+        $user_id = $token->getPayload()->get('sub');
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if($user["type"]=='admin'){
+                    $orders=Order::doesntHave('duty')->with(['service'])->get();
+                    return response()->json(['status'=>'success', 'user'=>$user,'orders'=>$orders]);
+                   
+        }
+        else{
+            $orders=Order::doesntHave('duty')->with(['service'])->where('user_id',$user_id)->get();
+            return response()->json(['status'=>'success', 'user'=>$user,'orders'=>$orders]);
+        }
+
+    } catch (TokenExpiredException $e) {
+        // Token has expired
+        return response()->json(['status' => 'fail', 'message' => 'Token expired'], 200);
+    } catch (TokenInvalidException $e) {
+        // Token is invalid
+        return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 200);
+    } catch (\Exception $e) {
+        // Other exceptions
+        return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 200);
+    }
+}
+public function get_request(Request $request,$id)
+{
+    // Check if the request contains the Authorization header
+    if (!$request->hasHeader('Authorization')) {
+        return response()->json(['status' => 'fail', 'message' => 'No token found'], 200);
+    }
+
+    $token = $request->header('Authorization');
+
+    // Check if the token starts with 'Bearer '
+    if (!Str::startsWith($token, 'Bearer ')) {
+        return response()->json(['status' => 'fail', 'message' => 'Invalid token format'], 200);
+    }
+
+    // Extract the token without the 'Bearer ' prefix
+    $jwtToken = Str::substr($token, 7);
+
+    try {
+        // Validate and decode the token
+        $token = JWTAuth::parseToken();
+        $user_id = $token->getPayload()->get('sub');
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if($user["type"]=='admin'){
+                    $orders=Order::doesntHave('duty')->with(['service'])->where('id',$id)->get();
+                    return response()->json(['status'=>'success', 'user'=>$user,'orders'=>$orders]);
+                   
+        }
+        else{
+            $orders=Order::doesntHave('duty')->with(['service'])->where('user_id',$user_id)->where('id',$id)->get();
+            return response()->json(['status'=>'success', 'user'=>$user,'orders'=>$orders]);
+        }
+
+    } catch (TokenExpiredException $e) {
+        // Token has expired
+        return response()->json(['status' => 'fail', 'message' => 'Token expired'], 200);
+    } catch (TokenInvalidException $e) {
+        // Token is invalid
+        return response()->json(['status' => 'fail', 'message' => 'Token invalid'], 200);
+    } catch (\Exception $e) {
+        // Other exceptions
+        return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 200);
+    }
+}
+public function cancel_request(Request $request,$id)
+{
+    // Check if the request contains the Authorization header
+    if (!$request->hasHeader('Authorization')) {
+        return response()->json(['status' => 'fail', 'message' => 'No token found'], 200);
+    }
+
+    $token = $request->header('Authorization');
+
+    // Check if the token starts with 'Bearer '
+    if (!Str::startsWith($token, 'Bearer ')) {
+        return response()->json(['status' => 'fail', 'message' => 'Invalid token format'], 200);
+    }
+
+    // Extract the token without the 'Bearer ' prefix
+    $jwtToken = Str::substr($token, 7);
+
+    try {
+        // Validate and decode the token
+        $token = JWTAuth::parseToken();
+        $user_id = $token->getPayload()->get('sub');
+        $user = JWTAuth::parseToken()->authenticate();
+
+       $order=Order::findOrFail($id);
+       $order->status="cancelled";
+       $order->save();
+       return response()->json(['status' => 'success', 'message' => 'Cancelled Succefuly'], 200);
+    } catch (TokenExpiredException $e) {
+        // Token has expired
+        return response()->json(['status' => 'fail', 'message' => 'Token expired'], 200);
+    } catch (TokenInvalidException $e) {
+        // Token is invalid
+        return response()->json(['status' => 'fail', 'message' => 'Token invalid'], 200);
+    } catch (\Exception $e) {
+        // Other exceptions
+        return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 200);
+    }
+}
+public function complete_request(Request $request,$id)
+{
+    // Check if the request contains the Authorization header
+    if (!$request->hasHeader('Authorization')) {
+        return response()->json(['status' => 'fail', 'message' => 'No token found'], 200);
+    }
+
+    $token = $request->header('Authorization');
+
+    // Check if the token starts with 'Bearer '
+    if (!Str::startsWith($token, 'Bearer ')) {
+        return response()->json(['status' => 'fail', 'message' => 'Invalid token format'], 200);
+    }
+
+    // Extract the token without the 'Bearer ' prefix
+    $jwtToken = Str::substr($token, 7);
+
+    try {
+        // Validate and decode the token
+        $token = JWTAuth::parseToken();
+        $user_id = $token->getPayload()->get('sub');
+        $user = JWTAuth::parseToken()->authenticate();
+
+       $order=Order::findOrFail($id);
+       $order->status="completed";
+       $order->save();
+       return response()->json(['status' => 'success', 'message' => 'Cancelled Succefuly'], 200);
+    } catch (TokenExpiredException $e) {
+        // Token has expired
+        return response()->json(['status' => 'fail', 'message' => 'Token expired'], 200);
+    } catch (TokenInvalidException $e) {
+        // Token is invalid
+        return response()->json(['status' => 'fail', 'message' => 'Token invalid'], 200);
+    } catch (\Exception $e) {
+        // Other exceptions
+        return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 200);
+    }
+}
 }
