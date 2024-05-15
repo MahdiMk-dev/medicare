@@ -34,22 +34,33 @@ class AdminUserController extends Controller
                 try {
 
                     $user = JWTAuth::parseToken()->authenticate();
+                    $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+        ]);
 
                     if($user["type"]=='admin'){
                       // var_dump($request) ; 
                     
 
-                    $id=$request->id;
+                    $id=$user->id;
                   
                     $userdata = User::find(intval($id));
 
                     if($userdata){
-                    $userdata->name = $request->name;
+                    $userdata->first_name = $request->first_name;
                     $userdata->email = $request->email;
                     $userdata->type = $request->type;
                     $userdata->phone_number = $request->phone_number;
-                    $userdata->status = $request->status;
-                    $userdata->station_id = intval($request->station_id);
+                    $userdata->last_name = $request->last_name;
+                    if($request->hasfile('filename')){
+                     $file = $request->file('filename');
+                     $fileName = $file->getClientOriginalName();
+                     $file->storeAs('public/',$fileName);
+                     $userdata->image_url="http://localhost:8000/storage/".$fileName;
+                     }
 
                    $userdata->save();
 
@@ -111,27 +122,25 @@ class AdminUserController extends Controller
                         // Get a substring of the shuffled characters with the desired length
                         $password = substr($shuffledChars, 0, 8);
                     $newuser = new User();
-                    $newuser->name = $request->name;
+                    $newuser->first_name = $request->first_name;
                     $newuser->email = $request->email;
                      $newuser->phone_number = $request->phone_number;
-                      $newuser->status = $request->status;
-                      $newuser->image_url='';
+                      $newuser->last_name = $request->last_name;
                        $newuser->type = $request->type;
-                        $newuser->station_id = intval($request->station_id);
                         $newuser->password =  Hash::make($password);
-                    // Set other attributes as needed
-                      //  var_dump($newuser);
-                    // Save the user to the database
-                 
-
-    //
+                        if($request->hasfile('filename')){
+                     $file = $request->file('filename');
+                     $fileName = $file->getClientOriginalName();
+                     $file->storeAs('public/',$fileName);
+                     $newuser->image_url="http://localhost:8000/storage/".$fileName;
+                     }
 
     $userName=$newuser->email;
 
     $reveiverEmailAddress = $newuser->email;
-
+try {
 $mail = new PHPMailer(true);
-try {        $newuser->save();
+        $newuser->save();
    
             /* Email SMTP Settings */
             $mail->SMTPDebug = 0;
@@ -154,7 +163,7 @@ try {        $newuser->save();
         $content .= "<p><strong>Username:</strong> ".$userName."</p>";
         $content .= "<p><strong>Password:</strong> ".$password."</p>";
             $mail->Body    = $content;
-   
+
             if( !$mail->send() ) {
                 return response()->json(['status'=>'fail', 'message'=>'failed to create user']);
             }
@@ -179,7 +188,7 @@ try {        $newuser->save();
                         return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
                 } catch (\Exception $e) {
                         // Other exceptions
-                        return response()->json(['status'=>'fail','message' => 'token_exception'], 401);
+                        return response()->json(['status'=>'fail','message' => $e->getMessage()], 401);
                 }
             }
         }
@@ -275,13 +284,13 @@ try {        $newuser->save();
                     }
                  } catch (TokenExpiredException $e) {
                 
-                     return response()->json(['status'=>'fail','message' => 'token_expired'], 401);
+                     return response()->json(['status'=>'fail','message' => 'token_expired'], 200);
                 } catch (TokenInvalidException $e) {
                         // Token is invalid
-                        return response()->json(['status'=>'fail','message' => 'token_invalid'], 401);
+                        return response()->json(['status'=>'fail','message' => 'token_invalid'], 200);
                 } catch (\Exception $e) {
                         // Other exceptions
-                        return response()->json(['status'=>'fail','message' => 'token_exception'], 401);
+                        return response()->json(['status'=>'fail','message' => 'token_exception'], 200);
                 }
             }
         }
