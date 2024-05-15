@@ -37,12 +37,11 @@
 
 }
 .hero button{
-    margin-left: 950px;
     width: 300px;
     height: 100px;
     background-color: #4ca673;
     color: black;
-    transform: translateY(-550px);
+    margin-top: 50px;
     border-radius: 25px;
     font-size: xx-large;
 
