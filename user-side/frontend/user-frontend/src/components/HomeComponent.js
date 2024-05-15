@@ -28,10 +28,10 @@ const HomeComponent = () => {
         <div className  ='hero-item'>
         <p>Delivering medical care to your doorstep with love and professionalism.</p>
         <p>Signup now to benefit from our services!</p>
+       
 
         {userData ? (
-  <button onClick={() => { 
-    localStorage.clear(); 
+  <button onClick={() => {  
     window.location.href="/#services"; 
   }}>
     <Link to="/#services">
@@ -40,7 +40,6 @@ const HomeComponent = () => {
   </button>
 ) : (
   <button onClick={() => { 
-    localStorage.clear(); 
     window.location.href="/auth"; 
   }}>
     <Link to="/auth">
