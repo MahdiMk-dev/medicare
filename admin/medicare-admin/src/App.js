@@ -14,6 +14,11 @@ import PatientList from "./components/PatientList";
 import Patient from "./components/Patient";
 import Medications from "./components/Medications";
 import NewMedication from "./components/NewMedication";
+import RequestList from "./components/RequestList";
+import RequestView from "./components/RequestView";
+import RequestAssign from "./components/RequestAssign";
+import DutyList from "./components/DutyList";
+import StaffCalendar from "./components/StaffCalendar";
 
 function App() {
   return (
@@ -30,8 +35,12 @@ function App() {
           <Route path="/patients" element={<PatientList />} />
           <Route path="/patient/:patientId" element={<Patient />} />
           <Route path="/medication/:medicationId" element={<Medications />} />
-          <Route path="/newmedication" element={<NewMedication />} />
-  
+          <Route path="/newmedication/:patientId" element={<NewMedication />} />
+          <Route path="/requests" element={<RequestList />} />
+          <Route path="/request_view/:requestId" element={<RequestView />} />
+          <Route path="/request_assign/:requestId" element={<RequestAssign />} />
+          <Route path="/duties/" element={<DutyList />} />
+          <Route path="/schedules/" element={<StaffCalendar />} />
         </Routes>
     </Router>
   );
