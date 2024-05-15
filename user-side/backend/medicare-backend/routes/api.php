@@ -7,11 +7,10 @@ use App\Http\Controllers\DutyController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MedicationController;
-use Symfony\Component\Routing\RequestContext;
 use App\Http\Controllers\AdminLoginController;
+use Symfony\Component\Routing\RequestContext;
 use App\Http\Controllers\AdminUserController;
-
-
+use App\Http\Controllers\AdminPatientController;
 
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/adminlogin', [AdminLoginController::class, 'login']);
@@ -35,3 +34,10 @@ use App\Http\Controllers\AdminUserController;
     Route::get('/get_user/{id}', [AdminUserController::class,'getuser']);
     Route::post('/create_user', [AdminUserController::class,'create_user']);
     Route::post('/update_user', [AdminUserController::class,'updateuser']);
+    Route::get('/get_patients', [AdminPatientController::class,'getPatients']);
+    Route::get('/get_patient/{id}', [AdminPatientController::class,'getpatient']);
+    
+    
+    
+    
+    
