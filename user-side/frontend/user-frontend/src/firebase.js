@@ -7,6 +7,7 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
+  apiKey: "AIzaSyAVFaFhfJDX6xB8wy6hOpy8w1OgvQymFoY",
   authDomain: "medicare-55710.firebaseapp.com",
   projectId: "medicare-55710",
   storageBucket: "medicare-55710.appspot.com",
