@@ -197,6 +197,13 @@ const[medicationId,setMedicationId]=useState();
   
         if (data.status === 'success'  ) {
           setMessage(`<div className='display-success'>{data.message</div>`)
+          const userData = { first_name:data.user.first_name,
+            last_name:data.user.last_name,
+            id: data.user.id,
+            email: data.user.email,
+          image_url:data.user.image_url};
+
+        dispatch(loginSuccess(userData));
 
         }
         else if (data.status === 'fail'){
