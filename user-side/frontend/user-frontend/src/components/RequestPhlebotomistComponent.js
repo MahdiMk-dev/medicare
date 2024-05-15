@@ -146,7 +146,7 @@ return(
                         <h4>Upload Document</h4>
                     </div>
                     <div class="form-item">
-                        <input  type="file" name="img_file" id="file"   defaultValue='none' onChange={handleInputChange} />
+                        <input  type="file" name="img_file" id="file"   onChange={handleInputChange} />
                         {image && (<img src={image} className="userUpdateImg"/> )}
                     </div>
                 </div>
