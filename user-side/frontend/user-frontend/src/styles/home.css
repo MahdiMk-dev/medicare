@@ -133,7 +133,7 @@
     width: 50%;
 }
 .contact-column img {
-    width: 80%;
+    width: 50%;
     height: 80%;
 }
 .contact-us button{
@@ -195,10 +195,10 @@ button a {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 20%; /* Full width */
+  width: 30%; /* Full width */
   height: 5px; /* Thickness of the line */
   background-color: black; /* Color of the line */
-  transform: translateX(525px);
+  transform: translateX(465px);
 }
 .underline p{
   text-align: center;
@@ -335,4 +335,47 @@ button a {
     color: red;
   }
 
+/* home.css */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column; /* Stack items vertically on small screens */
+    height: auto; /* Allow height to adjust based on content */
+  }
+
+  .hero-item {
+    width: 100%; /* Take up full width on small screens */
+    text-align: center;
+    margin-top: 20px; /* Add space between items */
+  }
+
+  .hero img {
+    height: auto; /* Allow image height to adjust */
+  }
+
+  .hero p {
+    margin-left: 0; /* Center text */
+    font-size: 20px; /* Decrease font size for smaller screens */
+    margin-bottom: 10px; /* Adjust spacing */
+  }
+
+  .hero button {
+    margin-left: auto; /* Align button to right */
+    margin-right: auto; /* Align button to left */
+  }
+
+  .services {
+    flex-direction: column; /* Stack services vertically on small screens */
+    height: auto; /* Allow height to adjust */
+  }
+
+  .services-item {
+    width: 100%; /* Take up full width on small screens */
+    margin-bottom: 20px; /* Add space between items */
+  }
+
+  .rectangle {
+    width: 80%; /* Adjust rectangle width */
+    margin: 0 auto; /* Center rectangle */
+  }
+}
 
