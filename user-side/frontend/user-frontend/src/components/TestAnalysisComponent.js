@@ -23,18 +23,18 @@ const TestAnalysis = () => {
 
         const formData = new FormData();
         formData.append("image", selectedImage);
-        formData.append("image_url", "test");
         formData.append("user_id", 3);
         try {
-            const response = await axios.post("http://localhost:5000/", formData, {
+            const response = await axios.post("http://localhost:5000/upload", formData, {
                 withCredentials: true,
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    
                 },
             });
 
             // Set the response message in the state
-            setResponseMessage(response.data.ai_result);
+            setResponseMessage(response.data.result);
         } catch (error) {
             console.error("Error uploading image:", error);
             alert("Error uploading image. Please try again later.");
@@ -52,7 +52,7 @@ const TestAnalysis = () => {
                 <input className="analysis-input" type="file" id="image" accept="image/*" onChange={handleImageChange} />
                 <button  className='analysis-btn' onClick={uploadImage}>Upload</button>
                 </div>  
-                <div className="response">
+                <div className="response scrollable-div">
                 {responseMessage && <p>{responseMessage}</p>}
                 </div>
             </div>
