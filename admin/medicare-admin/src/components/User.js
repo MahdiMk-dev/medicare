@@ -14,15 +14,19 @@ import { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Topbar from './Topbar';
 import Sidebar from './Sidebar';
+import axios from 'axios';
 function User() {
+
+    const[image,setImage]=useState();
+    const[file,setFile]=useState();
     const [data, setData] = useState({});
+    const [message, setMessage] = useState();
     const [sidata, setsideData] = useState({});
     const { userId } = useParams(); // Get the userId from URL params
-    
+  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        console.log('hi')
         const token = localStorage.getItem('admintoken');
         const response = await fetch('http://localhost:8000/api/get_user/'+userId, {
           method: 'GET',
@@ -32,10 +36,10 @@ function User() {
           }
         });
         const userData = await response.json();
-        console.log(userData)
         if(userData.status=='success'){
           setData(userData.user);
           setsideData(userData.user)
+          setImage(userData.user.image_url)
       }
       else{
         alert(data.message)
@@ -50,45 +54,56 @@ function User() {
   }, []);
       const handleChange = (e) => {
         const { id, value } = e.target;
+    if(id=="file"){
+      console.log('hi')
+    setImage(URL.createObjectURL(e.target.files[0]));
+    setData(prevData => ({
+      ...prevData,
+      [id]: e.target.files[0]
+    }));
+    setFile(e.target.files[0]);
+    }
+    else
+        
         setData({ ...data, [id]: value });
     };
  const handleSubmit = async (e) => {
     e.preventDefault();
-    const name = document.getElementById('email').value;
-    const email = document.getElementById('email').value;
-    const type = document.getElementById('type').value;
-    const phone_number = document.getElementById('phone_number').value;
-    const status = document.getElementById('status').value; 
-    const station = document.getElementById('station').value;
-    const id=userId
-    const formData = {
-            id: userId,
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-            type: data.type,
-            phone_number: data.phone_number,
-        };
+     
+        const formData = new FormData();
+        formData.append("filename", file);
+        formData.append("first_name", data.first_name);
+        formData.append("last_name", data.last_name);
+        formData.append("email", data.email);
+        formData.append("type", data.type);
+        formData.append("phone_number", data.phone_number);
+
     try {
-      const token = localStorage.getItem('admintoken');
-      console.log(token)
-      const response = await fetch('http://localhost:8000/api/updateadminusers', {
-        method: 'POST',
+          const token = localStorage.getItem('admintoken');
+      //  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      // Make the GET request with the configured headers
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if(data.status=='success'){
-        alert('updated successfully')
-        window.location.href='/admin'
-      }
-      else{
-        alert(data.message)
-         window.location.href="/admin_login"
-      }
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+          }
+        };
+        const response = await axios.post('http://localhost:8000/api/update_user',formData ,config)
+
+  
+        const data = response.data;
+  
+        if (data.status === 'success'  ) {
+         window.location.href = '/admin';
+
+        }
+        else if (data.status === 'fail'){
+          setMessage(`<div className='display-error'>{data.message</div>`)
+
+        } else {
+          window.location.href = '/admin';
+        }
       console.log(data); // Handle the response data here
     } catch (error) {
       console.error('Error:', error);
@@ -96,6 +111,10 @@ function User() {
   }; 
 
   return (
+    <div>
+    <Topbar />
+      <div className="admincontainer">
+        <Sidebar />
     <div className="user">
       <div className="userTitleContainer">
         <h1 className="userTitle">Edit User</h1>
@@ -124,6 +143,7 @@ function User() {
         <div className="userUpdate">
           <span className="userUpdateTitle">Edit</span>
           <form className="userUpdateForm" onSubmit={handleSubmit}>
+          <div dangerouslySetInnerHTML={{ __html: message }}></div>
             <div className="userUpdateLeft">
               <div className="userUpdateItem">
                 <label>First Name</label>
@@ -132,7 +152,7 @@ function User() {
                   id="first_name"
                   placeholder={data.first_name}
                   className="userUpdateInput"
-                  value={data.name}
+                  value={data.first_name}
                   onChange={handleChange}
                   required
                 />
@@ -144,7 +164,7 @@ function User() {
                   id="last_name"
                   placeholder={data.last_name}
                   className="userUpdateInput"
-                  value={data.name}
+                  value={data.last_name}
                   onChange={handleChange}
                   required
                 />
@@ -189,12 +209,26 @@ function User() {
                   required
                 />
               </div>
+              <div className="userUpdateRight">
+                <div className="userUpdateUpload">
+                  <img
+                    className="userUpdateImg"
+                    src={image} alt=""
+                  />
+                  <label htmlFor="file">
+                    <Publish className="userUpdateIcon" />
+                  </label>
+                  <input type="file" id="file" style={{ display: "none" }} onChange={handleChange} />
+                </div>
                <button className="userUpdateButton">Update</button>
+               </div>
             </div>
 
           </form>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }
