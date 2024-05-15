@@ -18,7 +18,7 @@ function App() {
           <Route path="/admin" element={<Home />} />
           <Route path="/users" element={<UserList />} />
           <Route path="/user/:userId" element={<User />} />
-          <Route path="/admin_login" element={<AdminLogin />} />
+          <Route path="/" element={<AdminLogin />} />
           <Route path="/newUser" element={<NewUser />} />
           <Route path="/displaychats" element={<DisplayChats />} />
           <Route path="/newchat" element={<AdminChat />} />
