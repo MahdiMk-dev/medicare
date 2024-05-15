@@ -13,22 +13,30 @@
 .hero{
     height: 100vh;
     display: flex;
+    
 }
 .hero-item{
   width: 50%;
   height: 100%;
-  text-align: center;
+  margin-top: 75px;
 
 }
 
 .hero img{
-    height: 100vh; 
+    height: 75%; 
     width: 100%;
 }
+.hero h1{
+  text-align: left;
+  margin-left: 50px;
+  margin-top: 200px;
+  font-size: 60px;
+}
 .hero p{
-
-    margin-top: 100px;
+    text-align: left;
+    margin-top: 60px;
     margin-left: 50px;
+    font-weight: 300;
     color: black;
     font-size: 30px;
     overflow: hidden; /* This ensures the text doesn't overflow */
@@ -37,14 +45,21 @@
 
 }
 .hero button{
-    width: 300px;
-    height: 100px;
-    background-color: #4ca673;
-    color: black;
+    width: 180px;
+    height: 60px;
+    background-color: #1AB188;
     margin-top: 50px;
-    border-radius: 25px;
+    border-radius: 10px;
     font-size: xx-large;
+    padding-bottom: 5px;
+    margin-left: 50px;
+    border: none;
 
+  
+}
+.hero button a{
+  font-size: x-large;
+  text-align: center;
 }
 .services{
     margin-top: 50px;
@@ -64,11 +79,10 @@
 .circle{
     text-align: center;
     padding: 8px;
-    background-color: #008037;
+    background-color: #1AB188;
     color: black;
     width: 100px; 
     height: 100px; 
-    border: rgb(217, 217, 217) solid 3px;
     border-radius: 50%; 
     top: 50px; 
     z-index:1;
@@ -87,14 +101,13 @@
     padding: 20px;
     background-color: white;
     color: black;
-    border: rgb(217, 217, 217) solid 3px;
-    width: 250px;
+    border: rgb(217, 217, 217) solid 1px;
+    width: 280px;
     height: 350px;
     justify-content: space-between;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 .rectangle:hover{
-  border: solid 2px #008037;
+  border: solid 2px #1AB188;
 }
 .rectangle p{
   text-align: justify;
@@ -105,12 +118,13 @@
 .rectangle button{
 
   padding: 10px;
+  border: none;
   border-radius: 5px;
-  background-color: #008037;
+  background-color: #1AB188;
   color: white;
   width: 100%;
   font-weight: bold;
-  font-size: x-small;
+  font-size: small;
 }
 .rectangle button:hover{
   transform: scale(1.05);
@@ -128,18 +142,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    width: 50%;
+    width: 60%;
 }
 .contact-column img {
     width: 50%;
-    height: 80%;
+    height: 60%;
 }
 .contact-us button{
     background-color: white;
     color: black;
     margin-left: 10px;
-    border-radius: 3px;
+    border-radius: 5px;
+    border: solid 1px #1AB188 ;
     width: 150px;
     height: 30px;
 }
@@ -167,10 +181,9 @@
   }
   
   .contact-method {
-    padding: 25px;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
   
   .icon {
@@ -194,10 +207,10 @@ button a {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 30%; /* Full width */
+  width: 20%; /* Full width */
   height: 5px; /* Thickness of the line */
-  background-color: black; /* Color of the line */
-  transform: translateX(465px);
+  background-color: #1AB188; /* Color of the line */
+  transform: translateX(520px);
 }
 .underline p{
   text-align: center;
@@ -205,11 +218,11 @@ button a {
   margin-top: 50px;
   font-size: 60px;
 }
-.title {
+.homeTitle {
   text-align: center;
   color: black;
   margin-top: 50px;
-  font-size: 60px;
+  font-size: 40px;
 
 }
 .about {
@@ -229,7 +242,7 @@ button a {
 }
 
 .row-item{
-    width: 50%;
+    width: 40%;
     text-align: justify;
     padding: 10px;
 
@@ -239,7 +252,8 @@ button a {
 
 }
 .row-image{
-    width: 50%;
+    width: 350px;
+    height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -255,9 +269,9 @@ button a {
 
 }
 .row-image img{
-    width: 50%;
-    height: 100%;
-    margin-bottom: 50px;
+    width: 350px;
+    height: 200px;
+    margin-bottom: 150px;
 }
 .page{
     margin-top: 50px;
@@ -274,6 +288,14 @@ button a {
   .contact-us img{
     border-radius: 25px;
   }
+  .contact-methods h1{
+    margin-top: 70px;
+    margin-left: 20px;
+  }
+  .contact-methods p{
+    margin-top: 15px;
+    margin-left: 10px;
+  }
   
   .contact-us h2 {
     font-size: 24px;
@@ -283,12 +305,12 @@ button a {
   .contact-methods {
     display: flex;
     flex-direction: column;
+    padding: 100px;
   }
   
   .contact-method {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
   }
   
   .icon {
@@ -298,7 +320,7 @@ button a {
   
   .footer {
     margin-top: 40px;
-    background-color: #4ca673;
+    background-color: #1AB188;
     height: 75px;
 
     
@@ -314,6 +336,9 @@ button a {
     justify-content: center;
     align-items: center;
 }  
+.contact-method p{
+  margin-bottom: 15px;
+}
 .icon.large {
     font-size: 48px; /* Double the size */
     color: white;
