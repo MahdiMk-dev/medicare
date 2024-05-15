@@ -8,9 +8,10 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 import json
+from flask import Response
 
 
-UPLOAD_FOLDER = './images'
+UPLOAD_FOLDER = 'C:/wamp64/www/medicare/medicare/user-side/backend/testanalysis/images'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
@@ -18,7 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:@localhost/
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app,supports_credentials=True)
 
 
 class ResultAnalysis(db.Model):
@@ -51,8 +52,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
+            return (app.config['UPLOAD_FOLDER']+'/'+ filename)
 
 @app.route('/', methods=['POST'])
 def result_analysis():
@@ -85,7 +85,37 @@ def result_analysis():
     db.session.commit()
 
     # Return the AI result
-    return json.dumps({"ai_result": ai_result})
+    return  ai_result
+@app.route('/upload', methods=['POST'])
+def upload():
+    image_url=upload_file()
+    user_id = request.form.get('user_id')
+    print(user_id)
 
+   
+   # nparr = np.fromstring(file.read(), np.uint8)
+    image = cv2.imread('C:/wamp64/www/medicare/medicare/user-side/backend/testanalysis/images/123.png')
+    text = pytesseract.image_to_string(image)
+    client = OpenAI(api_key="sk-proj-6j92qSjkNG3KNKOOWBQNT3BlbkFJyO0awHFDUc6Bv8s5D6N6")
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": "analyze below results"+text
+            }
+        ],
+        model="gpt-3.5-turbo",
+    )
+    ai_result = chat_completion.choices[0].message.content
+
+    result_analysis = ResultAnalysis(image_url=image_url, result=ai_result,user_id=user_id)
+    db.session.add(result_analysis)
+    db.session.commit()
+
+    js =  { "result" : ai_result} 
+#then do this
+    return Response(json.dumps(js),  mimetype='application/json')
+
+     
 if __name__ == '__main__':
     app.run()
