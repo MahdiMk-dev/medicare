@@ -50,19 +50,18 @@ const Navbar=()=>{
         <div class="nav">
         <div class="logo">
             <img src={logo} alt="logo image"/>
-            Medicare
         </div>
         <div class="nav-items">
             <a href="/">Home</a>
             <a href="/#services">Services</a>
             <a href="/#aboutUs">About Us</a>
-            <a href="/#contactUs">Contact Us</a>
+            <a href="/#contact">Contact Us</a>
         </div>
         
         {userData ? (
            <div class='profile'> 
-                <a href="profile">{userData.first_name} {userData.last_name}</a>
                 <a href="/live_chat" target="_blank"><ChatIcon />({unread})</a>
+                <a href="profile">{userData.first_name} {userData.last_name}</a>
                 <Link
                 to="/"
                 onClick={() => {
