@@ -66,6 +66,7 @@ def result_analysis():
     nparr = np.fromstring(file.read(), np.uint8)
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     text = pytesseract.image_to_string(image)
+    client = OpenAI(api_key="sk-proj-6j92qSjkNG3KNKOOWBQNT3BlbkFJyO0awHFDUc6Bv8s5D6N6")
 
     # Perform AI analysis
     chat_completion = client.chat.completions.create(
@@ -94,8 +95,9 @@ def upload():
 
    
    # nparr = np.fromstring(file.read(), np.uint8)
-    image = cv2.imread('C:/wamp64/www/medicare/medicare/user-side/backend/testanalysis/images/123.png')
+    image = cv2.imread(image_url)
     text = pytesseract.image_to_string(image)
+    client = OpenAI(api_key="sk-proj-6j92qSjkNG3KNKOOWBQNT3BlbkFJyO0awHFDUc6Bv8s5D6N6")
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -107,10 +109,7 @@ def upload():
     )
     ai_result = chat_completion.choices[0].message.content
 
-    result_analysis = ResultAnalysis(image_url=image_url, result=ai_result,user_id=user_id)
-    db.session.add(result_analysis)
-    db.session.commit()
-
+   
     js =  { "result" : ai_result} 
 #then do this
     return Response(json.dumps(js),  mimetype='application/json')
