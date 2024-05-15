@@ -96,7 +96,6 @@ def upload():
    # nparr = np.fromstring(file.read(), np.uint8)
     image = cv2.imread('C:/wamp64/www/medicare/medicare/user-side/backend/testanalysis/images/123.png')
     text = pytesseract.image_to_string(image)
-    client = OpenAI(api_key="sk-proj-6j92qSjkNG3KNKOOWBQNT3BlbkFJyO0awHFDUc6Bv8s5D6N6")
     chat_completion = client.chat.completions.create(
         messages=[
             {
