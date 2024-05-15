@@ -3,14 +3,18 @@ import React from 'react';
 import '../styles/home.css';
 import logoImage2 from '../images/1-removebg-preview.png'; 
 import newhero from '../images/newhero.png'
-import contact from '../images/contact.png'; 
+import contact from '../images/contactimg.jpg'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserNurse,faUserDoctor,faVialVirus   } from '@fortawesome/free-solid-svg-icons'; // Import the necessary icons
 import { Link } from 'react-router-dom';
 import { FaPhone, FaEnvelope, FaComments, FaFacebook, FaTwitter, FaInstagram, FaChartLine } from 'react-icons/fa';
+import { faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import about from '../images/newbg.png';
 import hero from '../images/heroimg.png';
+import vision from '../images/vision.jpg'
+import doctor from '../images/doctor.jpg'
+import workingdr from '../images/workingdr.jpg'
 
 const HomeComponent = () => {
   const userData = useSelector(state => state.user.userData);
@@ -89,7 +93,7 @@ const HomeComponent = () => {
             </div> 
             <div class="services-item">
                 <div class="circle">
-                <FontAwesomeIcon icon={FaChartLine } size="2x" color="white" />
+                <FontAwesomeIcon icon={faMagnifyingGlassChart}  size="2x" color="white" />
                 </div>
                 <div class="rectangle">
                     <p>Attach your medical result below so you can get a brief fast analysis!</p>
@@ -115,7 +119,7 @@ const HomeComponent = () => {
             </div>
                 <div class="about-row">
                     <div class="row-image">
-                        <img src={about} alt="2nd part"/>
+                        <img src={vision} alt="2nd part"/>
                     </div>
                 <div class="row-item">
                     <h2>Our Vision</h2>
@@ -129,12 +133,12 @@ const HomeComponent = () => {
                     <p>Medicare offers a range of in-home medical services designed to promote wellness, recovery, and comfort. Whether you require the expertise of a registered nurse, a consultation with a qualified physician, or the convenience of blood testing at home, we've got you covered. Our dedicated team of professionals is committed to ensuring that you receive the highest standard of care, tailored to your unique needs.</p>
                 </div>
                 <div class="row-image">
-                    <img src={about} alt="3rd"/>
+                    <img src={doctor} alt="3rd"/>
                 </div>
                 </div>
                 <div class="about-row">
                 <div class="row-image">
-                    <img src={about}/>
+                    <img src={workingdr}/>
                 </div>
                     <div class="row-item">
                     <h2>Our Commitment</h2>
