@@ -6,9 +6,11 @@ import axios from 'axios';
 import ChatBox from './ChatBox';
 import { collection, query, where, onSnapshot ,getDocs} from "firebase/firestore";
 import { db } from '../firebase'; // Assuming this is the path to your Firebase initialization file
-import { useSelector } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { DeleteOutline } from "@mui/icons-material";
 import { Button } from '@mui/material';
+import { loginSuccess } from '../actions/userActions';
+
 import {
     CalendarToday,
     LocationSearching,
@@ -19,6 +21,7 @@ import {
   } from "@mui/icons-material";
 
 function ProfileComponent() {
+  const dispatch = useDispatch();
   const [info, setinfo] = useState([]);
   const[medform,setShowMedForm]=useState(false)
   const [medications, setmedications] = useState([]);
@@ -196,6 +199,7 @@ const[medicationId,setMedicationId]=useState();
         const data = response.data;
   
         if (data.status === 'success'  ) {
+          
           setMessage(`<div className='display-success'>{data.message</div>`)
           const userData = { first_name:data.user.first_name,
             last_name:data.user.last_name,
