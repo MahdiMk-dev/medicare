@@ -18,7 +18,7 @@ const SendMessage = () => {
       avatar: userData.image_url,
       createdAt: serverTimestamp(),
       SenderId:userData.id,
-      ReceiverId:2,
+      ReceiverId:1,
       read: false
 
     });

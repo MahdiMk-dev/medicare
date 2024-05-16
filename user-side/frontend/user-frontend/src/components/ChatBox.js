@@ -110,31 +110,6 @@ const unsubscribe = getAndListenMessages();
 return () => unsubscribe;
 
 
-
-
-
-
- 
-
-
-/*  const q = query(
-                    collection(db, "messages"),
-                   // where('SenderId', '==', '1','||','ReceiverId', '==', '1'), // Assuming '1' is the user ID
-                    //where('ReceiverId', '==', '1')), // Assuming '1' is the receiver ID
-                    orderBy("createdAt", "desc"),
-                    limit(50)
-  );
-  const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
-    const fetchedMessages = [];
-    QuerySnapshot.forEach((doc) => {
-      fetchedMessages.push({ ...doc.data(), id: doc.id });
-    });
-    const sortedMessages = fetchedMessages.sort(
-      (a, b) => a.createdAt - b.createdAt
-    );
-    setMessages(sortedMessages);
-  });
-  return () => unsubscribe;*/
 }, []);
   return (
    <div>
