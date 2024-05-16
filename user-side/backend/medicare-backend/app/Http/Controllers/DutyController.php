@@ -103,12 +103,12 @@ public function get_duty(Request $request,$id)
 
         if($user["type"]=='admin'){
                     $duty=Duty::with(['order'])->where('id',$id)->get();
-                    return response()->json(['status'=>'success', 'user'=>$user,'duty'=>$orders]);
+                    return response()->json(['status'=>'success', 'user'=>$user,'duty'=>$duty]);
                    
         }
         else{
             $duty=Duty::with(['order'])->where('user_id',$user_id)->where('id',$id)->get();
-            return response()->json(['status'=>'success', 'user'=>$user,'duty'=>$orders]);
+            return response()->json(['status'=>'success', 'user'=>$user,'duty'=>$duty]);
         }
 
     } catch (TokenExpiredException $e) {
