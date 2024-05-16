@@ -155,7 +155,7 @@ $mail = new PHPMailer(true);
    
             $mail->isHTML(true);
    
-            $mail->Subject = "Branch User Created Email";
+            $mail->Subject = "Welcome To Medicare's Family";
                      $content = "<h1>Welcome to Our Platform</h1>";
         $content .= "<p>Thank you for joining us! Below is your username and password:</p>";
         $content .= "<p><strong>Username:</strong> ".$userName."</p>";
