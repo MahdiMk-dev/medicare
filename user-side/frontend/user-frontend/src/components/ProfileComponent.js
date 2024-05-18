@@ -537,6 +537,11 @@ function subscribeToMessages() {
                     required
                     onChange={(e) => handleInputChange(e, setProfileData)}
                   />
+                  
+                  <input type="file" name="img_file" id="file"  onChange={(e) => handleInputChange(e, setProfileData)} />
+                  <img src={image} className="userUpdateImg"/>
+                  </div>
+                  <div className="coinsFormLeft">
                   <label>Address</label>
                   <input
                     id="address"
@@ -565,11 +570,11 @@ function subscribeToMessages() {
                     value={ProfileData.phone_number}
                     onChange={(e) => handleInputChange(e, setProfileData)}
                   />
-                  <input type="file" name="img_file" id="file"  onChange={(e) => handleInputChange(e, setProfileData)} />
-                  <img src={image} className="userUpdateImg"/>
-                  <button className="requestButton" >Update</button>
+                  
               </div>
+
               </form>
+              <button className="requestButton" >Update</button>
 
           </div>
           </div>
