@@ -98,7 +98,6 @@ def upload():
     image = cv2.imread(image_url)
     text = pytesseract.image_to_string(image)
     
-    client = OpenAI(api_key="sk-proj-zvRh8iNTJ6DUslbmWvfuT3BlbkFJZdvTCH4I7fHXOujFz9of")
     chat_completion = client.chat.completions.create(
         messages=[
             {
