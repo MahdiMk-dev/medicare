@@ -52,7 +52,7 @@ const TestAnalysis = () => {
                 <input className="analysis-input" type="file" id="image" accept="image/*" onChange={handleImageChange} />
                 <button  className='analysis-btn' onClick={uploadImage}>Upload</button>
                 </div>  
-                <h3>Response</h3>
+                <h3 className="response-title">Response</h3>
                 <div className="response scrollable-div">
                 {responseMessage && <p>{responseMessage}</p>}
                 </div>
