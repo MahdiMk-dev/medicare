@@ -35,6 +35,15 @@
     align-items: center;
     border-radius: 10px;
     color: black;
+    text-decoration: none;
+    font-size: larger;
+    margin-bottom: 20px;
+  }
+  .sidebarListItem ul li{
+    text-decoration: none;
+  }
+  .sidebarListItem ul li a{
+    text-decoration: none;
   }
   
   .sidebarListItem.active,

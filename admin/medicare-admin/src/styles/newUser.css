@@ -45,14 +45,15 @@
       border-radius: 5px;
   }
   
-  .newUserButton{
+  .productAddButton{
       width: 200px;
       border: none;
-      background-color: darkblue;
+      background-color: #3bb077;
       color: white;
       padding: 7px 10px;
       font-weight: 600;
       border-radius: 10px;
       margin-top: 30px;
       cursor: pointer;
+margin-bottom: 20px;
   }

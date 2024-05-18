@@ -96,7 +96,7 @@ function UserList() {
         <Sidebar />
     <div className="userList">
     <div className="productTitleContainer">
-        <h1 className="productTitle">Users</h1>
+        <h1 className="productTitle">Staff</h1>
         <Link to="/newuser">
           <button className="productAddButton">Create</button>
         </Link>
