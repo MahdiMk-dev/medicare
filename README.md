@@ -123,16 +123,26 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [example](https://example.com)
-2. Clone the repo
-   git clone [github](https://github.com/your_username_/Project-Name.git)
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
-   ```
+1.  Get a free API Key at [example](https://example.com)
+2.  Clone the repo
+    git clone [github](https://github.com/MahdiMk-dev/medicare)
+3.  For Frontend applications (user and admin):
+    a. Install NPM packages
+    ```sh
+    npm install
+    ```
+          b. Start running the App
+    ```sh
+    npm start
+    ```
+4.  For backend part:
+    a. For Laravel APIs:
+    ```sh
+    php artisan serve
+    ```
+          b. For flask app (AI analysis)
+    ```sh
+    flask run
+    ```
 
-Now, you should be able to run Coffee Express locally and explore its features.
+Now, you should be able to run Medicare locally and explore its features.
