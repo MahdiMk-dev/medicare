@@ -167,7 +167,11 @@ body {
     box-shadow: 1px 1px 8px 0 grey;
     height: 50%;
     margin-bottom: 20px;
-
+}
+.coins form{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
 }
   .profileListEdit{
       border: none;
@@ -259,14 +263,16 @@ body {
     margin-bottom: 10px;
   }
   .requestButton{
+    text-align: center;
     border: none;
     padding: 5px;
-    border-radius: 5px;
-    background-color: #008037;
+    border-radius: 15px;
+    background-color: #1AB188;
     color:white;
     font-weight: 600;
     cursor: pointer;
     margin: 15px;
+    width: 200px;
     
   }
   .requestForm{
@@ -362,6 +368,9 @@ body {
   background-color: #ebf1fe;
   color: #2a7ade;
 
+}
+.mainprofile .title{
+  margin-top: 150px;
 }
 .userUpdateImg{
       width: 100px;
