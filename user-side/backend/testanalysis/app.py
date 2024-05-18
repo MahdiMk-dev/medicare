@@ -66,7 +66,6 @@ def result_analysis():
     nparr = np.fromstring(file.read(), np.uint8)
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     text = pytesseract.image_to_string(image)
-    client = OpenAI(api_key="sk-proj-6j92qSjkNG3KNKOOWBQNT3BlbkFJyO0awHFDUc6Bv8s5D6N6")
 
     # Perform AI analysis
     chat_completion = client.chat.completions.create(
