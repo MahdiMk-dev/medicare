@@ -9,6 +9,8 @@ import { faUserNurse,faUserDoctor,faVialVirus   } from '@fortawesome/free-solid-
 import { Link } from 'react-router-dom';
 import { FaPhone, FaEnvelope, FaComments, FaFacebook, FaTwitter, FaInstagram, FaChartLine } from 'react-icons/fa';
 import { faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+
 import { useSelector } from 'react-redux';
 import about from '../images/newbg.png';
 import hero from '../images/heroimg.png';
@@ -52,103 +54,81 @@ const HomeComponent = () => {
        
       </div>
 
-      <div className="main">
-      <div className="underlined-container">
-      <p  id="services-homeTitle" class='homeTitle'>Services</p>
-        <div className="underline"></div>
-      </div>
+
+      <div class="services-section" id="services-section">
+      
+        <p  id="services-homeTitle" class='homeTitle'>Services</p>
+
+
         <div className="services" id="services">
         <div class="services-item">
-                <div class="circle">
-                <FontAwesomeIcon icon={faUserNurse } size="2x" color="white" />
-                </div>
+
                 <div class="rectangle">
-                    <p>Private Nursing Services: Our registered nurses and practical nurses are available to provide specialized medical treatments, long-term care, or short-term assistance, all within the comfort of your home.</p>
-                    <button id="request-nurse" ><a href='/requestNurse'>Request Private Nurse</a></button>
+                    <FontAwesomeIcon icon={faUserNurse } size="3x" />
+                    <p>Private Nurse</p>
+                    <button id="request-nurse" ><a href='/requestNurse'>Request Nurse</a></button>
                 </div>
             </div>
             <div class="services-item">
-                <div class="circle">
-               
-                <FontAwesomeIcon icon={faUserDoctor} size="2x" color="white"   />
-                </div>
+
                 <div class="rectangle">
-                    <p>Telemedicine Consultations: Access timely medical advice and consultations from board-certified physicians, right from the convenience of your living room. Whether it's an urgent matter or a routine check-up, our telemedicine services ensure that healthcare is just a click away.</p>
+                    <FontAwesomeIcon icon={faUserDoctor} size="3x"    />
+                    <p className='medical-title'>Medical Consultations</p>
                     
                     <div>
     </div>
-                    <button id="request-doctor"><a href='/requestDoctor'>Request Medical Consultation</a></button>
+                    <button id="request-doctor"><a href='/requestDoctor'>Request A Consultation</a></button>
 
                 </div>
             </div>
             <div class="services-item">
-                <div class="circle">
-                <FontAwesomeIcon icon={faVialVirus}  size="2x" color="white"  />
-                </div>
+
                 <div class="rectangle">
-                    <p>At-Home Phlebotomy: Say goodbye to the hassle of visiting a lab for blood tests. Our skilled phlebotomists come to you, ensuring a seamless and stress-free experience. We collect blood samples at your convenience and ensure they reach the lab promptly for accurate testing.</p>
+                <FontAwesomeIcon icon={faVialVirus}  size="3x"   />
+
+                    <p>Labs</p>
                     <button id="request-phlebotomist"><a href='/requestPhlebotomist'>Request Lab Tests</a></button>
                 </div>
             </div> 
             <div class="services-item">
-                <div class="circle">
-                <FontAwesomeIcon icon={faMagnifyingGlassChart}  size="2x" color="white" />
-                </div>
+
                 <div class="rectangle">
-                    <p>Attach your medical result below so you can get a brief fast analysis!</p>
-                    <p class='disclaimer'>Diclaimer: This analysis is AI generated and is not 100% dependable so don't hesitate to contact one of our Doctors for better medical plan</p>
+                <FontAwesomeIcon icon={faMagnifyingGlassChart}  size="3x"  />
+
+                    <p>Result Analysis</p>
                     <button id="analysis" ><a href='/result_analysis'>Analyze My Result</a></button>
                 </div>
             </div>       
             </div>
+            </div>
             <div id="aboutUs">
         <div className="about">
-        <div className="underlined-container">
+
       <p  id="aboutUs" className='homeTitle'>About Us</p>
-        <div className="underline"></div>
-      </div>
+
         <div class="about-row">
                 <div class="row-item">
-                    <h2>About Medicare</h2>
-                    <p>At Medicare, we believe in delivering exceptional healthcare services right to your doorstep. Our mission is to provide convenient and comprehensive medical care tailored to meet the diverse needs of our patients. With a focus on quality, compassion, and efficiency, we strive to redefine the healthcare experience by making it accessible and personalized.</p>
+                    <h2>Why Choose Us</h2>
+                    <ul>
+                      <li><FontAwesomeIcon icon={faCircleCheck} style={{ color: '#1AB188' }}  /> <p>Delivering Medical Services to your doorstep</p></li>
+                      <li><FontAwesomeIcon icon={faCircleCheck} style={{ color: '#1AB188' }}  /><p>Our advanced AI technology provides quick and accurate analysis of your medical results</p></li>
+                      <li><FontAwesomeIcon icon={faCircleCheck} style={{ color: '#1AB188' }}  /><p> Our services are designed to save you time and provide the utmost convenience, fitting seamlessly into your schedule.</p></li>
+                      <li><FontAwesomeIcon icon={faCircleCheck} style={{ color: '#1AB188' }}  /><p>Our dedicated healthcare professionals provide personalized attention and care, tailoring their services to meet your specific health needs.</p></li>
+                      <li><FontAwesomeIcon icon={faCircleCheck} style={{ color: '#1AB188' }}  /><p>Our team comprises experienced and licensed medical professionals committed to delivering the highest standards of care. </p></li>
+                    </ul>
                 </div>
                 <div class="row-image">
                     <img src={logoImage2} alt="logo medicare"/>
                 </div>
             </div>
-                <div class="about-row">
-                    <div class="row-image">
-                        <img src={vision} alt="2nd part"/>
-                    </div>
-                <div class="row-item">
-                    <h2>Our Vision</h2>
-                    <p>We envision a future where healthcare is not just a service but a seamless part of everyday life. By harnessing the power of technology and human expertise, we aim to revolutionize the way healthcare is delivered, making it more patient-centric, efficient, and empowering.</p>
+                        </div>
+            </div>
 
-                </div>
-            </div>
-            <div class="about-row">
-                <div class="row-item">
-                    <h2>Our Services</h2>
-                    <p>Medicare offers a range of in-home medical services designed to promote wellness, recovery, and comfort. Whether you require the expertise of a registered nurse, a consultation with a qualified physician, or the convenience of blood testing at home, we've got you covered. Our dedicated team of professionals is committed to ensuring that you receive the highest standard of care, tailored to your unique needs.</p>
-                </div>
-                <div class="row-image">
-                    <img src={doctor} alt="3rd"/>
-                </div>
-                </div>
-                <div class="about-row">
-                <div class="row-image">
-                    <img src={workingdr}/>
-                </div>
-                    <div class="row-item">
-                    <h2>Our Commitment</h2>
-                    <p>At Medicare, we are committed to putting your health and well-being first. We understand the challenges of navigating the healthcare system, which is why we're dedicated to providing you with the support and guidance you need every step of the way. Whether it's managing your medications, accessing expert advice, or simply having someone to talk to, we're here for you, 24/7.</p>
-                </div>
-            </div>        </div>
-            </div>
-            <div className="underlined-container">
+
+<div className='contact-section'>
+  <div className='contact-form'>
       <p  id="aboutUs" className='homeTitle'>Contact Us</p>
-        <div className="underline"></div>
-      </div>
+
             <div className="contact-us">
 
         <div className='contact-column'>
@@ -174,12 +154,7 @@ const HomeComponent = () => {
             <img src={contact}></img>
         </div>
       </div>
-
-
-
-
-
-
+      </div>
       </div>
       <footer className="footer">
       <div className="social-icons">
