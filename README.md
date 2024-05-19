@@ -42,9 +42,9 @@
 
 ### Mockups
 
-| Home screen                             | Menu Screen                           | Order Screen                          |
-| --------------------------------------- | ------------------------------------- | ------------------------------------- |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
+| Home screen            | Admin Home Screen         |
+| ---------------------- | ------------------------- |
+| ![Landing](./Home.png) | ![fsdaf](./adminHome.png) |
 
 <br><br>
 
@@ -60,21 +60,24 @@
 <!-- Implementation -->
 <img src="./readme/title6.svg"/>
 
-### User Screens (Mobile)
+### User Screens (Web)
 
-| Login screen                              | Register screen                         | Landing screen                          | Loading screen                          |
-| ----------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
-| Home screen                               | Menu Screen                             | Order Screen                            | Checkout Screen                         |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
+| Login screen                | Register screen              |
+| --------------------------- | ---------------------------- |
+| ![Landing](./userLogin.PNG) | ![fsdaf](./UserRegister.PNG) |
+
+| Profile screen            | Landing screen          |
+| ------------------------- | ----------------------- |
+| ![Landing](./profile.PNG) | ![fsdaf](./landing.PNG) |
 
 ### Admin Screens (Web)
 
-| Login screen                            | Register screen                       | Landing screen                        |
-| --------------------------------------- | ------------------------------------- | ------------------------------------- |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
-| Home screen                             | Menu Screen                           | Order Screen                          |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
+| Login screen                 | Home screen                           |
+| ---------------------------- | ------------------------------------- |
+| ![Landing](./adminLogin.PNG) | ![fsdaf](./adminHomePage.PNG)         |
+| ---------------------------- | ------------------------------------- |
+| Staff screen                 | Menu Screen                           |
+| ![Landing](./adminStaff.PNG) | ![fsdaf](./schedules.PNG)             |
 
 <br><br>
 
