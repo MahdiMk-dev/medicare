@@ -42,9 +42,9 @@
 
 ### Mockups
 
-| Home screen            | Admin Home Screen         |
-| ---------------------- | ------------------------- |
-| ![Landing](./Home.png) | ![fsdaf](./adminHome.png) |
+| Home screen                         | Admin Home Screen                      |
+| ----------------------------------- | -------------------------------------- |
+| ![Landing](./readmeImages/Home.png) | ![fsdaf](./readmeImages/adminHome.png) |
 
 <br><br>
 
@@ -53,7 +53,7 @@
 
 ### Architecting Data Excellence: Innovative Database Design Strategies:
 
-- <img src="./ERDiagram.PNG"/>
+- <img src="./readmeImages/ERDiagram.PNG"/>
 
 <br><br>
 
@@ -62,22 +62,22 @@
 
 ### User Screens (Web)
 
-| Login screen                | Register screen              |
-| --------------------------- | ---------------------------- |
-| ![Landing](./userLogin.PNG) | ![fsdaf](./UserRegister.PNG) |
+| Login screen                             | Register screen                           |
+| ---------------------------------------- | ----------------------------------------- |
+| ![Landing](./readmeImages/userLogin.PNG) | ![fsdaf](./readmeImages/UserRegister.PNG) |
 
-| Profile screen            | Landing screen          |
-| ------------------------- | ----------------------- |
-| ![Landing](./profile.PNG) | ![fsdaf](./landing.PNG) |
+| Profile screen                         | Landing screen                       |
+| -------------------------------------- | ------------------------------------ |
+| ![Landing](./readmeImages/profile.PNG) | ![fsdaf](./readmeImages/landing.PNG) |
 
 ### Admin Screens (Web)
 
-| Login screen                 | Home screen                           |
-| ---------------------------- | ------------------------------------- |
-| ![Landing](./adminLogin.PNG) | ![fsdaf](./adminHomePage.PNG)         |
-| ---------------------------- | ------------------------------------- |
-| Staff screen                 | Menu Screen                           |
-| ![Landing](./adminStaff.PNG) | ![fsdaf](./schedules.PNG)             |
+| Login screen                              | Home screen                                |
+| ----------------------------------------- | ------------------------------------------ |
+| ![Landing](./readmeImages/adminLogin.PNG) | ![fsdaf](./readmeImages/adminHomePage.PNG) |
+| ----------------------------              | -------------------------------------      |
+| Staff screen                              | Menu Screen                                |
+| ![Landing](./readmeImages/adminStaff.PNG) | ![fsdaf](./readmeImages/schedules.PNG)     |
 
 <br><br>
 
@@ -86,7 +86,7 @@
 
 ### Mastering AI Interaction: Unveiling the Power of Prompt Engineering:
 
-- This project uses advanced prompt engineering techniques to optimize the interaction with natural language processing models. By skillfully crafting input instructions, we tailor the behavior of the models to achieve precise and efficient language understanding and generation for various tasks and preferences.
+- This project uses advanced prompt engineering techniques integrate AI tools and ImagesToText tools to provide the user with fast analysis for his/her medical results.
 
 <br><br>
 
@@ -95,7 +95,7 @@
 
 ### Efficient AI Deployment: Unleashing the Potential with AWS Integration:
 
-- This project leverages AWS deployment strategies to seamlessly integrate and deploy natural language processing models. With a focus on scalability, reliability, and performance, we ensure that AI applications powered by these models deliver robust and responsive solutions for diverse use cases.
+This project utilizes AWS deployment strategies to seamlessly integrate and deploy natural language processing models. By prioritizing scalability, reliability, and performance, we ensure that AI applications driven by these models provide robust and responsive solutions for a variety of use cases.
 
 <br><br>
 
@@ -104,14 +104,14 @@
 
 ### Precision in Development: Harnessing the Power of Unit Testing:
 
-- This project employs rigorous unit testing methodologies to ensure the reliability and accuracy of code components. By systematically evaluating individual units of the software, we guarantee a robust foundation, identifying and addressing potential issues early in the development process.
+This project employs rigorous unit testing methodologies to ensure the reliability and accuracy of code components. By systematically evaluating individual software units, we establish a robust foundation and identify and address potential issues early in the development process.
 
 <br><br>
 
 <!-- How to run -->
 <img src="./readme/title10.svg"/>
 
-> To set up Coffee Express locally, follow these steps:
+> To set up Medicare locally, follow these steps:
 
 ### Prerequisites
 
@@ -126,10 +126,9 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1.  Get a free API Key at [example](https://example.com)
-2.  Clone the repo
+1.  Clone the repo
     git clone [github](https://github.com/MahdiMk-dev/medicare)
-3.  For Frontend applications (user and admin):
+2.  For Frontend applications (user and admin):
     a. Install NPM packages
     ```sh
     npm install
@@ -138,7 +137,7 @@ _Below is an example of how you can instruct your audience on installing and set
     ```sh
     npm start
     ```
-4.  For backend part:
+3.  For backend part:
     a. For Laravel APIs:
     ```sh
     php artisan serve
