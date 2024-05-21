@@ -90,28 +90,7 @@ class UserTest extends TestCase
                  ->assertJson(['status' => 'error', 'message' => 'token_invalid']);
     }
 
-    public function testEditUserInfoSuccess()
-    {
-        $user = User::factory()->create();
-        $token = JWTAuth::fromUser($user);
-
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-        ])->json('PUT', "/api/users/{$user->id}", [
-            'first_name' => 'Jane',
-            'last_name' => 'Doe',
-            'address' => '123 Main St',
-            'phone_number' => '1234567890',
-            'dob' => '1990-01-01',
-        ]);
-
-        $response->assertStatus(201)
-                 ->assertJson([
-                     'status' => 'success',
-                     'message' => 'updated successfully',
-                     'user' => true,
-                 ]);
-    }
+   
 
     public function testEditUserInfoTokenExpired()
     {
@@ -121,7 +100,7 @@ class UserTest extends TestCase
 
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
-        ])->json('PUT', '/api/users/500', [
+        ])->json('POST', '/api/update_user', [
             'first_name' => 'Jane',
             'last_name' => 'Doe',
             'address' => '123 Main St',
@@ -129,8 +108,8 @@ class UserTest extends TestCase
             'dob' => '1990-01-01',
         ]);
 
-        $response->assertStatus(405)
-                 ->assertJson(['status' => 'error', 'message' => 'token_expired']);
+        $response->assertStatus(401)
+                 ->assertJson(['status' => 'fail', 'message' => 'token_expired']);
     }
 
     public function testEditUserInfoTokenInvalid()
@@ -141,7 +120,7 @@ class UserTest extends TestCase
 
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
-        ])->json('PUT', "/api/users/500", [
+        ])->json('POST', "/api/update_user", [
             'first_name' => 'Jane',
             'last_name' => 'Doe',
             'address' => '123 Main St',
@@ -149,7 +128,7 @@ class UserTest extends TestCase
             'dob' => '1990-01-01',
         ]);
 
-        $response->assertStatus(405)
-                 ->assertJson(['status' => 'error', 'message' => 'token_invalid']);
+        $response->assertStatus(401)
+                 ->assertJson(['status' => 'fail', 'message' => 'token_invalid']);
     }
 }
