@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Medication extends Model
-{
+{ use HasFactory;
     protected $fillable = [
         'name', // Add 'name' to the fillable array
         'dose',

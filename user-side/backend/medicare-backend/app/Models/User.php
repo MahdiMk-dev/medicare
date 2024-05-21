@@ -11,6 +11,27 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class user extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'gender',
+        'dob',
+        'type',
+        'phone_number',
+        'address',
+        'email',
+        'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     // Other class properties and methods...
 
