@@ -11,11 +11,20 @@
 
 ### User Stories
 
+Patient:
+
 - As a patient, I want to have a live chat with a medical admin to get help with specific services/medical opinions, so that I can benefit the most from the application.
 - As a patient, I want to request medical services, so that I can get the needed care at home.
 - As a patient, I want to get a brief quick analysis of my results, so that I can know if I should do something or contact someone urgently.
+
+Staff:
+
 - As a staff, I want to get email with my schedule so that I don't miss any schedule task.
 - As a staff, I want to have access over my patients' profiles, so that I can provide good care.
+- As a staff, I want to view my schedule in a clear way as added by the admin.
+
+Admin:
+
 - As an admin, I want to have full access over the system, so that I can provide good management of human and medical resources.
 - As an admin, I want to assign staff to newly received requests.
 - As an admin, I want to have live chat with any patient, so that I can give any urgent comment and for better communication securing high quality of service.
@@ -81,30 +90,36 @@
 
 <br><br>
 
-<!-- Prompt Engineering -->
+<!-- Prompt Engineering-->
 <img src="./readme/title7.svg"/>
 
 ### Mastering AI Interaction: Unveiling the Power of Prompt Engineering:
 
 - This project uses advanced prompt engineering techniques integrate AI tools and ImagesToText tools to provide the user with fast analysis for his/her medical results.
 
+<img src="./readmeImages/AIPrompt.PNG"/>
+
 <br><br>
 
-<!-- AWS Deployment -->
+<!-- AWS Deployment-->
 <img src="./readme/title8.svg"/>
 
 ### Efficient AI Deployment: Unleashing the Potential with AWS Integration:
 
 This project utilizes AWS deployment strategies to seamlessly integrate and deploy natural language processing models. By prioritizing scalability, reliability, and performance, we ensure that AI applications driven by these models provide robust and responsive solutions for a variety of use cases.
 
+<img src="./readmeImages/AWS.PNG"/>
+
 <br><br>
 
-<!-- Unit Testing -->
+<!-- Unit Testing-->
 <img src="./readme/title9.svg"/>
 
 ### Precision in Development: Harnessing the Power of Unit Testing:
 
 This project employs rigorous unit testing methodologies to ensure the reliability and accuracy of code components. By systematically evaluating individual software units, we establish a robust foundation and identify and address potential issues early in the development process.
+
+<img src="./readmeImages/UnitTesting.PNG"/>
 
 <br><br>
 
