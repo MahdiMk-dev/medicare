@@ -52,7 +52,7 @@ class MedicationController extends Controller
         $medication->save();
 
         // Return response
-        return response()->json(['status' => 'success', 'message' => 'Medication added successfully', ]);
+        return response()->json(['status' => 'success', 'message' => 'Medication added successfully' ],200);
     } catch (TokenExpiredException $e) {
         // Token has expired
         return response()->json(['status'=>'fail','message' => 'token_expired'], 401);
